@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Tank.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="engine\splash.png" />
+    <Image Include="Example\brick.jpg" />
+    <Image Include="Example\Earth.jpg" />
+    <Image Include="Example\grass.jpg" />
+    <Image Include="Example\ground.jpg" />
+    <Image Include="Example\Particle.png" />
+    <Image Include="Example\Windmill.png" />
+    <Image Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RC.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="engine\assets\engine_textures.s3a" />
+    <None Include="engine\config.ini" />
+    <None Include="engine\dll\7-zip32\7-zip32.dll" />
+    <None Include="engine\dll\libmpg123\libmpg123.dll" />
+    <None Include="engine\dll\OpenSSL\libeay32.dll" />
+    <None Include="engine\dll\OpenSSL\ssleay32.dll" />
+    <None Include="engine\dll\SoundTouch\SoundTouch.dll" />
+    <None Include="engine\fonts\mplus\LICENSE_E" />
+    <None Include="engine\fonts\mplus\LICENSE_J" />
+    <None Include="engine\fonts\README" />
+    <None Include="engine\shaders\d3d11\DeferredFinalize.ps" />
+    <None Include="engine\shaders\d3d11\Font.ps" />
+    <None Include="engine\shaders\d3d11\FullScreenTriangle.vs" />
+    <None Include="engine\shaders\d3d11\FullScreenTriangle1xMSAA.ps" />
+    <None Include="engine\shaders\d3d11\FullScreenTriangle1xMSAA_Linear.ps" />
+    <None Include="engine\shaders\d3d11\FullScreenTriangle2xMSAA.ps" />
+    <None Include="engine\shaders\d3d11\FullScreenTriangle2xMSAA_Linear.ps" />
+    <None Include="engine\shaders\d3d11\FullScreenTriangle4xMSAA.ps" />
+    <None Include="engine\shaders\d3d11\FullScreenTriangle4xMSAA_Linear.ps" />
+    <None Include="engine\shaders\d3d11\FXAA_None.ps" />
+    <None Include="engine\shaders\d3d11\FXAA_Q20.ps" />
+    <None Include="engine\shaders\d3d11\FXAA_Q25.ps" />
+    <None Include="engine\shaders\d3d11\FXAA_Q39.ps" />
+    <None Include="engine\shaders\d3d11\LightAccumulation.ps" />
+    <None Include="engine\shaders\d3d11\LightAccumulation.vs" />
+    <None Include="engine\shaders\d3d11\LightAccumulation_ExponentialFog.ps" />
+    <None Include="engine\shaders\d3d11\LightAccumulation_HeightFog.ps" />
+    <None Include="engine\shaders\d3d11\LightAccumulation_LinearFog.ps" />
+    <None Include="engine\shaders\d3d11\LightAccumulation_NoFog.ps" />
+    <None Include="engine\shaders\d3d11\LightAccumulation_SquaredExponentialFog.ps" />
+    <None Include="engine\shaders\d3d11\MeshDeferred.ps" />
+    <None Include="engine\shaders\d3d11\MeshDeferred.vs" />
+    <None Include="engine\shaders\d3d11\MeshDeferredInstancing.vs" />
+    <None Include="engine\shaders\d3d11\MeshForwardInstancing_DirectionalLight.vs" />
+    <None Include="engine\shaders\d3d11\MeshForwardInstancing_NoLight.vs" />
+    <None Include="engine\shaders\d3d11\MeshForwardInstancing_PointLight.vs" />
+    <None Include="engine\shaders\d3d11\MeshForward_DirectionalLight.vs" />
+    <None Include="engine\shaders\d3d11\MeshForward_ExponentialFog.ps" />
+    <None Include="engine\shaders\d3d11\MeshForward_HeightFog.ps" />
+    <None Include="engine\shaders\d3d11\MeshForward_LinearFog.ps" />
+    <None Include="engine\shaders\d3d11\MeshForward_NoFog.ps" />
+    <None Include="engine\shaders\d3d11\MeshForward_NoLight.vs" />
+    <None Include="engine\shaders\d3d11\MeshForward_PointLight.vs" />
+    <None Include="engine\shaders\d3d11\MeshForward_SquaredExponentialFog.ps" />
+    <None Include="engine\shaders\d3d11\Particle.vs" />
+    <None Include="engine\shaders\d3d11\ParticleInstancing.vs" />
+    <None Include="engine\shaders\d3d11\PS.SIV3D" />
+    <None Include="engine\shaders\d3d11\Shape.ps" />
+    <None Include="engine\shaders\d3d11\Shape.vs" />
+    <None Include="engine\shaders\d3d11\ShapeStencil.ps" />
+    <None Include="engine\shaders\d3d11\ShapeStencil.vs" />
+    <None Include="engine\shaders\d3d11\Sprite.ps" />
+    <None Include="engine\shaders\d3d11\Sprite.vs" />
+    <None Include="engine\shaders\d3d11\SpriteStencil.ps" />
+    <None Include="engine\shaders\d3d11\SpriteStencil.vs" />
+    <None Include="engine\shaders\d3d11\TexturedMeshDeferred.ps" />
+    <None Include="engine\shaders\d3d11\TexturedMeshDeferred.vs" />
+    <None Include="engine\shaders\d3d11\TexturedMeshDeferredInstancing.vs" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForwardInstancing_DirectionalLight.vs" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForwardInstancing_NoLight.vs" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForwardInstancing_PointLight.vs" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_DirectionalLight.vs" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_ExponentialFog.ps" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_HeightFog.ps" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_LinearFog.ps" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_NoFog.ps" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_NoLight.vs" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_PointLight.vs" />
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_SquaredExponentialFog.ps" />
+    <None Include="engine\shaders\d3d11\VS.SIV3D" />
+    <None Include="engine\Siv3DVersion" />
+    <None Include="Example\Prokofiev.mid" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Example\Sound.mp3" />
+    <Media Include="Example\風の丘.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="engine\fonts\mplus\mplus-1p-black.ttf" />
+    <Font Include="engine\fonts\mplus\mplus-1p-bold.ttf" />
+    <Font Include="engine\fonts\mplus\mplus-1p-heavy.ttf" />
+    <Font Include="engine\fonts\mplus\mplus-1p-light.ttf" />
+    <Font Include="engine\fonts\mplus\mplus-1p-medium.ttf" />
+    <Font Include="engine\fonts\mplus\mplus-1p-regular.ttf" />
+    <Font Include="engine\fonts\mplus\mplus-1p-thin.ttf" />
+    <Font Include="engine\fonts\umeplus-p-gothic.ttf" />
+    <Font Include="Example\YomogiFont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="engine\dll\7-zip32\copying.txt" />
+    <Text Include="engine\dll\libmpg123\COPYING.txt" />
+    <Text Include="engine\dll\OpenSSL\license.txt" />
+    <Text Include="engine\dll\SoundTouch\COPYING.TXT" />
+    <Text Include="Example\素材について.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="engine\objdetect\faceAnime.xml" />
+    <Xml Include="engine\objdetect\facePhoto.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Tank.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{01EBD207-CEBE-4DA3-A9A9-7D6E6169945A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>TANK</RootNamespace>
+    <ProjectName>TANK</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SIV3D_20150103)\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SIV3D_20150103)\Lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SIV3D_20150103)\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SIV3D_20150103)\Lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

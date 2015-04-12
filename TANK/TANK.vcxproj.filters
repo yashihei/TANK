@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル\Example">
+      <UniqueIdentifier>{c0489d58-8f7e-47e4-9583-af8f7ace8eb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine">
+      <UniqueIdentifier>{8968430e-57d3-4c20-bca2-cc0f943c43b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\assets">
+      <UniqueIdentifier>{6d8e3d21-4adb-4257-a886-cb33270f06f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\dll">
+      <UniqueIdentifier>{24507974-573a-4afe-8884-b90f935d9dc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\dll\7-zip32">
+      <UniqueIdentifier>{caaeb0ce-930c-4173-9d96-69fa2164e457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\dll\libmpg123">
+      <UniqueIdentifier>{a24d1ce2-c670-41b0-937e-44a90d78cda3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\dll\OpenSSL">
+      <UniqueIdentifier>{e74a6094-fb21-44fb-a195-74c18236145a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\dll\SoundTouch">
+      <UniqueIdentifier>{32cd1392-6802-4e44-ac44-4e514dfe9ea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\fonts">
+      <UniqueIdentifier>{90467a33-8cfe-4fea-b3da-53f95f662798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\fonts\mplus">
+      <UniqueIdentifier>{d24f0bf9-2e9a-4c88-b1b8-a4e93beb000c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\objdetect">
+      <UniqueIdentifier>{652d3e9b-f343-4aa4-8fc1-2be07105873b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\shaders">
+      <UniqueIdentifier>{ee3f1781-9daf-465f-a4ed-3a1938c202cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\engine\shaders\d3d11">
+      <UniqueIdentifier>{5d6a0500-1c4d-42b8-bc20-84fc83199957}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Example\Earth.jpg">
+      <Filter>リソース ファイル\Example</Filter>
+    </Image>
+    <Image Include="Example\grass.jpg">
+      <Filter>リソース ファイル\Example</Filter>
+    </Image>
+    <Image Include="Example\ground.jpg">
+      <Filter>リソース ファイル\Example</Filter>
+    </Image>
+    <Image Include="Example\Particle.png">
+      <Filter>リソース ファイル\Example</Filter>
+    </Image>
+    <Image Include="Example\Windmill.png">
+      <Filter>リソース ファイル\Example</Filter>
+    </Image>
+    <Image Include="Example\brick.jpg">
+      <Filter>リソース ファイル\Example</Filter>
+    </Image>
+    <Image Include="engine\splash.png">
+      <Filter>リソース ファイル\engine</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RC.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Example\Prokofiev.mid">
+      <Filter>リソース ファイル\Example</Filter>
+    </None>
+    <None Include="engine\assets\engine_textures.s3a">
+      <Filter>リソース ファイル\engine\assets</Filter>
+    </None>
+    <None Include="engine\dll\7-zip32\7-zip32.dll">
+      <Filter>リソース ファイル\engine\dll\7-zip32</Filter>
+    </None>
+    <None Include="engine\dll\libmpg123\libmpg123.dll">
+      <Filter>リソース ファイル\engine\dll\libmpg123</Filter>
+    </None>
+    <None Include="engine\dll\OpenSSL\ssleay32.dll">
+      <Filter>リソース ファイル\engine\dll\OpenSSL</Filter>
+    </None>
+    <None Include="engine\dll\OpenSSL\libeay32.dll">
+      <Filter>リソース ファイル\engine\dll\OpenSSL</Filter>
+    </None>
+    <None Include="engine\dll\SoundTouch\SoundTouch.dll">
+      <Filter>リソース ファイル\engine\dll\SoundTouch</Filter>
+    </None>
+    <None Include="engine\fonts\README">
+      <Filter>リソース ファイル\engine\fonts</Filter>
+    </None>
+    <None Include="engine\fonts\mplus\LICENSE_E">
+      <Filter>リソース ファイル\engine\fonts\mplus</Filter>
+    </None>
+    <None Include="engine\fonts\mplus\LICENSE_J">
+      <Filter>リソース ファイル\engine\fonts\mplus</Filter>
+    </None>
+    <None Include="engine\Siv3DVersion">
+      <Filter>リソース ファイル\engine</Filter>
+    </None>
+    <None Include="engine\config.ini">
+      <Filter>リソース ファイル\engine</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForward_DirectionalLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForward_NoLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForward_PointLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForwardInstancing_DirectionalLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForwardInstancing_NoLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForwardInstancing_PointLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\Particle.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\ParticleInstancing.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\Shape.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\ShapeStencil.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\Sprite.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\SpriteStencil.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshDeferred.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshDeferredInstancing.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_DirectionalLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_NoLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_PointLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForwardInstancing_DirectionalLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForwardInstancing_NoLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForwardInstancing_PointLight.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\DeferredFinalize.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\Font.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FullScreenTriangle1xMSAA.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FullScreenTriangle1xMSAA_Linear.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FullScreenTriangle2xMSAA.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FullScreenTriangle2xMSAA_Linear.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FullScreenTriangle4xMSAA.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FullScreenTriangle4xMSAA_Linear.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FXAA_None.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FXAA_Q20.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FXAA_Q25.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FXAA_Q39.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\LightAccumulation.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\LightAccumulation_ExponentialFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\LightAccumulation_HeightFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\LightAccumulation_LinearFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\LightAccumulation_NoFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\LightAccumulation_SquaredExponentialFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshDeferred.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForward_ExponentialFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForward_HeightFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForward_LinearFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForward_NoFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshForward_SquaredExponentialFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\Shape.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\ShapeStencil.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\Sprite.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\SpriteStencil.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshDeferred.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_ExponentialFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_HeightFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_LinearFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_NoFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\TexturedMeshForward_SquaredExponentialFog.ps">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\PS.SIV3D">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\VS.SIV3D">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\FullScreenTriangle.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\LightAccumulation.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshDeferred.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+    <None Include="engine\shaders\d3d11\MeshDeferredInstancing.vs">
+      <Filter>リソース ファイル\engine\shaders\d3d11</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Example\Sound.mp3">
+      <Filter>リソース ファイル\Example</Filter>
+    </Media>
+    <Media Include="Example\風の丘.mp3">
+      <Filter>リソース ファイル\Example</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Example\YomogiFont.ttf">
+      <Filter>リソース ファイル\Example</Filter>
+    </Font>
+    <Font Include="engine\fonts\umeplus-p-gothic.ttf">
+      <Filter>リソース ファイル\engine\fonts</Filter>
+    </Font>
+    <Font Include="engine\fonts\mplus\mplus-1p-bold.ttf">
+      <Filter>リソース ファイル\engine\fonts\mplus</Filter>
+    </Font>
+    <Font Include="engine\fonts\mplus\mplus-1p-heavy.ttf">
+      <Filter>リソース ファイル\engine\fonts\mplus</Filter>
+    </Font>
+    <Font Include="engine\fonts\mplus\mplus-1p-light.ttf">
+      <Filter>リソース ファイル\engine\fonts\mplus</Filter>
+    </Font>
+    <Font Include="engine\fonts\mplus\mplus-1p-medium.ttf">
+      <Filter>リソース ファイル\engine\fonts\mplus</Filter>
+    </Font>
+    <Font Include="engine\fonts\mplus\mplus-1p-regular.ttf">
+      <Filter>リソース ファイル\engine\fonts\mplus</Filter>
+    </Font>
+    <Font Include="engine\fonts\mplus\mplus-1p-thin.ttf">
+      <Filter>リソース ファイル\engine\fonts\mplus</Filter>
+    </Font>
+    <Font Include="engine\fonts\mplus\mplus-1p-black.ttf">
+      <Filter>リソース ファイル\engine\fonts\mplus</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Example\素材について.txt">
+      <Filter>リソース ファイル\Example</Filter>
+    </Text>
+    <Text Include="engine\dll\7-zip32\copying.txt">
+      <Filter>リソース ファイル\engine\dll\7-zip32</Filter>
+    </Text>
+    <Text Include="engine\dll\libmpg123\COPYING.txt">
+      <Filter>リソース ファイル\engine\dll\libmpg123</Filter>
+    </Text>
+    <Text Include="engine\dll\OpenSSL\license.txt">
+      <Filter>リソース ファイル\engine\dll\OpenSSL</Filter>
+    </Text>
+    <Text Include="engine\dll\SoundTouch\COPYING.TXT">
+      <Filter>リソース ファイル\engine\dll\SoundTouch</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="engine\objdetect\faceAnime.xml">
+      <Filter>リソース ファイル\engine\objdetect</Filter>
+    </Xml>
+    <Xml Include="engine\objdetect\facePhoto.xml">
+      <Filter>リソース ファイル\engine\objdetect</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
