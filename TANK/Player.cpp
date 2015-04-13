@@ -1,6 +1,6 @@
 #include "Tank.h"
 
-void Tank::init() {
+void Player::init() {
 	hp = 100;
 	pos = Vec2(100.0, 100.0);
 	cnt = 0;
@@ -8,7 +8,7 @@ void Tank::init() {
 	radian = 0;
 }
 
-void Tank::move() {
+void Player::move() {
 	cnt++;
 
 	double speed = 5.0;
@@ -31,7 +31,7 @@ void Tank::move() {
 	}
 }
 
-void Tank::draw() {
+void Player::draw() {
 	int w = 30, h = 60;
 
 	RectF(pos, w, h).rotated(radian + Radians(90)).draw(Palette::Red);

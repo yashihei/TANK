@@ -3,7 +3,7 @@
 #include "Tank.h"
 
 void Game::init() {
-	tank = std::make_shared<Tank>();
+	tank = std::make_shared<Player>();
 	tank->init();
 }
 

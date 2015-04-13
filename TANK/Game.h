@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 
-class Tank;
+class Player;
 
 class Game
 {
@@ -11,5 +11,5 @@ public:
 	void move();
 	void draw();
 private:
-	std::shared_ptr<Tank> tank;
+	std::shared_ptr<Player> tank;
 };

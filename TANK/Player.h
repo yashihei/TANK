@@ -4,10 +4,10 @@
 //プレイヤー機
 //何か基本的に小さくて早くて滅茶苦茶火力持ってる感じで
 
-class Tank
+class Player
 {
 public:
-	Tank(){};
+	Player(){};
 	void init();
 	void move();
 	void draw();
