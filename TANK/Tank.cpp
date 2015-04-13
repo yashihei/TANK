@@ -11,8 +11,7 @@ void Tank::init() {
 void Tank::move() {
 	cnt++;
 
-	//FIXME:OŠpŠÖ”–Y‚ê‚½“®‚«‚ª•Ï
-	double speed = 3.0;
+	double speed = 5.0;
 	if (Input::KeyW.pressed) {
 		pos.x += speed * Cos(radian);
 		pos.y += speed * Sin(radian);
@@ -21,8 +20,10 @@ void Tank::move() {
 		pos.y -= speed * Sin(radian);
 	}
 
-	double turnSpeed = 2.0;
-	//turn
+	double turnSpeed = 3.5;
+	if (Input::KeyS.pressed) {
+		turnSpeed *= -1;
+	}
 	if (Input::KeyD.pressed) {
 		radian += Radians(turnSpeed);
 	} else if (Input::KeyA.pressed) {
@@ -33,5 +34,5 @@ void Tank::move() {
 void Tank::draw() {
 	int w = 30, h = 60;
 
-	RectF(pos, w, h).rotated(radian).draw(Palette::Red);
+	RectF(pos, w, h).rotated(radian + Radians(90)).draw(Palette::Red);
 }

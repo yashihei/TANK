@@ -24,4 +24,3 @@ private:
 	State state;
 	double radian;
 };
-

@@ -13,4 +13,3 @@ public:
 private:
 	std::shared_ptr<Tank> tank;
 };
-
