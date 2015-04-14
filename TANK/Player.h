@@ -8,6 +8,7 @@ struct Shot
 {
 	Vec2 pos, vec;
 	double rad;
+	bool enable;
 };
 
 class Player
@@ -26,8 +27,7 @@ public:
 
 private:
 	int hp;
-	Vec2 pos;
-	//Vec2 vec;
+	Vec2 pos, vec;
 	int cnt;
 	State state;
 	double rad;

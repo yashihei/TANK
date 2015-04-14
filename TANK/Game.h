@@ -10,6 +10,11 @@ public:
 	void init();
 	void move();
 	void draw();
+
+	enum class State {
+		TITLE,
+		PLAY,
+	};
 private:
 	std::shared_ptr<Player> player;
 };
