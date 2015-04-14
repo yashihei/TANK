@@ -1,16 +1,16 @@
 #include "Game.h"
 
-#include "Tank.h"
+#include "Player.h"
 
 void Game::init() {
-	tank = std::make_shared<Player>();
-	tank->init();
+	player = std::make_shared<Player>();
+	player->init();
 }
 
 void Game::move() {
-	tank->move();
+	player->move();
 }
 
 void Game::draw() {
-	tank->draw();
+	player->draw();
 }

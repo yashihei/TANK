@@ -11,5 +11,5 @@ public:
 	void move();
 	void draw();
 private:
-	std::shared_ptr<Player> tank;
+	std::shared_ptr<Player> player;
 };

@@ -1,8 +1,14 @@
 #pragma once
 #include <Siv3D.hpp>
+#include <memory>
+#include <list>
 
-//プレイヤー機
-//何か基本的に小さくて早くて滅茶苦茶火力持ってる感じで
+//ショットに関する処理が増えたらクラス化
+struct Shot
+{
+	Vec2 pos, vec;
+	double rad;
+};
 
 class Player
 {
@@ -17,10 +23,14 @@ public:
 		DAMAGE,
 		REBORN,
 	};
+
 private:
 	int hp;
 	Vec2 pos;
+	//Vec2 vec;
 	int cnt;
 	State state;
-	double radian;
+	double rad;
+
+	std::list<std::shared_ptr<Shot>> shots;
 };
