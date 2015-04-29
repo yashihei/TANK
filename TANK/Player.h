@@ -19,12 +19,13 @@ public:
 	void move();
 	void draw();
 
+	Vec2 getPos() { return pos; }
+
 	enum class State {
 		NORMAL,
 		DAMAGE,
 		REBORN,
 	};
-
 private:
 	int hp;
 	Vec2 pos, vec;
@@ -32,5 +33,6 @@ private:
 	State state;
 	double rad;
 
+	void moveShot();
 	std::list<std::shared_ptr<Shot>> shots;
 };

@@ -31,7 +31,10 @@ void Player::move() {
 		rad -= Radians(turnSpeed);
 	}
 
-	//以下shot関連
+	moveShot();
+}
+
+void Player::moveShot() {
 	if (Input::MouseL.pressed && cnt % 10 == 0) {
 		const Point mousePos = Mouse::Pos();
 		const double rad = Atan2(mousePos.y - pos.y, mousePos.x - pos.x);
@@ -40,7 +43,7 @@ void Player::move() {
 		//ポインタで持つ必要性無いかも
 		auto shot = std::make_shared<Shot>();
 		shot->pos.set(pos);
-		shot->vec.set(Cos(rad) * shotSpeed, Sin(rad) * shotSpeed);//FIXME
+		shot->vec.set(Cos(rad) * shotSpeed, Sin(rad) * shotSpeed);
 		shot->enable = true;
 		shots.push_back(shot);
 	}

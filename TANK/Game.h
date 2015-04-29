@@ -2,6 +2,7 @@
 #include <memory>
 
 class Player;
+class EnemyManager;
 
 class Game
 {
@@ -15,6 +16,9 @@ public:
 		TITLE,
 		PLAY,
 	};
+	
+	std::shared_ptr<Player> getPlayer() { return player; }
 private:
 	std::shared_ptr<Player> player;
+	std::shared_ptr<EnemyManager> enemyManager;
 };
