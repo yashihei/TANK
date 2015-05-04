@@ -9,15 +9,21 @@ void Game::init() {
 
 	player->init();
 	enemyManager->init();
+
+	cnt = 0;
 }
 
 void Game::move() {
+	ClearPrint();
+	Println(L"FPS:", Profiler::FPS());
+	cnt++;
 	player->move();
 	enemyManager->move(this);
 
-	if (Input::KeyZ.clicked) {
+	if (cnt % 20 == 0) {
 		auto e = std::make_shared<Noob>();
-		e->setPos(Vec2(0,0));
+		e->init();
+		e->setPos(Vec2(Random(0, Window::Width()),Random(0, Window::Height())));
 		enemyManager->add(e);
 	}
 }

@@ -1,5 +1,24 @@
 #include "Player.h"
 
+void Shot::init(Vec2 pos, Vec2 vec, double rad) {
+	this->pos = pos;
+	this->vec = vec;
+	this->rad = rad;
+	enable = true;
+}
+
+void Shot::move() {
+	pos.moveBy(vec);
+
+	if (pos.x > Window::Width() || pos.x < 0 || pos.y > Window::Height() || pos.y < 0) {
+		enable = false;
+	}
+}
+
+void Shot::draw() {
+	Circle(pos, Radius).draw(Palette::White);
+}
+
 void Player::init() {
 	hp = 100;
 	pos = Vec2(100.0, 100.0);
@@ -21,7 +40,7 @@ void Player::move() {
 	}
 
 	//回転
-	double turnSpeed = 3.5;
+	double turnSpeed = 5.5;
 	if (Input::KeyS.pressed) {
 		turnSpeed *= -1;
 	}
@@ -42,28 +61,23 @@ void Player::moveShot() {
 
 		//ポインタで持つ必要性無いかも
 		auto shot = std::make_shared<Shot>();
-		shot->pos.set(pos);
-		shot->vec.set(Cos(rad) * shotSpeed, Sin(rad) * shotSpeed);
-		shot->enable = true;
+		shot->init(pos, { Cos(rad) * shotSpeed, Sin(rad) * shotSpeed }, rad);
 		shots.push_back(shot);
 	}
 
 	for (auto& shot : shots) {
-		shot->pos.moveBy(shot->vec);
-
-		if (shot->pos.x > Window::Width() || shot->pos.x < 0 || shot->pos.y > Window::Height() || shot->pos.y < 0) {
-			shot->enable = false;
-		}
+		shot->move();
 	}
-	Erase_if(shots, [](std::shared_ptr<Shot> shot) { return !shot->enable; });
+	Erase_if(shots, [](std::shared_ptr<Shot> shot) { return !shot->isEnable(); });
+	Println(L"ShotCount:", shots.size());
 }
 
 void Player::draw() {
 	int w = 30, h = 60;
-	RectF(pos.x - w/2, pos.y - h/2, w, h).rotated(rad + Radians(90)).draw(Palette::Red);
+	RectF(pos.x - w/2, pos.y - h/2, w, h).rotated(rad + Radians(90)).draw(Palette::Blue);
 
 	for (auto& shot : shots) {
-		Circle(shot->pos, 10).draw(Palette::White);
+		shot->draw();
 	}
 	Circle(Mouse::Pos(), 5).draw(Palette::Yellow);
 	Line(pos, Mouse::Pos()).draw(Palette::Blue);

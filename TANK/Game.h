@@ -18,7 +18,10 @@ public:
 	};
 	
 	std::shared_ptr<Player> getPlayer() { return player; }
+	std::shared_ptr<EnemyManager> getEnemyManager() { return enemyManager; }
 private:
 	std::shared_ptr<Player> player;
 	std::shared_ptr<EnemyManager> enemyManager;
+
+	int cnt;
 };
