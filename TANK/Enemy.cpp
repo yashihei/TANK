@@ -12,14 +12,14 @@ Enemy::Enemy() {
 bool Enemy::checkShotHit(Game* game) {
 	auto shots = game->getPlayer()->getShots();
 	for (auto& shot : shots) {
-		if (Geometry2D::Intersect(Circle(shot->getPos(), shot->Radius), Circle(pos, 20))) {
+		if (Geometry2D::Intersect(Circle(shot->getPos(), shot->RADIUS), Circle(pos, 15))) {
 			return true;
 		}
 	}
 	return false;
 }
 
-void Noob::init() {
+Noob::Noob() {
 	hp = 10;
 }
 
@@ -48,10 +48,10 @@ void Noob::move(Game* game) {
 	if (checkShotHit(game)) enable = false;
 }
 
-void Noob::draw() {
-	//Circle(pos, 20.0).draw(Palette::Orange);
+void Noob::draw(Game* game) {
 	int w = 30, h = 60;
-	RectF(pos.x - w / 2, pos.y - h / 2, w, h).rotated(rad + Radians(90)).draw(Palette::Red).drawFrame( 1.5 , Palette::White);
+	Vec2 screenPos = game->getOffsetPos() + pos;
+	RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(rad + Radians(90)).draw(Palette::Red).drawFrame( 1.5 , Palette::White);
 }
 
 void EnemyManager::init() {
@@ -63,11 +63,12 @@ void EnemyManager::move(Game* game) {
 		enemy->move(game);
 	}
 	Erase_if(enemies, [](std::shared_ptr<Enemy> enemy) { return !enemy->isEnable(); });
+	Println(L"EnemyNum:", enemies.size());
 }
 
-void EnemyManager::draw() {
+void EnemyManager::draw(Game* game) {
 	for (auto& enemy : enemies) {
-		enemy->draw();
+		enemy->draw(game);
 	}
 }
 

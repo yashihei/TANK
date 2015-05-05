@@ -1,4 +1,5 @@
 #pragma once
+#include <Siv3D.hpp>
 #include <memory>
 
 class Player;
@@ -19,9 +20,12 @@ public:
 	
 	std::shared_ptr<Player> getPlayer() { return player; }
 	std::shared_ptr<EnemyManager> getEnemyManager() { return enemyManager; }
+	Vec2 getOffsetPos() { return offsetPos; }
 private:
 	std::shared_ptr<Player> player;
 	std::shared_ptr<EnemyManager> enemyManager;
 
 	int cnt;
+	Vec2 offsetPos;
+	Point stageSize;
 };

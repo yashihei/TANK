@@ -12,9 +12,8 @@ public:
 	};
 
 	Enemy();
-	virtual void init() = 0;
 	virtual void move(Game* game) = 0;
-	virtual void draw() = 0;
+	virtual void draw(Game* game) = 0;
 
 	void setPos(Vec2 pos) { this->pos = pos; }
 	Vec2 getPos(Vec2 pos) { return pos; }
@@ -31,9 +30,9 @@ protected:
 class Noob : public Enemy
 {
 public:
-	void init() override;
+	Noob();
 	void move(Game* game) override;
-	void draw() override;
+	void draw(Game* game) override;
 };
 
 class EnemyManager
@@ -41,7 +40,7 @@ class EnemyManager
 public:
 	void init();
 	void move(Game* game);
-	void draw();
+	void draw(Game* game);
 	void add(std::shared_ptr<Enemy>);
 private:
 	std::list<std::shared_ptr<Enemy>> enemies;
