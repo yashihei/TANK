@@ -25,7 +25,7 @@ Noob::Noob() {
 
 void Noob::move(Game* game) {
 	const Vec2 playerPos = game->getPlayer()->getPos();
-	double sp = 1.5;
+	double sp = 1.0;
 	double tRad;
 	double limitRad = Radians(2.0);
 	
@@ -52,6 +52,15 @@ void Noob::draw(Game* game) {
 	int w = 30, h = 60;
 	Vec2 screenPos = game->getOffsetPos() + pos;
 	RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(rad + Radians(90)).draw(Palette::Red).drawFrame( 1.5 , Palette::White);
+}
+
+TankDestroyer::TankDestroyer() {
+}
+
+void TankDestroyer::move(Game* game) {
+}
+
+void TankDestroyer::draw(Game* game) {
 }
 
 void EnemyManager::init() {

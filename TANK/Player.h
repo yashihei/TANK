@@ -12,8 +12,8 @@ public:
 
 	Shot(){};
 	void init(Vec2 pos, Vec2 vec, double rad);
-	void move();
-	void draw(Vec2 offsetPos);
+	void move(Game* game);
+	void draw(Game* game);
 
 	Vec2 getPos() { return pos; }
 	bool isEnable() { return enable; }
@@ -21,8 +21,6 @@ private:
 	Vec2 pos, vec;
 	double rad;
 	bool enable;
-
-	void operator =(const Shot&) = delete;
 };
 
 class Player
@@ -48,6 +46,6 @@ private:
 	State state;
 	double rad, turretRad;
 
-	void moveShot();
+	void moveShot(Game* game);
 	std::list<std::shared_ptr<Shot>> shots;
 };

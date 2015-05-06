@@ -35,6 +35,14 @@ public:
 	void draw(Game* game) override;
 };
 
+class TankDestroyer : public Enemy
+{
+public:
+	TankDestroyer();
+	void move(Game* game) override;
+	void draw(Game* game) override;
+};
+
 class EnemyManager
 {
 public:

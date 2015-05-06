@@ -23,6 +23,7 @@ void Game::init() {
 void Game::move() {
 	ClearPrint();
 	Println(L"FPS:", Profiler::FPS());
+	Profiler::Graphics().print();
 	cnt++;
 
 	player->move(this);
@@ -33,20 +34,18 @@ void Game::move() {
 		e->setPos(Vec2(Random(0, stageSize.x),Random(0, stageSize.y)));
 		enemyManager->add(e);
 	}
-}
 
-void Game::draw() {
 	offsetPos.set(Window::Width() / 2 - player->getPos().x, Window::Height() / 2 - player->getPos().y);
-	offsetPos.x = Min({ offsetPos.x, 0.0 });
-	offsetPos.x = Max({ offsetPos.x, (double)Window::Width() - stageSize.x });
-	offsetPos.y = Min({ offsetPos.y, 0.0 });
-	offsetPos.y = Max({ offsetPos.y, (double)Window::Height() - stageSize.y });
+	offsetPos.x = Clamp(offsetPos.x, static_cast<double>(Window::Width() - stageSize.x), 0.0);
+	offsetPos.y = Clamp(offsetPos.y, static_cast<double>(Window::Height() - stageSize.y), 0.0);
 
 	if (Input::KeyP.pressed) {
 		offsetPos.x += Random(-30, 30);
 		offsetPos.y += Random(-30, 30);
 	}
+}
 
+void Game::draw() {
 	TextureAsset(L"backGround").draw(offsetPos.x, offsetPos.y);
 	player->draw(this);
 	enemyManager->draw(this);

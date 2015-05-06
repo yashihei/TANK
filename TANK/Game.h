@@ -21,6 +21,7 @@ public:
 	std::shared_ptr<Player> getPlayer() { return player; }
 	std::shared_ptr<EnemyManager> getEnemyManager() { return enemyManager; }
 	Vec2 getOffsetPos() { return offsetPos; }
+	Point getStageSize() { return stageSize; }
 private:
 	std::shared_ptr<Player> player;
 	std::shared_ptr<EnemyManager> enemyManager;
