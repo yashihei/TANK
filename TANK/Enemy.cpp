@@ -31,7 +31,7 @@ void Enemy::defaultMove(Game* game) {
 bool Enemy::checkShotHit(Game* game) {
 	auto shots = game->getPlayer()->getShots();//FIXME:‚È‚ñ‚©‚±‚±•‰’S‚©‚©‚Á‚Ä‚¢‚é
 	for (auto& shot : shots) {
-		if (Geometry2D::Intersect(Circle(shot->getPos(), shot->RADIUS), Circle(pos, 15))) {
+		if (Geometry2D::Intersect(Circle(shot->getPos(), shot->RADIUS), Circle(pos, radius))) {
 			shot->disable();
 			return true;
 		}
@@ -41,6 +41,7 @@ bool Enemy::checkShotHit(Game* game) {
 
 Noob::Noob() {
 	hp = 5;
+	radius = 15.0;
 }
 
 void Noob::move(Game* game) {
@@ -81,12 +82,27 @@ void Noob::draw(Game* game) {
 }
 
 TankDestroyer::TankDestroyer() {
+	hp = 10;
+	radius = 20.0;
 }
 
 void TankDestroyer::move(Game* game) {
+	const Vec2 playerPos = game->getPlayer()->getPos();
+
+	rad = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
+	if (state == State::Damage) {
+		color = Palette::White;
+	} else {
+		color = Palette::Blue;
+	}
+
+	defaultMove(game);
 }
 
 void TankDestroyer::draw(Game* game) {
+	Vec2 screenPos = game->getOffsetPos() + pos;
+	Triangle(screenPos, 60.0).rotated(rad + Radians(90)).draw(color).drawFrame(1.5, Palette::White);
+	//Circle(screenPos, radius).draw(Palette::Yellow);//“–‚½‚è”»’è
 }
 
 void EnemyManager::init() {

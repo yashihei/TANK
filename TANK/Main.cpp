@@ -9,7 +9,7 @@ void Main()
 	} else if (command == MessageBoxCommand::No) {
 		Window::Resize(800, 600);
 	} else {
-		System::Exit();
+		return;
 	}
 
 	Game game;

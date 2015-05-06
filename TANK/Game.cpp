@@ -34,6 +34,11 @@ void Game::move() {
 		e->setPos(Vec2(Random(0, stageSize.x),Random(0, stageSize.y)));
 		enemyManager->add(e);
 	}
+	if (cnt % 300 == 0) {
+		auto e = std::make_shared<TankDestroyer>();
+		e->setPos(Vec2(Random(0, stageSize.x),Random(0, stageSize.y)));
+		enemyManager->add(e);
+	}
 
 	offsetPos.set(Window::Width() / 2 - player->getPos().x, Window::Height() / 2 - player->getPos().y);
 	offsetPos.x = Clamp(offsetPos.x, static_cast<double>(Window::Width() - stageSize.x), 0.0);

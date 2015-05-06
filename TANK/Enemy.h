@@ -24,7 +24,7 @@ protected:
 	State state;
 	Vec2 pos, vec;
 	int hp, cnt;
-	double rad;
+	double rad, radius;
 	bool enable;
 	Color color;//‰æ‘œ‚É·‚µ‘Ö‚¦‚½‚çÁ‚·
 
