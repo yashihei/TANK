@@ -9,6 +9,8 @@ class Enemy
 {
 public:
 	enum class State {
+		Normal,
+		Damage,
 	};
 
 	Enemy();
@@ -19,12 +21,15 @@ public:
 	Vec2 getPos(Vec2 pos) { return pos; }
 	bool isEnable() { return enable; }
 protected:
+	State state;
 	Vec2 pos, vec;
 	int hp, cnt;
 	double rad;
 	bool enable;
+	Color color;//‰æ‘œ‚É·‚µ‘Ö‚¦‚½‚çÁ‚·
 
 	bool checkShotHit(Game* game);
+	void defaultMove(Game* game);
 };
 
 class Noob : public Enemy

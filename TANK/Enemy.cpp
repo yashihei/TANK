@@ -7,12 +7,32 @@ Enemy::Enemy() {
 	cnt = 0;
 	rad = 0.0;
 	enable = true;
+	state = State::Normal;
+}
+
+//FIXME:‚à‚¤­‚µ‚¢‚¢‘‚«•û‚ª‚ ‚é‚Í‚¸
+void Enemy::defaultMove(Game* game) {
+	cnt++;
+
+	if (checkShotHit(game)) {
+		hp--;
+		if (hp == 0) {
+			enable = false;
+			return;
+		}
+		cnt = 0;
+		state = State::Damage;
+	}
+	if (state == State::Damage && cnt == 5) {
+		state = State::Normal;
+	}
 }
 
 bool Enemy::checkShotHit(Game* game) {
-	auto shots = game->getPlayer()->getShots();
+	auto shots = game->getPlayer()->getShots();//FIXME:‚È‚ñ‚©‚±‚±•‰’S‚©‚©‚Á‚Ä‚¢‚é
 	for (auto& shot : shots) {
 		if (Geometry2D::Intersect(Circle(shot->getPos(), shot->RADIUS), Circle(pos, 15))) {
+			shot->disable();
 			return true;
 		}
 	}
@@ -20,7 +40,7 @@ bool Enemy::checkShotHit(Game* game) {
 }
 
 Noob::Noob() {
-	hp = 10;
+	hp = 5;
 }
 
 void Noob::move(Game* game) {
@@ -45,13 +65,19 @@ void Noob::move(Game* game) {
 	vec.y = Sin(rad) * sp;
 	pos.moveBy(vec);
 
-	if (checkShotHit(game)) enable = false;
+	if (state == State::Damage) {
+		color = Palette::White;
+	} else {
+		color = Palette::Red;
+	}
+
+	defaultMove(game);
 }
 
 void Noob::draw(Game* game) {
 	int w = 30, h = 60;
 	Vec2 screenPos = game->getOffsetPos() + pos;
-	RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(rad + Radians(90)).draw(Palette::Red).drawFrame( 1.5 , Palette::White);
+	RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(rad + Radians(90)).draw(color).drawFrame( 1.5 , Palette::White);
 }
 
 TankDestroyer::TankDestroyer() {

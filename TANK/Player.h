@@ -17,6 +17,7 @@ public:
 
 	Vec2 getPos() { return pos; }
 	bool isEnable() { return enable; }
+	void disable() { enable = false; }
 private:
 	Vec2 pos, vec;
 	double rad;
