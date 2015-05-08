@@ -5,7 +5,7 @@
 
 Enemy::Enemy() {
 	cnt = 0;
-	rad = 0.0;
+	radian = 0.0;
 	enable = true;
 	state = State::Normal;
 }
@@ -40,7 +40,7 @@ bool Enemy::checkShotHit(Game* game) {
 }
 
 Noob::Noob() {
-	hp = 5;
+	hp = 3;
 	radius = 15.0;
 }
 
@@ -60,10 +60,10 @@ void Noob::move(Game* game) {
 	//}
 	//Println(L"EnemyRad:", rad);
 	
-	rad = tRad;
+	radian = tRad;
 
-	vec.x = Cos(rad) * sp;
-	vec.y = Sin(rad) * sp;
+	vec.x = Cos(radian) * sp;
+	vec.y = Sin(radian) * sp;
 	pos.moveBy(vec);
 
 	if (state == State::Damage) {
@@ -77,8 +77,8 @@ void Noob::move(Game* game) {
 
 void Noob::draw(Game* game) {
 	int w = 30, h = 60;
-	Vec2 screenPos = game->getOffsetPos() + pos;
-	RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(rad + Radians(90)).draw(color).drawFrame( 1.5 , Palette::White);
+	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(radian + Radians(90)).draw(color).drawFrame( 1.5 , Palette::White);
 }
 
 TankDestroyer::TankDestroyer() {
@@ -89,7 +89,7 @@ TankDestroyer::TankDestroyer() {
 void TankDestroyer::move(Game* game) {
 	const Vec2 playerPos = game->getPlayer()->getPos();
 
-	rad = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
+	radian = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
 	if (state == State::Damage) {
 		color = Palette::White;
 	} else {
@@ -100,8 +100,8 @@ void TankDestroyer::move(Game* game) {
 }
 
 void TankDestroyer::draw(Game* game) {
-	Vec2 screenPos = game->getOffsetPos() + pos;
-	Triangle(screenPos, 60.0).rotated(rad + Radians(90)).draw(color).drawFrame(1.5, Palette::White);
+	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	Triangle(screenPos, 60.0).rotated(radian + Radians(90)).draw(color).drawFrame(1.5, Palette::White);
 	//Circle(screenPos, radius).draw(Palette::Yellow);//“–‚½‚è”»’è
 }
 

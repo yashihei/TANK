@@ -20,7 +20,7 @@ public:
 	void disable() { enable = false; }
 private:
 	Vec2 pos, vec;
-	double rad;
+	double radian;
 	bool enable;
 };
 
@@ -45,7 +45,7 @@ private:
 	Vec2 pos, vec;
 	int cnt;
 	State state;
-	double rad, turretRad;
+	double radian, turretRad;
 
 	void moveShot(Game* game);
 	std::list<std::shared_ptr<Shot>> shots;

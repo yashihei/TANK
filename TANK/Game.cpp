@@ -9,6 +9,7 @@ void Game::init() {
 
 	player = std::make_shared<Player>();
 	enemyManager = std::make_shared<EnemyManager>();
+	camera2D = std::make_shared<Camera2D>();
 
 	player->init();
 	enemyManager->init();
@@ -28,6 +29,7 @@ void Game::move() {
 
 	player->move(this);
 	enemyManager->move(this);
+	camera2D->posUpdate(this);
 
 	if (cnt % 60 == 0) {
 		auto e = std::make_shared<Noob>();
@@ -40,18 +42,30 @@ void Game::move() {
 		enemyManager->add(e);
 	}
 
-	offsetPos.set(Window::Width() / 2 - player->getPos().x, Window::Height() / 2 - player->getPos().y);
-	offsetPos.x = Clamp(offsetPos.x, static_cast<double>(Window::Width() - stageSize.x), 0.0);
-	offsetPos.y = Clamp(offsetPos.y, static_cast<double>(Window::Height() - stageSize.y), 0.0);
-
-	if (Input::KeyP.pressed) {
-		offsetPos.x += Random(-30, 30);
-		offsetPos.y += Random(-30, 30);
-	}
+	if (Input::KeyP.pressed) camera2D->shake();
 }
 
 void Game::draw() {
-	TextureAsset(L"backGround").draw(offsetPos.x, offsetPos.y);
+	TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
 	player->draw(this);
 	enemyManager->draw(this);
 }
+
+void Camera2D::shake() {
+	offsetPos.x += Random(-30, 30);
+	offsetPos.y += Random(-30, 30);
+}
+
+Vec2 Camera2D::convertToScreenPos(Vec2 pos) {
+	return pos + offsetPos;
+}
+
+void Camera2D::posUpdate(Game* game) {
+	auto player = game->getPlayer();
+	Point stageSize = game->getStageSize();
+
+	offsetPos.set(Window::Width() / 2 - player->getPos().x, Window::Height() / 2 - player->getPos().y);
+	offsetPos.x = Clamp(offsetPos.x, static_cast<double>(Window::Width() - stageSize.x), 0.0);
+	offsetPos.y = Clamp(offsetPos.y, static_cast<double>(Window::Height() - stageSize.y), 0.0);
+}
+

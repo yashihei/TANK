@@ -4,6 +4,7 @@
 
 class Player;
 class EnemyManager;
+class Camera2D;
 
 class Game
 {
@@ -20,13 +21,26 @@ public:
 	
 	std::shared_ptr<Player> getPlayer() { return player; }
 	std::shared_ptr<EnemyManager> getEnemyManager() { return enemyManager; }
-	Vec2 getOffsetPos() { return offsetPos; }
+	std::shared_ptr<Camera2D> getCamera2D() { return camera2D; }
 	Point getStageSize() { return stageSize; }
 private:
 	std::shared_ptr<Player> player;
 	std::shared_ptr<EnemyManager> enemyManager;
+	std::shared_ptr<Camera2D> camera2D;
 
 	int cnt;
-	Vec2 offsetPos;
 	Point stageSize;
+};
+
+class Camera2D
+{
+public:
+	Camera2D(){};
+	void posUpdate(Game* game);
+	void shake();
+	Vec2 convertToScreenPos(Vec2 pos);
+
+	Vec2 getoffsetPos() { return offsetPos; }
+private:
+	Vec2 offsetPos;
 };

@@ -7,7 +7,7 @@ const double Shot::RADIUS = 10.0;
 void Shot::init(Vec2 pos, Vec2 vec, double rad) {
 	this->pos = pos;
 	this->vec = vec;
-	this->rad = rad;
+	this->radian = rad;
 	enable = true;
 }
 
@@ -21,7 +21,7 @@ void Shot::move(Game* game) {
 }
 
 void Shot::draw(Game* game) {
-	Vec2 screenPos = game->getOffsetPos() + pos;
+	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	Circle(screenPos, RADIUS).draw(Palette::White);
 }
 
@@ -30,7 +30,7 @@ void Player::init() {
 	pos = Vec2(100.0, 100.0);
 	cnt = 0;
 	state = State::REBORN;
-	rad = turretRad = 0.0;
+	radian = turretRad = 0.0;
 }
 
 void Player::move(Game* game) {
@@ -38,7 +38,7 @@ void Player::move(Game* game) {
 
 	//前進後退
 	double speed = 5.0;
-	vec = Vec2(speed * Cos(rad), speed * Sin(rad));
+	vec = Vec2(speed * Cos(radian), speed * Sin(radian));
 	if (Input::KeyW.pressed) {
 		pos.moveBy(vec);
 	} else if (Input::KeyS.pressed) {
@@ -54,9 +54,9 @@ void Player::move(Game* game) {
 		turnSpeed *= -1;
 	}
 	if (Input::KeyD.pressed) {
-		rad += Radians(turnSpeed);
+		radian += Radians(turnSpeed);
 	} else if (Input::KeyA.pressed) {
-		rad -= Radians(turnSpeed);
+		radian -= Radians(turnSpeed);
 	}
 
 	moveShot(game);
@@ -65,13 +65,13 @@ void Player::move(Game* game) {
 void Player::moveShot(Game* game) {
 	if (Input::MouseL.pressed && cnt % 10 == 0) {
 		const Point mousePos = Mouse::Pos();
-		Vec2 offsetPos = game->getOffsetPos();
-		const double rad = Atan2(mousePos.y - pos.y - offsetPos.y, mousePos.x - pos.x - offsetPos.x);
+		Vec2 offsetPos = game->getCamera2D()->getoffsetPos();
+		const double shotRad = Atan2(mousePos.y - pos.y - offsetPos.y, mousePos.x - pos.x - offsetPos.x);
 		double shotSpeed = 10.0;
 
 		//ポインタで持つ必要性無いかも
 		auto shot = std::make_shared<Shot>();
-		shot->init(pos, { Cos(rad) * shotSpeed, Sin(rad) * shotSpeed }, rad);
+		shot->init(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, radian);
 		shots.push_back(shot);
 	}
 
@@ -82,8 +82,8 @@ void Player::moveShot(Game* game) {
 }
 
 void Player::draw(Game* game) {
-	Vec2 screenPos = game->getOffsetPos() + pos;
-	TextureAsset(L"playerTank").scale(1.5).rotate(rad + Radians(90)).drawAt(screenPos);
+	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	TextureAsset(L"playerTank").scale(1.5).rotate(radian + Radians(90)).drawAt(screenPos);
 	//int w = 30, h = 60;
 	//RectF(pos.x - w/2, pos.y - h/2, w, h).rotated(rad + Radians(90)).draw(Palette::Blue);
 
