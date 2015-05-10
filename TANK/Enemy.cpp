@@ -29,7 +29,7 @@ void Enemy::defaultMove(Game* game) {
 }
 
 bool Enemy::checkShotHit(Game* game) {
-	auto shots = game->getPlayer()->getShots();//FIXME:‚È‚ñ‚©‚±‚±•‰’S‚©‚©‚Á‚Ä‚¢‚é
+	auto& shots = game->getPlayer()->getShots();
 	for (auto& shot : shots) {
 		if (Geometry2D::Intersect(Circle(shot->getPos(), shot->RADIUS), Circle(pos, radius))) {
 			shot->disable();
@@ -40,7 +40,7 @@ bool Enemy::checkShotHit(Game* game) {
 }
 
 Noob::Noob() {
-	hp = 3;
+	hp = 20;
 	radius = 15.0;
 }
 
@@ -78,11 +78,12 @@ void Noob::move(Game* game) {
 void Noob::draw(Game* game) {
 	int w = 30, h = 60;
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(radian + Radians(90)).draw(color).drawFrame( 1.5 , Palette::White);
+	RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(radian + Radians(90)).draw(color);// .drawFrame(1.5, Palette::White);
+	//TextureAsset(L"playerTank").rotate(radian + Radians(90)).drawAt(screenPos, color);
 }
 
 TankDestroyer::TankDestroyer() {
-	hp = 10;
+	hp = 30;
 	radius = 20.0;
 }
 
@@ -90,18 +91,19 @@ void TankDestroyer::move(Game* game) {
 	const Vec2 playerPos = game->getPlayer()->getPos();
 
 	radian = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
-	if (state == State::Damage) {
-		color = Palette::White;
-	} else {
-		color = Palette::Blue;
-	}
 
 	defaultMove(game);
 }
 
 void TankDestroyer::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	Triangle(screenPos, 60.0).rotated(radian + Radians(90)).draw(color).drawFrame(1.5, Palette::White);
+	auto tex = TextureAsset(L"SU-152").scale(1.2).rotate(radian + Radians(90));
+	if (state == State::Normal) {
+		tex.drawAt(screenPos);
+	} else {
+		tex.drawAt(screenPos, { 255, 255, 255 });//TODO:ƒtƒ‰ƒbƒVƒ…
+	}
+	//Triangle(screenPos, 60.0).rotated(radian + Radians(90)).draw(color).drawFrame(1.5, Palette::White);
 	//Circle(screenPos, radius).draw(Palette::Yellow);//“–‚½‚è”»’è
 }
 

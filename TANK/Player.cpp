@@ -59,6 +59,10 @@ void Player::move(Game* game) {
 		radian -= Radians(turnSpeed);
 	}
 
+	const Point mousePos = Mouse::Pos();
+	Vec2 offsetPos = game->getCamera2D()->getoffsetPos();
+	turretRad = Atan2(mousePos.y - pos.y - offsetPos.y, mousePos.x - pos.x - offsetPos.x);
+
 	moveShot(game);
 }
 
@@ -72,7 +76,7 @@ void Player::moveShot(Game* game) {
 		//ポインタで持つ必要性無いかも
 		auto shot = std::make_shared<Shot>();
 		shot->init(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, radian);
-		shots.push_back(shot);
+		shots.push_back(shot);//emplaceしろ
 	}
 
 	for (auto& shot : shots) {
@@ -83,7 +87,8 @@ void Player::moveShot(Game* game) {
 
 void Player::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	TextureAsset(L"playerTank").scale(1.5).rotate(radian + Radians(90)).drawAt(screenPos);
+	TextureAsset(L"playerTank").scale(1.2).rotate(radian + Radians(90)).drawAt(screenPos);
+	TextureAsset(L"turret").scale(1.2).rotate(turretRad + Radians(90)).drawAt(screenPos);
 	//int w = 30, h = 60;
 	//RectF(pos.x - w/2, pos.y - h/2, w, h).rotated(rad + Radians(90)).draw(Palette::Blue);
 
@@ -92,5 +97,5 @@ void Player::draw(Game* game) {
 	}
 
 	Circle(Mouse::Pos(), 5).draw(Palette::Yellow);
-	Line(screenPos, Mouse::Pos()).draw(Palette::Darkgray);
+	//Line(screenPos, Mouse::Pos()).draw(Palette::Darkgray);
 }

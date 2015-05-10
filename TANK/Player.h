@@ -1,7 +1,7 @@
 #pragma once
 #include <Siv3D.hpp>
 #include <memory>
-#include <list>
+#include <vector>
 
 class Game;
 
@@ -39,7 +39,7 @@ public:
 	void draw(Game* game);
 
 	Vec2 getPos() { return pos; }
-	const std::list<std::shared_ptr<Shot>>& getShots() const { return shots; }
+	const std::vector<std::shared_ptr<Shot>>& getShots() const { return shots; }
 private:
 	int hp;
 	Vec2 pos, vec;
@@ -48,5 +48,5 @@ private:
 	double radian, turretRad;
 
 	void moveShot(Game* game);
-	std::list<std::shared_ptr<Shot>> shots;
+	std::vector<std::shared_ptr<Shot>> shots;
 };

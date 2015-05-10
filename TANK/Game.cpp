@@ -5,6 +5,8 @@
 
 void Game::init() {
 	TextureAsset::Register(L"playerTank", L"dat/panther.png", TextureDesc::Mipped);
+	TextureAsset::Register(L"turret", L"dat/turret.png", TextureDesc::Mipped);
+	TextureAsset::Register(L"SU-152", L"dat/SU-152.png", TextureDesc::Mipped);
 	TextureAsset::Register(L"backGround", L"dat/background.png");
 
 	player = std::make_shared<Player>();
@@ -31,14 +33,14 @@ void Game::move() {
 	enemyManager->move(this);
 	camera2D->posUpdate(this);
 
-	if (cnt % 60 == 0) {
+	if (Input::Key1.pressed) {
 		auto e = std::make_shared<Noob>();
-		e->setPos(Vec2(Random(0, stageSize.x),Random(0, stageSize.y)));
+		e->setPos(Mouse::Pos());//TODO:À•W
 		enemyManager->add(e);
 	}
-	if (cnt % 300 == 0) {
+	if (Input::Key2.pressed) {
 		auto e = std::make_shared<TankDestroyer>();
-		e->setPos(Vec2(Random(0, stageSize.x),Random(0, stageSize.y)));
+		e->setPos(Mouse::Pos());
 		enemyManager->add(e);
 	}
 

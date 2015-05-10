@@ -1,6 +1,6 @@
 #pragma once
 #include <Siv3D.hpp>
-#include <list>
+#include <vector>
 #include <memory>
 
 class Game;
@@ -56,5 +56,5 @@ public:
 	void draw(Game* game);
 	void add(std::shared_ptr<Enemy>);
 private:
-	std::list<std::shared_ptr<Enemy>> enemies;
+	std::vector<std::shared_ptr<Enemy>> enemies;
 };
