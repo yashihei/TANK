@@ -38,6 +38,8 @@ public:
 	Noob();
 	void move(Game* game) override;
 	void draw(Game* game) override;
+private:
+	double turretRadian;
 };
 
 class TankDestroyer : public Enemy

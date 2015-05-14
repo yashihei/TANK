@@ -4,9 +4,10 @@
 #include "Enemy.h"
 
 void Game::init() {
-	TextureAsset::Register(L"playerTank", L"dat/panther.png", TextureDesc::Mipped);
-	TextureAsset::Register(L"turret", L"dat/turret.png", TextureDesc::Mipped);
-	TextureAsset::Register(L"SU-152", L"dat/SU-152.png", TextureDesc::Mipped);
+	TextureAsset::Register(L"playerTank", L"dat/panther.png");
+	TextureAsset::Register(L"turret", L"dat/turret.png");
+	TextureAsset::Register(L"SU-152", L"dat/SU-152.png");
+	TextureAsset::Register(L"bullet", L"dat/bullet.png");
 	TextureAsset::Register(L"backGround", L"dat/background.png");
 
 	player = std::make_shared<Player>();
@@ -33,18 +34,18 @@ void Game::move() {
 	enemyManager->move(this);
 	camera2D->posUpdate(this);
 
-	if (Input::Key1.pressed) {
+	if (Input::Key1.clicked) {
 		auto e = std::make_shared<Noob>();
-		e->setPos(Mouse::Pos());//TODO:À•W
+		e->setPos(Mouse::Pos() - camera2D->getoffsetPos());
 		enemyManager->add(e);
 	}
-	if (Input::Key2.pressed) {
+	if (Input::Key2.clicked) {
 		auto e = std::make_shared<TankDestroyer>();
-		e->setPos(Mouse::Pos());
+		e->setPos(Mouse::Pos() - camera2D->getoffsetPos());
 		enemyManager->add(e);
 	}
 
-	if (Input::KeyP.pressed) camera2D->shake();
+	if (Input::KeyP.pressed) camera2D->shake(30);
 }
 
 void Game::draw() {
@@ -53,9 +54,9 @@ void Game::draw() {
 	enemyManager->draw(this);
 }
 
-void Camera2D::shake() {
-	offsetPos.x += Random(-30, 30);
-	offsetPos.y += Random(-30, 30);
+void Camera2D::shake(int num) {
+	offsetPos.x += Random(-num, num);
+	offsetPos.y += Random(-num, num);
 }
 
 Vec2 Camera2D::convertToScreenPos(Vec2 pos) {

@@ -37,7 +37,7 @@ class Camera2D
 public:
 	Camera2D(){};
 	void posUpdate(Game* game);
-	void shake();
+	void shake(int num);
 	Vec2 convertToScreenPos(Vec2 pos);
 
 	Vec2 getoffsetPos() { return offsetPos; }

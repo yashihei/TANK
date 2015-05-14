@@ -23,7 +23,7 @@ void Enemy::defaultMove(Game* game) {
 		cnt = 0;
 		state = State::Damage;
 	}
-	if (state == State::Damage && cnt == 5) {
+	if (cnt == 5) {
 		state = State::Normal;
 	}
 }
@@ -47,11 +47,11 @@ Noob::Noob() {
 void Noob::move(Game* game) {
 	const Vec2 playerPos = game->getPlayer()->getPos();
 	double sp = 1.0;
-	double tRad;
-	double limitRad = Radians(2.0);
 	
 	//旋回に制限 FIXME:
-	tRad = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
+	//double tRad;
+	//double limitRad = Radians(2.0);
+	//tRad = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
 	//double difRad = rad - tRad;
 	//if (Abs(difRad) > limitRad) {
 	//	rad += (difRad > 0) ? -limitRad : limitRad;
@@ -60,11 +60,14 @@ void Noob::move(Game* game) {
 	//}
 	//Println(L"EnemyRad:", rad);
 	
-	radian = tRad;
+	radian = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
+	turretRadian = radian;
 
-	vec.x = Cos(radian) * sp;
-	vec.y = Sin(radian) * sp;
-	pos.moveBy(vec);
+	if (!Geometry2D::Intersect(Circle(playerPos, 100.0), Circle(pos, radius))) {
+		vec.x = Cos(radian) * sp;
+		vec.y = Sin(radian) * sp;
+		pos.moveBy(vec);
+	}
 
 	if (state == State::Damage) {
 		color = Palette::White;
@@ -78,8 +81,9 @@ void Noob::move(Game* game) {
 void Noob::draw(Game* game) {
 	int w = 30, h = 60;
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(radian + Radians(90)).draw(color);// .drawFrame(1.5, Palette::White);
-	//TextureAsset(L"playerTank").rotate(radian + Radians(90)).drawAt(screenPos, color);
+	//RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(radian + Radians(90)).draw(color).drawFrame(1.5, Palette::White);
+	TextureAsset(L"playerTank").rotate(radian + Radians(90)).drawAt(screenPos, { 255, 0, 0 });
+	TextureAsset(L"turret").rotate(turretRadian + Radians(90)).drawAt(screenPos, { 255, 0, 0 });
 }
 
 TankDestroyer::TankDestroyer() {
@@ -97,13 +101,12 @@ void TankDestroyer::move(Game* game) {
 
 void TankDestroyer::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	auto tex = TextureAsset(L"SU-152").scale(1.2).rotate(radian + Radians(90));
+	auto& tex = TextureAsset(L"SU-152").scale(1.0).rotate(radian + Radians(90));
 	if (state == State::Normal) {
 		tex.drawAt(screenPos);
 	} else {
-		tex.drawAt(screenPos, { 255, 255, 255 });//TODO:フラッシュ
+		tex.drawAt(screenPos, { 255, 0, 0 });//TODO:白フラッシュ
 	}
-	//Triangle(screenPos, 60.0).rotated(radian + Radians(90)).draw(color).drawFrame(1.5, Palette::White);
 	//Circle(screenPos, radius).draw(Palette::Yellow);//当たり判定
 }
 
