@@ -30,10 +30,11 @@ void Enemy::defaultMove(Game* game) {
 }
 
 bool Enemy::checkShotHit(Game* game) {
-	auto& shots = game->getPlayer()->getShots();
-	for (auto& shot : shots) {
-		if (Geometry2D::Intersect(Circle(shot->getPos(), shot->RADIUS), Circle(pos, radius))) {
-			shot->disable();
+	auto& bullets = game->getBulletManager()->getBullets();
+	for (auto& bullet : bullets) {
+		if (bullet->getType() != Bullet::Type::PLAYER) continue;
+		if (Geometry2D::Intersect(Circle(bullet->getPos(), bullet->getRadius()), Circle(pos, radius))) {
+			bullet->disable();
 			return true;
 		}
 	}

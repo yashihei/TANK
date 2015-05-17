@@ -8,6 +8,7 @@ void Bullet::init(Vec2 pos, Vec2 vec, double radian, Type type) {
 	this->radian = radian;
 	this->type = type;
 	enable = true;
+	radius = 5.0;
 	cnt = 0;
 }
 

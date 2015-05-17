@@ -19,10 +19,12 @@ public:
 
 	Vec2 getPos() { return pos; }
 	Type getType() { return type; }
+	double getRadius() { return radius; }
 	bool isEnabled() { return enable; }
+	void disable() { enable = false; }
 private:
 	Vec2 pos, vec;
-	double radian;
+	double radian, radius;
 	int cnt;
 	bool enable;
 	Type type;

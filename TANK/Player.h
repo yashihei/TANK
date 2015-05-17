@@ -5,25 +5,6 @@
 
 class Game;
 
-class Shot
-{
-public:
-	static const double RADIUS;
-
-	Shot(){};
-	void init(Vec2 pos, Vec2 vec, double rad);
-	void move(Game* game);
-	void draw(Game* game);
-
-	Vec2 getPos() { return pos; }
-	bool isEnable() { return enable; }
-	void disable() { enable = false; }
-private:
-	Vec2 pos, vec;
-	double radian;
-	bool enable;
-};
-
 class Player
 {
 public:
@@ -39,14 +20,10 @@ public:
 	void draw(Game* game);
 
 	Vec2 getPos() { return pos; }
-	const std::vector<std::shared_ptr<Shot>>& getShots() const { return shots; }
 private:
 	int hp;
 	Vec2 pos, vec;
 	int cnt;
 	State state;
 	double radian, turretRad;
-
-	void moveShot(Game* game);
-	std::vector<std::shared_ptr<Shot>> shots;
 };
