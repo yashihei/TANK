@@ -12,8 +12,8 @@ void Shot::init(Vec2 pos, Vec2 vec, double rad) {
 }
 
 void Shot::move(Game* game) {
-	pos.moveBy(vec);
-	Point stageSize = game->getStageSize();
+	pos += vec;
+	Rect stageSize = game->getStageSize();
 
 	if (pos.x > stageSize.x || pos.x < 0 || pos.y > stageSize.y || pos.y < 0) {
 		enable = false;
@@ -41,9 +41,9 @@ void Player::move(Game* game) {
 	double speed = 7.0;
 	vec = Vec2(speed * Cos(radian), speed * Sin(radian));
 	if (Input::KeyW.pressed) {
-		pos.moveBy(vec);
+		pos += vec;
 	} else if (Input::KeyS.pressed) {
-		pos.moveBy(-vec);
+		pos -= vec;
 	}
 
 	pos.x = Clamp(pos.x, 0.0, static_cast<double>(game->getStageSize().x));

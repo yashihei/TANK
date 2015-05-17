@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "Player.h"
+#include "Bullet.h"
 
 Enemy::Enemy() {
 	cnt = 0;
@@ -66,7 +67,7 @@ void Noob::move(Game* game) {
 	if (!Geometry2D::Intersect(Circle(playerPos, 100.0), Circle(pos, radius))) {
 		vec.x = Cos(radian) * sp;
 		vec.y = Sin(radian) * sp;
-		pos.moveBy(vec);
+		pos += vec;
 	}
 
 	if (state == State::Damage) {
@@ -75,15 +76,23 @@ void Noob::move(Game* game) {
 		color = Palette::Red;
 	}
 
+	if (cnt % 10 == 0) {
+		auto bulletManager = game->getBulletManager();
+		auto bullet = std::make_shared<Bullet>();
+		bullet->init(pos, { Cos(radian) * 8.0, Sin(radian) * 8.0 }, radian, Bullet::Type::ENEMY);
+		bulletManager->add(bullet);
+	}
+
 	defaultMove(game);
 }
 
 void Noob::draw(Game* game) {
-	int w = 30, h = 60;
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	//RectF(screenPos.x - w / 2, screenPos.y - h / 2, w, h).rotated(radian + Radians(90)).draw(color).drawFrame(1.5, Palette::White);
-	TextureAsset(L"playerTank").rotate(radian + Radians(90)).drawAt(screenPos, { 255, 0, 0 });
-	TextureAsset(L"turret").rotate(turretRadian + Radians(90)).drawAt(screenPos, { 255, 0, 0 });
+
+	if (state == State::Damage) Graphics2D::SetBlendState(BlendState::Additive);
+	TextureAsset(L"playerTank").rotate(radian + Radians(90)).drawAt(screenPos, color);
+	TextureAsset(L"turret").rotate(turretRadian + Radians(90)).drawAt(screenPos, color);
+	Graphics2D::SetBlendState(BlendState::Default);
 }
 
 TankDestroyer::TankDestroyer() {

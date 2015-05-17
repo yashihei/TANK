@@ -4,6 +4,7 @@
 
 class Player;
 class EnemyManager;
+class BulletManager;
 class Camera2D;
 
 class Game
@@ -21,15 +22,17 @@ public:
 	
 	std::shared_ptr<Player> getPlayer() { return player; }
 	std::shared_ptr<EnemyManager> getEnemyManager() { return enemyManager; }
+	std::shared_ptr<BulletManager> getBulletManager() { return bulletManager; }
 	std::shared_ptr<Camera2D> getCamera2D() { return camera2D; }
-	Point getStageSize() { return stageSize; }
+	Rect getStageSize() { return stageSize; }
 private:
 	std::shared_ptr<Player> player;
 	std::shared_ptr<EnemyManager> enemyManager;
+	std::shared_ptr<BulletManager> bulletManager;
 	std::shared_ptr<Camera2D> camera2D;
 
 	int cnt;
-	Point stageSize;
+	Rect stageSize;
 };
 
 class Camera2D
