@@ -18,12 +18,13 @@ public:
 	virtual void draw(Game* game) = 0;
 
 	void setPos(Vec2 pos) { this->pos = pos; }
-	Vec2 getPos(Vec2 pos) { return pos; }
+	Vec2 getPos() { return pos; }
+	double getRadius() { return radius; }
 	bool isEnable() { return enable; }
 protected:
 	State state;
 	Vec2 pos, vec;
-	int hp, cnt;
+	int hp, cnt, shotCnt;
 	double radian, radius;
 	bool enable;
 	Color color;//‰æ‘œ‚É·‚µ‘Ö‚¦‚½‚çÁ‚·
@@ -38,8 +39,6 @@ public:
 	Noob();
 	void move(Game* game) override;
 	void draw(Game* game) override;
-private:
-	double turretRadian;
 };
 
 class TankDestroyer : public Enemy
@@ -57,6 +56,8 @@ public:
 	void move(Game* game);
 	void draw(Game* game);
 	void add(std::shared_ptr<Enemy>);
+
+	const std::vector<std::shared_ptr<Enemy>>& getEnemies() const { return enemies; }
 private:
 	std::vector<std::shared_ptr<Enemy>> enemies;
 };

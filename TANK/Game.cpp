@@ -10,6 +10,9 @@ void Game::init() {
 	TextureAsset::Register(L"SU-152", L"dat/SU-152.png");
 	TextureAsset::Register(L"bullet", L"dat/bullet.png");
 	TextureAsset::Register(L"backGround", L"dat/background.png");
+	TextureAsset::Register(L"technyan", L"dat/technyan.png");
+	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
+	SoundAsset::Register(L"hit", L"dat/hit.wav");
 
 	player = std::make_shared<Player>();
 	enemyManager = std::make_shared<EnemyManager>();
@@ -39,17 +42,13 @@ void Game::move() {
 	bulletManager->move(this);
 	camera2D->posUpdate(this);
 
-	if (Input::Key1.clicked) {
+	if (cnt % 180 == 0) {
 		auto e = std::make_shared<Noob>();
-		e->setPos(Mouse::Pos() - camera2D->getoffsetPos());
-		enemyManager->add(e);
-	}
-	if (Input::Key2.clicked) {
-		auto e = std::make_shared<TankDestroyer>();
-		e->setPos(Mouse::Pos() - camera2D->getoffsetPos());
+		e->setPos(Vec2(Random(0, stageSize.x), Random(0, stageSize.y)));
 		enemyManager->add(e);
 	}
 
+	if (Input::KeyR.clicked) enemyManager->init();
 	if (Input::KeyP.pressed) camera2D->shake(30);
 }
 
@@ -71,7 +70,7 @@ Vec2 Camera2D::convertToScreenPos(Vec2 pos) {
 
 void Camera2D::posUpdate(Game* game) {
 	auto player = game->getPlayer();
-	Rect stageSize = game->getStageSize();
+	const Rect stageSize = game->getStageSize();
 
 	offsetPos.set(Window::Width() / 2 - player->getPos().x, Window::Height() / 2 - player->getPos().y);
 	offsetPos.x = Clamp(offsetPos.x, static_cast<double>(Window::Width() - stageSize.x), 0.0);

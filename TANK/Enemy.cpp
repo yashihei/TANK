@@ -6,6 +6,7 @@
 
 Enemy::Enemy() {
 	cnt = 0;
+	shotCnt = 0;
 	radian = 0.0;
 	enable = true;
 	state = State::Normal;
@@ -22,6 +23,7 @@ void Enemy::defaultMove(Game* game) {
 			return;
 		}
 		cnt = 0;
+		SoundAsset(L"hit").playMulti();
 		state = State::Damage;
 	}
 	if (cnt == 5) {
@@ -32,7 +34,7 @@ void Enemy::defaultMove(Game* game) {
 bool Enemy::checkShotHit(Game* game) {
 	auto& bullets = game->getBulletManager()->getBullets();
 	for (auto& bullet : bullets) {
-		if (bullet->getType() != Bullet::Type::PLAYER) continue;
+		if (bullet->getType() == Bullet::Type::ENEMY) continue;
 		if (Geometry2D::Intersect(Circle(bullet->getPos(), bullet->getRadius()), Circle(pos, radius))) {
 			bullet->disable();
 			return true;
@@ -43,7 +45,7 @@ bool Enemy::checkShotHit(Game* game) {
 
 Noob::Noob() {
 	hp = 20;
-	radius = 15.0;
+	radius = 25.0;
 }
 
 void Noob::move(Game* game) {
@@ -63,7 +65,6 @@ void Noob::move(Game* game) {
 	//Println(L"EnemyRad:", rad);
 	
 	radian = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
-	turretRadian = radian;
 
 	if (!Geometry2D::Intersect(Circle(playerPos, 100.0), Circle(pos, radius))) {
 		vec.x = Cos(radian) * sp;
@@ -72,15 +73,18 @@ void Noob::move(Game* game) {
 	}
 
 	if (state == State::Damage) {
-		color = Palette::White;
-	} else {
 		color = Palette::Red;
+	} else {
+		color = Palette::White;
 	}
 
-	if (cnt % 10 == 0) {
+	shotCnt++;
+	if (shotCnt % 10 == 0) {
 		auto bulletManager = game->getBulletManager();
 		auto bullet = std::make_shared<Bullet>();
-		bullet->init(pos, { Cos(radian) * 8.0, Sin(radian) * 8.0 }, radian, Bullet::Type::ENEMY);
+		const double bulletSp = 8.0;
+
+		bullet->init(pos, { Cos(radian) * bulletSp, Sin(radian) * bulletSp }, radian, Bullet::Type::ENEMY);
 		bulletManager->add(bullet);
 	}
 
@@ -90,10 +94,8 @@ void Noob::move(Game* game) {
 void Noob::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 
-	if (state == State::Damage) Graphics2D::SetBlendState(BlendState::Additive);
-	TextureAsset(L"playerTank").rotate(radian + Radians(90)).drawAt(screenPos, color);
-	TextureAsset(L"turret").rotate(turretRadian + Radians(90)).drawAt(screenPos, color);
-	Graphics2D::SetBlendState(BlendState::Default);
+	TextureAsset(L"technyan").scale(0.3).rotate(radian + Pi/2).drawAt(screenPos, color);
+	//Circle(screenPos, radius).draw();
 }
 
 TankDestroyer::TankDestroyer() {
@@ -111,7 +113,7 @@ void TankDestroyer::move(Game* game) {
 
 void TankDestroyer::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	auto& tex = TextureAsset(L"SU-152").scale(1.0).rotate(radian + Radians(90));
+	auto& tex = TextureAsset(L"SU-152").scale(1.0).rotate(radian + Pi/2);
 	if (state == State::Normal) {
 		tex.drawAt(screenPos);
 	} else {

@@ -24,7 +24,7 @@ void Bullet::move(Game* game) {
 
 void Bullet::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	TextureAsset(L"bullet").rotate(radian + Radians(90)).drawAt(screenPos);
+	TextureAsset(L"bullet").rotate(radian + Pi/2).drawAt(screenPos);
 }
 
 void BulletManager::init() {
@@ -40,6 +40,7 @@ void BulletManager::move(Game* game) {
 		bullet->move(game);
 	}
 	Erase_if(bullets, [](std::shared_ptr<Bullet> bullet) { return !bullet->isEnabled(); });
+	Println(L"BulletNum:", bullets.size());
 }
 
 void BulletManager::draw(Game* game) {

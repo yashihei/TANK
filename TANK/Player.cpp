@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "Bullet.h"
+#include "Enemy.h"
 
 void Player::init() {
 	hp = 100;
@@ -15,7 +16,7 @@ void Player::move(Game* game) {
 	cnt++;
 
 	//前進後退
-	double speed = 7.0;
+	const double speed = 7.0;
 	vec = Vec2(speed * Cos(radian), speed * Sin(radian));
 	if (Input::KeyW.pressed) {
 		pos += vec;
@@ -37,6 +38,7 @@ void Player::move(Game* game) {
 		radian -= Radians(turnSpeed);
 	}
 
+	//ショット
 	const Point mousePos = Mouse::Pos();
 	const Vec2 offsetPos = game->getCamera2D()->getoffsetPos();
 	turretRad = Atan2(mousePos.y - pos.y - offsetPos.y, mousePos.x - pos.x - offsetPos.x);
@@ -49,13 +51,14 @@ void Player::move(Game* game) {
 		auto bullet = std::make_shared<Bullet>();
 		bullet->init(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Type::PLAYER);
 		bulletManager->add(bullet);
+		SoundAsset(L"shoot").playMulti();
 	}
 }
 
 void Player::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	TextureAsset(L"playerTank").rotate(radian + Radians(90)).drawAt(screenPos);
-	TextureAsset(L"turret").rotate(turretRad + Radians(90)).drawAt(screenPos);
+	TextureAsset(L"playerTank").rotate(radian + Pi/2).drawAt(screenPos);
+	TextureAsset(L"turret").rotate(turretRad + Pi/2).drawAt(screenPos);
 
 	Circle(Mouse::Pos(), 5).draw(Palette::Yellow);
 	//Line(screenPos, Mouse::Pos()).draw(Palette::Darkgray);
