@@ -20,6 +20,7 @@ public:
 	void setPos(Vec2 pos) { this->pos = pos; }
 	Vec2 getPos() { return pos; }
 	double getRadius() { return radius; }
+	State getState() { return state; }
 	bool isEnable() { return enable; }
 protected:
 	State state;

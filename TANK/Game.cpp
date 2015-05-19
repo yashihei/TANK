@@ -57,6 +57,23 @@ void Game::draw() {
 	player->draw(this);
 	enemyManager->draw(this);
 	bulletManager->draw(this);
+	drawMiniMap();
+}
+
+void Game::drawMiniMap() {
+	auto& enemies = enemyManager->getEnemies();
+	const Vec2 offset(Window::Width() - 150, 30);
+	const Rect mapRect(offset.asPoint(), {120, 120});
+	const double scale = static_cast<double>(stageSize.x) / mapRect.w;
+	const Vec2 playerPos = player->getPos();
+
+	mapRect.draw({ 0, 122, 255, 122 });
+	Circle(playerPos / scale + offset, 2.0).draw(Palette::Yellow);
+	for (auto& enemy : enemies) {
+		Circle(enemy->getPos() / scale + offset, 2.0).draw(Palette::Red);
+		if (enemy->getState() == Enemy::State::Damage)
+			Circle(enemy->getPos() / scale + offset, 2.0).draw(Color(255).setAlpha(200));
+	}
 }
 
 void Camera2D::shake(int num) {

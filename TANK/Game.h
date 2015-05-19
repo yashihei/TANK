@@ -33,6 +33,8 @@ private:
 
 	int cnt;
 	Rect stageSize;
+
+	void drawMiniMap();
 };
 
 class Camera2D
