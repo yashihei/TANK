@@ -10,20 +10,30 @@ Enemy::Enemy() {
 	radian = 0.0;
 	enable = true;
 	state = State::Normal;
+	explosionAnimation = std::make_shared<Animation>();
 }
 
 //FIXME:‚à‚¤­‚µ‚¢‚¢‘‚«•û‚ª‚ ‚é‚Í‚¸
 void Enemy::defaultMove(Game* game) {
 	cnt++;
 
+	if (state == State::Burn) {
+		if (cnt == 25) enable = false;
+		game->getCamera2D()->shake(15);
+		explosionAnimation->move();
+		return;
+	}
 	if (checkShotHit(game)) {
 		hp--;
+		SoundAsset(L"hit").playMulti();
 		if (hp == 0) {
-			enable = false;
+			state = State::Burn;
+			explosionAnimation->init(L"explosion", 7, 4);
+			SoundAsset(L"burn").playMulti();
+			cnt = 0;
 			return;
 		}
 		cnt = 0;
-		SoundAsset(L"hit").playMulti();
 		state = State::Damage;
 	}
 	if (cnt == 5) {
@@ -43,14 +53,16 @@ bool Enemy::checkShotHit(Game* game) {
 	return false;
 }
 
-Noob::Noob() {
+Technyan::Technyan() {
 	hp = 20;
 	radius = 25.0;
 }
 
-void Noob::move(Game* game) {
+void Technyan::move(Game* game) {
+	defaultMove(game);
+
 	const Vec2 playerPos = game->getPlayer()->getPos();
-	double sp = 1.0;
+	double sp = 2.0;
 	
 	//ù‰ñ‚É§ŒÀ FIXME:
 	//double tRad;
@@ -87,13 +99,14 @@ void Noob::move(Game* game) {
 		bullet->init(pos, { Cos(radian) * bulletSp, Sin(radian) * bulletSp }, radian, Bullet::Type::ENEMY);
 		bulletManager->add(bullet);
 	}
-
-	defaultMove(game);
 }
 
-void Noob::draw(Game* game) {
+void Technyan::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-
+	if (state == State::Burn) {
+		explosionAnimation->draw(screenPos);
+		return;
+	}
 	TextureAsset(L"technyan").scale(0.3).rotate(radian + Pi/2).drawAt(screenPos, color);
 	//Circle(screenPos, radius).draw();
 }

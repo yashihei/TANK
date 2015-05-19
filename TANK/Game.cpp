@@ -11,8 +11,11 @@ void Game::init() {
 	TextureAsset::Register(L"bullet", L"dat/bullet.png");
 	TextureAsset::Register(L"backGround", L"dat/background.png");
 	TextureAsset::Register(L"technyan", L"dat/technyan.png");
+	TextureAsset::Register(L"explosion", L"dat/explosion.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
+	SoundAsset::Register(L"burn", L"dat/burn.wav");
+	SoundAsset::Register(L"bgm", L"dat/bgm.mp3");
 
 	player = std::make_shared<Player>();
 	enemyManager = std::make_shared<EnemyManager>();
@@ -27,6 +30,7 @@ void Game::init() {
 	stageSize.x = TextureAsset(L"backGround").width;
 	stageSize.y = TextureAsset(L"backGround").height;
 
+	SoundAsset(L"bgm").play();
 	Graphics2D::SetSamplerState(SamplerState::WrapPoint);
 }
 
@@ -37,13 +41,13 @@ void Game::move() {
 	Profiler::Graphics().print();
 	cnt++;
 
+	camera2D->posUpdate(this);
 	player->move(this);
 	enemyManager->move(this);
 	bulletManager->move(this);
-	camera2D->posUpdate(this);
 
 	if (cnt % 180 == 0) {
-		auto e = std::make_shared<Noob>();
+		auto e = std::make_shared<Technyan>();
 		e->setPos(Vec2(Random(0, stageSize.x), Random(0, stageSize.y)));
 		enemyManager->add(e);
 	}
@@ -57,10 +61,10 @@ void Game::draw() {
 	player->draw(this);
 	enemyManager->draw(this);
 	bulletManager->draw(this);
-	drawMiniMap();
+	drawMinimap();
 }
 
-void Game::drawMiniMap() {
+void Game::drawMinimap() {
 	auto& enemies = enemyManager->getEnemies();
 	const Vec2 offset(Window::Width() - 150, 30);
 	const Rect mapRect(offset.asPoint(), {120, 120});
@@ -79,6 +83,7 @@ void Game::drawMiniMap() {
 void Camera2D::shake(int num) {
 	offsetPos.x += Random(-num, num);
 	offsetPos.y += Random(-num, num);
+	Println(L"Shake!");
 }
 
 Vec2 Camera2D::convertToScreenPos(Vec2 pos) {
@@ -94,3 +99,21 @@ void Camera2D::posUpdate(Game* game) {
 	offsetPos.y = Clamp(offsetPos.y, static_cast<double>(Window::Height() - stageSize.y), 0.0);
 }
 
+void Animation::init(String name, int sepNum, int sepTime) {
+	this->assetName = name;
+	this->sepNum = sepNum;
+	this->sepTime = sepTime;
+	trimSize = Point(TextureAsset(assetName).width / sepNum, TextureAsset(assetName).height);
+	cnt = 0;
+}
+
+void Animation::move() {
+	cnt++;
+	if (cnt == sepTime * sepNum) cnt = 0;
+}
+
+void Animation::draw(Vec2 pos) {
+	int animeNum = cnt / sepTime;
+	Rect trimRect(trimSize.x * animeNum, 0, trimSize);
+	TextureAsset(assetName)(trimRect).drawAt(pos);
+}

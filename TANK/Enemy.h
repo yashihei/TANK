@@ -4,6 +4,7 @@
 #include <memory>
 
 class Game;
+class Animation;
 
 class Enemy
 {
@@ -11,6 +12,7 @@ public:
 	enum class State {
 		Normal,
 		Damage,
+		Burn,
 	};
 
 	Enemy();
@@ -28,16 +30,17 @@ protected:
 	int hp, cnt, shotCnt;
 	double radian, radius;
 	bool enable;
-	Color color;//âÊëúÇ…ç∑Çµë÷Ç¶ÇΩÇÁè¡Ç∑
+	Color color;
+	std::shared_ptr<Animation> explosionAnimation;
 
 	bool checkShotHit(Game* game);
 	void defaultMove(Game* game);
 };
 
-class Noob : public Enemy
+class Technyan : public Enemy
 {
 public:
-	Noob();
+	Technyan();
 	void move(Game* game) override;
 	void draw(Game* game) override;
 };

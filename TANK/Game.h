@@ -6,6 +6,7 @@ class Player;
 class EnemyManager;
 class BulletManager;
 class Camera2D;
+class Animation;
 
 class Game
 {
@@ -34,7 +35,7 @@ private:
 	int cnt;
 	Rect stageSize;
 
-	void drawMiniMap();
+	void drawMinimap();
 };
 
 class Camera2D
@@ -48,4 +49,18 @@ public:
 	Vec2 getoffsetPos() { return offsetPos; }
 private:
 	Vec2 offsetPos;
+};
+
+class Animation
+{
+public:
+	Animation(){};
+	void init(String name, int sepNum, int sepTime);
+	void move();
+	void draw(Vec2 pos);
+private:
+	String assetName;
+	Point trimSize;
+	int sepTime, sepNum;
+	int cnt;
 };

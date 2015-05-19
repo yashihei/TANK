@@ -5,7 +5,7 @@
 #include "Enemy.h"
 
 void Player::init() {
-	hp = 100;
+	hp = 20;
 	pos = Vec2(100.0, 100.0);
 	cnt = 0;
 	state = State::REBORN;
