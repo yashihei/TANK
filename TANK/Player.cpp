@@ -7,13 +7,28 @@
 void Player::init() {
 	hp = 20;
 	pos = Vec2(100.0, 100.0);
-	cnt = 0;
-	state = State::REBORN;
+	cnt = shotCnt = 0;
+	state = State::Normal;
 	radian = turretRad = 0.0;
+	color = Palette::White;
 }
 
 void Player::move(Game* game) {
-	cnt++;
+	cnt++; 
+
+	if (checkEnemyShotHit(game)) {
+		hp--;
+		SoundAsset(L"damage").playMulti();
+		state = State::Damage;
+		cnt = 0;
+	}
+	if (cnt == 5) state = State::Normal;
+
+	if (state == State::Damage) {
+		color = Palette::Red;
+	} else {
+		color = Palette::White;
+	}
 
 	//‘OiŒã‘Ş
 	const double speed = 7.0;
@@ -43,7 +58,8 @@ void Player::move(Game* game) {
 	const Vec2 offsetPos = game->getCamera2D()->getoffsetPos();
 	turretRad = Atan2(mousePos.y - pos.y - offsetPos.y, mousePos.x - pos.x - offsetPos.x);
 
-	if (Input::MouseL.pressed && cnt % 3 == 0) {
+	shotCnt++;
+	if (Input::MouseL.pressed && shotCnt % 3 == 0) {
 		double shotRad = Atan2(mousePos.y - offsetPos.y - pos.y, mousePos.x - offsetPos.x - pos.x) + Radians(Random(-5.0, 5.0));
 		double shotSpeed = 15.0;
 
@@ -57,9 +73,21 @@ void Player::move(Game* game) {
 
 void Player::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	TextureAsset(L"playerTank").rotate(radian + Pi/2).drawAt(screenPos);
-	TextureAsset(L"turret").rotate(turretRad + Pi/2).drawAt(screenPos);
+	TextureAsset(L"playerTank").rotate(radian + Pi/2).drawAt(screenPos, color);
+	TextureAsset(L"turret").rotate(turretRad + Pi/2).drawAt(screenPos, color);
 
 	Circle(Mouse::Pos(), 5).draw(Palette::Yellow);
 	//Line(screenPos, Mouse::Pos()).draw(Palette::Darkgray);
+}
+
+bool Player::checkEnemyShotHit(Game* game) {
+	auto& bullets = game->getBulletManager()->getBullets();
+	for (auto& bullet : bullets) {
+		if (bullet->getType() == Bullet::Type::PLAYER) continue;
+		if (Geometry2D::Intersect(Circle(bullet->getPos(), bullet->getRadius()), Circle(pos, 10.0))) {
+			bullet->disable();
+			return true;
+		}
+	}
+	return false;
 }

@@ -9,9 +9,8 @@ class Player
 {
 public:
 	enum class State {
-		NORMAL,
-		DAMAGE,
-		REBORN,
+		Normal,
+		Damage,
 	};
 
 	Player(){};
@@ -23,7 +22,11 @@ public:
 private:
 	int hp;
 	Vec2 pos, vec;
-	int cnt;
+	int cnt, shotCnt;
 	State state;
 	double radian, turretRad;
+	Color color;
+
+	void fire(Game* game);
+	bool checkEnemyShotHit(Game* game);
 };

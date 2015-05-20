@@ -18,7 +18,7 @@ void Enemy::defaultMove(Game* game) {
 	cnt++;
 
 	if (state == State::Burn) {
-		if (cnt == 25) enable = false;
+		if (cnt == 32) enable = false;
 		game->getCamera2D()->shake(15);
 		explosionAnimation->move();
 		return;
@@ -55,7 +55,7 @@ bool Enemy::checkShotHit(Game* game) {
 
 Technyan::Technyan() {
 	hp = 20;
-	radius = 25.0;
+	radius = 35.0;
 }
 
 void Technyan::move(Game* game) {
@@ -107,7 +107,7 @@ void Technyan::draw(Game* game) {
 		explosionAnimation->draw(screenPos);
 		return;
 	}
-	TextureAsset(L"technyan").scale(0.3).rotate(radian + Pi/2).drawAt(screenPos, color);
+	TextureAsset(L"technyan").scale(0.5).rotate(radian + Pi/2).drawAt(screenPos, color);
 	//Circle(screenPos, radius).draw();
 }
 

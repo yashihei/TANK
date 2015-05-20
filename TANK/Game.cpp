@@ -14,6 +14,7 @@ void Game::init() {
 	TextureAsset::Register(L"explosion", L"dat/explosion.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
+	SoundAsset::Register(L"damage", L"dat/damage.wav");
 	SoundAsset::Register(L"burn", L"dat/burn.wav");
 	SoundAsset::Register(L"bgm", L"dat/bgm.mp3");
 
