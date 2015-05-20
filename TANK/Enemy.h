@@ -27,7 +27,7 @@ public:
 protected:
 	State state;
 	Vec2 pos, vec;
-	int hp, cnt, shotCnt;
+	int hp, cnt;
 	double radian, radius;
 	bool enable;
 	Color color;

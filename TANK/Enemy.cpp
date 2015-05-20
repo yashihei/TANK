@@ -6,7 +6,6 @@
 
 Enemy::Enemy() {
 	cnt = 0;
-	shotCnt = 0;
 	radian = 0.0;
 	enable = true;
 	state = State::Normal;
@@ -90,8 +89,7 @@ void Technyan::move(Game* game) {
 		color = Palette::White;
 	}
 
-	shotCnt++;
-	if (shotCnt % 10 == 0) {
+	if (System::FrameCount() % 10 == 0) {
 		auto bulletManager = game->getBulletManager();
 		auto bullet = std::make_shared<Bullet>();
 		const double bulletSp = 8.0;

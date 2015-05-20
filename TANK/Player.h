@@ -19,10 +19,11 @@ public:
 	void draw(Game* game);
 
 	Vec2 getPos() { return pos; }
+	int getHp() { return hp; }
 private:
 	int hp;
 	Vec2 pos, vec;
-	int cnt, shotCnt;
+	int cnt;
 	State state;
 	double radian, turretRad;
 	Color color;

@@ -12,6 +12,7 @@ void Game::init() {
 	TextureAsset::Register(L"backGround", L"dat/background.png");
 	TextureAsset::Register(L"technyan", L"dat/technyan.png");
 	TextureAsset::Register(L"explosion", L"dat/explosion.png");
+	TextureAsset::Register(L"missile", L"dat/missile.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
 	SoundAsset::Register(L"damage", L"dat/damage.wav");
@@ -27,10 +28,10 @@ void Game::init() {
 	enemyManager->init();
 	bulletManager->init();
 
-	cnt = 0;
 	stageSize.x = TextureAsset(L"backGround").width;
 	stageSize.y = TextureAsset(L"backGround").height;
 
+	SoundAsset(L"bgm").setLoop(true);
 	SoundAsset(L"bgm").play();
 	Graphics2D::SetSamplerState(SamplerState::WrapPoint);
 }
@@ -40,14 +41,14 @@ void Game::move() {
 	ClearPrint();
 	Println(L"FPS:", Profiler::FPS());
 	Profiler::Graphics().print();
-	cnt++;
+	const int cnt = System::FrameCount();
 
 	camera2D->posUpdate(this);
 	player->move(this);
 	enemyManager->move(this);
 	bulletManager->move(this);
 
-	if (cnt % 180 == 0) {
+	if (cnt % 120 == 0) {
 		auto e = std::make_shared<Technyan>();
 		e->setPos(Vec2(Random(0, stageSize.x), Random(0, stageSize.y)));
 		enemyManager->add(e);
@@ -62,6 +63,7 @@ void Game::draw() {
 	player->draw(this);
 	enemyManager->draw(this);
 	bulletManager->draw(this);
+	drawHpCircle();
 	drawMinimap();
 }
 
@@ -75,10 +77,18 @@ void Game::drawMinimap() {
 	mapRect.draw({ 0, 122, 255, 122 });
 	Circle(playerPos / scale + offset, 2.0).draw(Palette::Yellow);
 	for (auto& enemy : enemies) {
+		if (enemy->getState() == Enemy::State::Burn) continue;
 		Circle(enemy->getPos() / scale + offset, 2.0).draw(Palette::Red);
 		if (enemy->getState() == Enemy::State::Damage)
 			Circle(enemy->getPos() / scale + offset, 2.0).draw(Color(255).setAlpha(200));
 	}
+}
+
+void Game::drawHpCircle() {
+	int playerHp = player->getHp();
+	Vec2 screenPos = camera2D->convertToScreenPos(player->getPos());
+	if (playerHp < 10)
+		Circle(screenPos, (500 / 10) * playerHp).drawFrame(0.0, 1000.0, Color(255, 30, 30).setAlpha(70));
 }
 
 void Camera2D::shake(int num) {

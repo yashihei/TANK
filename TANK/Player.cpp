@@ -5,16 +5,16 @@
 #include "Enemy.h"
 
 void Player::init() {
-	hp = 20;
+	hp = 10;
 	pos = Vec2(100.0, 100.0);
-	cnt = shotCnt = 0;
+	cnt = 0;
 	state = State::Normal;
 	radian = turretRad = 0.0;
 	color = Palette::White;
 }
 
 void Player::move(Game* game) {
-	cnt++; 
+	cnt++;
 
 	if (checkEnemyShotHit(game)) {
 		hp--;
@@ -23,6 +23,9 @@ void Player::move(Game* game) {
 		cnt = 0;
 	}
 	if (cnt == 5) state = State::Normal;
+	if (state == State::Normal && cnt % 30 == 0 && hp < 10) {
+		hp++;
+	}
 
 	if (state == State::Damage) {
 		color = Palette::Red;
@@ -53,22 +56,7 @@ void Player::move(Game* game) {
 		radian -= Radians(turnSpeed);
 	}
 
-	//ƒVƒ‡ƒbƒg
-	const Point mousePos = Mouse::Pos();
-	const Vec2 offsetPos = game->getCamera2D()->getoffsetPos();
-	turretRad = Atan2(mousePos.y - pos.y - offsetPos.y, mousePos.x - pos.x - offsetPos.x);
-
-	shotCnt++;
-	if (Input::MouseL.pressed && shotCnt % 3 == 0) {
-		double shotRad = Atan2(mousePos.y - offsetPos.y - pos.y, mousePos.x - offsetPos.x - pos.x) + Radians(Random(-5.0, 5.0));
-		double shotSpeed = 15.0;
-
-		auto bulletManager = game->getBulletManager();
-		auto bullet = std::make_shared<Bullet>();
-		bullet->init(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Type::PLAYER);
-		bulletManager->add(bullet);
-		SoundAsset(L"shoot").playMulti();
-	}
+	fire(game);
 }
 
 void Player::draw(Game* game) {
@@ -78,6 +66,23 @@ void Player::draw(Game* game) {
 
 	Circle(Mouse::Pos(), 5).draw(Palette::Yellow);
 	//Line(screenPos, Mouse::Pos()).draw(Palette::Darkgray);
+}
+
+void Player::fire(Game* game) {
+	const Point mousePos = Mouse::Pos();
+	const Vec2 offsetPos = game->getCamera2D()->getoffsetPos();
+	turretRad = Atan2(mousePos.y - pos.y - offsetPos.y, mousePos.x - pos.x - offsetPos.x);
+
+	if (Input::MouseL.pressed && System::FrameCount() % 3 == 0) {
+		double shotRad = Atan2(mousePos.y - offsetPos.y - pos.y, mousePos.x - offsetPos.x - pos.x) + Radians(Random(-5.0, 5.0));
+		double shotSpeed = 15.0;
+
+		auto bulletManager = game->getBulletManager();
+		auto bullet = std::make_shared<Bullet>();
+		bullet->init(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Type::PLAYER);
+		bulletManager->add(bullet);
+		SoundAsset(L"shoot").playMulti();
+	}
 }
 
 bool Player::checkEnemyShotHit(Game* game) {

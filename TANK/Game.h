@@ -32,10 +32,10 @@ private:
 	std::shared_ptr<BulletManager> bulletManager;
 	std::shared_ptr<Camera2D> camera2D;
 
-	int cnt;
 	Rect stageSize;
 
 	void drawMinimap();
+	void drawHpCircle();
 };
 
 class Camera2D
