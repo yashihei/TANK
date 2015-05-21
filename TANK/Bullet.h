@@ -7,27 +7,41 @@ class Game;
 
 class Bullet {
 public:
-	enum class Type {
+	enum class Target {
 		ENEMY,
 		PLAYER
 	};
 
 	Bullet() {}
-	void init(Vec2 pos, Vec2 vec, double radian, Type type);
-	void move(Game* game);
-	void draw(Game* game);
+	void init(Vec2 pos, Vec2 vec, double radian, Target target);
+	virtual void move(Game* game) = 0;
+	virtual void draw(Game* game) = 0;
 
 	Vec2 getPos() { return pos; }
-	Type getType() { return type; }
+	Target getTarget() { return target; }
 	double getRadius() { return radius; }
 	bool isEnabled() { return enable; }
 	void disable() { enable = false; }
-private:
+protected:
 	Vec2 pos, vec;
 	double radian, radius;
 	int cnt;
 	bool enable;
-	Type type;
+	Target target;
+
+	void checkOutStage(Game* game);
+};
+
+class NormalBullet : public Bullet {
+public:
+	void move(Game* game) override;
+	void draw(Game* game) override;
+};
+
+class Missile : public Bullet {
+public:
+	void move(Game* game) override;
+	void draw(Game* game) override;
 };
 
 class BulletManager

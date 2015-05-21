@@ -78,17 +78,27 @@ void Player::fire(Game* game) {
 		double shotSpeed = 15.0;
 
 		auto bulletManager = game->getBulletManager();
-		auto bullet = std::make_shared<Bullet>();
-		bullet->init(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Type::PLAYER);
+		auto bullet = std::make_shared<NormalBullet>();
+		bullet->init(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Target::ENEMY);
 		bulletManager->add(bullet);
 		SoundAsset(L"shoot").playMulti();
+	}
+
+	if (Input::MouseR.clicked) {
+		double shotRad = Atan2(mousePos.y - offsetPos.y - pos.y, mousePos.x - offsetPos.x - pos.x);
+		double shotSpeed = -5.0;
+
+		auto bulletManager = game->getBulletManager();
+		auto bullet = std::make_shared<Missile>();
+		bullet->init(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Target::ENEMY);
+		bulletManager->add(bullet);
 	}
 }
 
 bool Player::checkEnemyShotHit(Game* game) {
 	auto& bullets = game->getBulletManager()->getBullets();
 	for (auto& bullet : bullets) {
-		if (bullet->getType() == Bullet::Type::PLAYER) continue;
+		if (bullet->getTarget() == Bullet::Target::ENEMY) continue;
 		if (Geometry2D::Intersect(Circle(bullet->getPos(), bullet->getRadius()), Circle(pos, 10.0))) {
 			bullet->disable();
 			return true;

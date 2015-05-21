@@ -43,7 +43,7 @@ void Enemy::defaultMove(Game* game) {
 bool Enemy::checkShotHit(Game* game) {
 	auto& bullets = game->getBulletManager()->getBullets();
 	for (auto& bullet : bullets) {
-		if (bullet->getType() == Bullet::Type::ENEMY) continue;
+		if (bullet->getTarget() == Bullet::Target::PLAYER) continue;
 		if (Geometry2D::Intersect(Circle(bullet->getPos(), bullet->getRadius()), Circle(pos, radius))) {
 			bullet->disable();
 			return true;
@@ -91,10 +91,10 @@ void Technyan::move(Game* game) {
 
 	if (System::FrameCount() % 10 == 0) {
 		auto bulletManager = game->getBulletManager();
-		auto bullet = std::make_shared<Bullet>();
+		auto bullet = std::make_shared<NormalBullet>();
 		const double bulletSp = 8.0;
 
-		bullet->init(pos, { Cos(radian) * bulletSp, Sin(radian) * bulletSp }, radian, Bullet::Type::ENEMY);
+		bullet->init(pos, { Cos(radian) * bulletSp, Sin(radian) * bulletSp }, radian, Bullet::Target::PLAYER);
 		bulletManager->add(bullet);
 	}
 }
