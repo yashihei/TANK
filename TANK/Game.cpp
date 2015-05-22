@@ -13,6 +13,7 @@ void Game::init() {
 	TextureAsset::Register(L"technyan", L"dat/technyan.png");
 	TextureAsset::Register(L"explosion", L"dat/explosion.png");
 	TextureAsset::Register(L"missile", L"dat/missile.png");
+	TextureAsset::Register(L"marker", L"dat/marker.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
 	SoundAsset::Register(L"damage", L"dat/damage.wav");
@@ -63,8 +64,13 @@ void Game::draw() {
 	player->draw(this);
 	enemyManager->draw(this);
 	bulletManager->draw(this);
-	drawHpCircle();
+	drawHUD();
+}
+
+void Game::drawHUD() {
+	TextureAsset(L"marker").scale(1.5).drawAt(Mouse::Pos());
 	drawMinimap();
+	drawHpCircle();
 }
 
 void Game::drawMinimap() {

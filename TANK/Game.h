@@ -34,6 +34,7 @@ private:
 
 	Rect stageSize;
 
+	void drawHUD();
 	void drawMinimap();
 	void drawHpCircle();
 };

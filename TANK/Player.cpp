@@ -63,9 +63,6 @@ void Player::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	TextureAsset(L"playerTank").rotate(radian + Pi/2).drawAt(screenPos, color);
 	TextureAsset(L"turret").rotate(turretRad + Pi/2).drawAt(screenPos, color);
-
-	Circle(Mouse::Pos(), 5).draw(Palette::Yellow);
-	//Line(screenPos, Mouse::Pos()).draw(Palette::Darkgray);
 }
 
 void Player::fire(Game* game) {
