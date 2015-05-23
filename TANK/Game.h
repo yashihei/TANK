@@ -19,6 +19,7 @@ public:
 	enum class State {
 		TITLE,
 		PLAY,
+		GAME_OVER,
 	};
 	
 	std::shared_ptr<Player> getPlayer() { return player; }
@@ -26,6 +27,7 @@ public:
 	std::shared_ptr<BulletManager> getBulletManager() { return bulletManager; }
 	std::shared_ptr<Camera2D> getCamera2D() { return camera2D; }
 	Rect getStageSize() { return stageSize; }
+	void gameOver();
 private:
 	std::shared_ptr<Player> player;
 	std::shared_ptr<EnemyManager> enemyManager;
@@ -33,6 +35,10 @@ private:
 	std::shared_ptr<Camera2D> camera2D;
 
 	Rect stageSize;
+	State state = State::TITLE;
+	int cnt = 0;
+
+	void gameStart();
 
 	void drawHUD();
 	void drawMinimap();
@@ -43,13 +49,14 @@ class Camera2D
 {
 public:
 	Camera2D(){};
+	void init();
 	void posUpdate(Game* game);
 	void shake(int num);
 	Vec2 convertToScreenPos(Vec2 pos);
 
 	Vec2 getoffsetPos() { return offsetPos; }
 private:
-	Vec2 offsetPos;
+	Vec2 offsetPos = { 0, 0 };
 };
 
 class Animation
@@ -63,5 +70,5 @@ private:
 	String assetName;
 	Point trimSize;
 	int sepTime, sepNum;
-	int cnt;
+	int cnt = 0;
 };

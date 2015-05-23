@@ -5,25 +5,39 @@
 #include "Enemy.h"
 
 void Player::init() {
-	hp = 10;
-	pos = Vec2(100.0, 100.0);
+	hp = HP_MAX;
+	pos = Vec2(540.0, 540.0);
 	cnt = 0;
 	state = State::Normal;
 	radian = turretRad = 0.0;
 	color = Palette::White;
+	explosionAnimation = std::make_shared<Animation>();
 }
 
 void Player::move(Game* game) {
 	cnt++;
 
+	if (state == State::Burn) {
+		game->getCamera2D()->shake(30);
+		explosionAnimation->move();
+		if (cnt == 32) {
+			game->gameOver();
+		}
+		return;
+	}
 	if (checkEnemyShotHit(game)) {
 		hp--;
 		SoundAsset(L"damage").playMulti();
 		state = State::Damage;
 		cnt = 0;
+		if (hp == 0) {
+			state = State::Burn;
+			explosionAnimation->init(L"explosion", 7, 4);
+			SoundAsset(L"burn").playMulti();
+		}
 	}
 	if (cnt == 5) state = State::Normal;
-	if (state == State::Normal && cnt % 30 == 0 && hp < 10) {
+	if (state == State::Normal && cnt % 30 == 0 && hp < HP_MAX) {
 		hp++;
 	}
 
@@ -61,6 +75,10 @@ void Player::move(Game* game) {
 
 void Player::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	if (state == State::Burn) {
+		explosionAnimation->draw(screenPos);
+		return;
+	}
 	TextureAsset(L"playerTank").rotate(radian + Pi/2).drawAt(screenPos, color);
 	TextureAsset(L"turret").rotate(turretRad + Pi/2).drawAt(screenPos, color);
 }

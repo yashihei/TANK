@@ -4,13 +4,16 @@
 #include <vector>
 
 class Game;
+class Animation;
 
 class Player
 {
 public:
+	static const int HP_MAX = 5;
 	enum class State {
 		Normal,
 		Damage,
+		Burn,
 	};
 
 	Player(){};
@@ -27,6 +30,7 @@ private:
 	State state;
 	double radian, turretRad;
 	Color color;
+	std::shared_ptr<Animation> explosionAnimation;
 
 	void fire(Game* game);
 	bool checkEnemyShotHit(Game* game);

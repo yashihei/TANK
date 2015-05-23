@@ -14,6 +14,7 @@ void Game::init() {
 	TextureAsset::Register(L"explosion", L"dat/explosion.png");
 	TextureAsset::Register(L"missile", L"dat/missile.png");
 	TextureAsset::Register(L"marker", L"dat/marker.png");
+	TextureAsset::Register(L"title", L"dat/title.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
 	SoundAsset::Register(L"damage", L"dat/damage.wav");
@@ -29,12 +30,9 @@ void Game::init() {
 	enemyManager->init();
 	bulletManager->init();
 
+	Graphics2D::SetSamplerState(SamplerState::WrapPoint);
 	stageSize.x = TextureAsset(L"backGround").width;
 	stageSize.y = TextureAsset(L"backGround").height;
-
-	SoundAsset(L"bgm").setLoop(true);
-	SoundAsset(L"bgm").play();
-	Graphics2D::SetSamplerState(SamplerState::WrapPoint);
 }
 
 void Game::move() {
@@ -42,29 +40,76 @@ void Game::move() {
 	ClearPrint();
 	Println(L"FPS:", Profiler::FPS());
 	Profiler::Graphics().print();
-	const int cnt = System::FrameCount();
+	cnt++;
 
-	camera2D->posUpdate(this);
-	player->move(this);
-	enemyManager->move(this);
-	bulletManager->move(this);
-
-	if (cnt % 120 == 0) {
-		auto e = std::make_shared<Technyan>();
-		e->setPos(Vec2(Random(0, stageSize.x), Random(0, stageSize.y)));
-		enemyManager->add(e);
+	switch (state) {
+	case State::TITLE:
+		if (Input::MouseL.clicked) gameStart();
+		enemyManager->move(this);
+		bulletManager->move(this);
+		break;
+	case State::PLAY:
+		camera2D->posUpdate(this);
+		player->move(this);
+		enemyManager->move(this);
+		bulletManager->move(this);
+		if (System::FrameCount() % 120 == 0) {
+			auto e = std::make_shared<Technyan>();
+			e->setPos(Vec2(Random(0, stageSize.x), Random(0, stageSize.y)));
+			enemyManager->add(e);
+		}
+		break;
+	case State::GAME_OVER:
+		enemyManager->move(this);
+		bulletManager->move(this);
+		if (Input::MouseL.clicked || cnt > 300) {
+			SoundAsset(L"bgm").stop();
+			state = State::TITLE;
+		}
+		break;
 	}
 
 	if (Input::KeyR.clicked) enemyManager->init();
 	if (Input::KeyP.pressed) camera2D->shake(30);
 }
 
+void Game::gameStart() {
+	player->init();
+	enemyManager->init();
+	bulletManager->init();
+	SoundAsset(L"bgm").setLoop(true);
+	SoundAsset(L"bgm").play();
+	state = State::PLAY;
+}
+
+void Game::gameOver() {
+	state = State::GAME_OVER;
+	camera2D->posUpdate(this);
+	cnt = 0;
+}
+
 void Game::draw() {
-	TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
-	player->draw(this);
-	enemyManager->draw(this);
-	bulletManager->draw(this);
-	drawHUD();
+	switch (state) {
+	case State::TITLE:
+		TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
+		enemyManager->draw(this);
+		bulletManager->draw(this);
+		TextureAsset(L"title").drawAt(Window::Center());
+		break;
+	case State::PLAY:
+		TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
+		player->draw(this);
+		enemyManager->draw(this);
+		bulletManager->draw(this);
+		drawHUD();
+		break;
+	case State::GAME_OVER:
+		TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
+		enemyManager->draw(this);
+		bulletManager->draw(this);
+		Println(L"‚°[‚Þ‚¨[‚Î[");
+		break;
+	}
 }
 
 void Game::drawHUD() {
@@ -93,14 +138,13 @@ void Game::drawMinimap() {
 void Game::drawHpCircle() {
 	int playerHp = player->getHp();
 	Vec2 screenPos = camera2D->convertToScreenPos(player->getPos());
-	if (playerHp < 10)
-		Circle(screenPos, (500 / 10) * playerHp).drawFrame(0.0, 1000.0, Color(255, 30, 30).setAlpha(70));
+	if (playerHp < Player::HP_MAX)
+		Circle(screenPos, (500 / Player::HP_MAX) * playerHp).drawFrame(0.0, 1000.0, Color(255, 30, 30).setAlpha(70));
 }
 
 void Camera2D::shake(int num) {
 	offsetPos.x += Random(-num, num);
 	offsetPos.y += Random(-num, num);
-	Println(L"Shake!");
 }
 
 Vec2 Camera2D::convertToScreenPos(Vec2 pos) {
@@ -121,7 +165,6 @@ void Animation::init(String name, int sepNum, int sepTime) {
 	this->sepNum = sepNum;
 	this->sepTime = sepTime;
 	trimSize = Point(TextureAsset(assetName).width / sepNum, TextureAsset(assetName).height);
-	cnt = 0;
 }
 
 void Animation::move() {

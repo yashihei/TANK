@@ -89,10 +89,10 @@ void Technyan::move(Game* game) {
 		color = Palette::White;
 	}
 
-	if (System::FrameCount() % 10 == 0) {
+	if (System::FrameCount() % 7 == 0) {
 		auto bulletManager = game->getBulletManager();
 		auto bullet = std::make_shared<NormalBullet>();
-		const double bulletSp = 8.0;
+		const double bulletSp = 15.0;
 
 		bullet->init(pos, { Cos(radian) * bulletSp, Sin(radian) * bulletSp }, radian, Bullet::Target::PLAYER);
 		bulletManager->add(bullet);
