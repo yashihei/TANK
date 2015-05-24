@@ -15,11 +15,13 @@ void Game::init() {
 	TextureAsset::Register(L"missile", L"dat/missile.png");
 	TextureAsset::Register(L"marker", L"dat/marker.png");
 	TextureAsset::Register(L"title", L"dat/title.png");
+	TextureAsset::Register(L"gameOver", L"dat/gameover.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
 	SoundAsset::Register(L"damage", L"dat/damage.wav");
 	SoundAsset::Register(L"burn", L"dat/burn.wav");
 	SoundAsset::Register(L"bgm", L"dat/bgm.mp3");
+	FontAsset::Register(L"score", 20, Typeface::Black);
 
 	player = std::make_shared<Player>();
 	enemyManager = std::make_shared<EnemyManager>();
@@ -39,7 +41,7 @@ void Game::move() {
 	if (Input::KeySpace.pressed) return;
 	ClearPrint();
 	Println(L"FPS:", Profiler::FPS());
-	Profiler::Graphics().print();
+	//Profiler::Graphics().print();
 	cnt++;
 
 	switch (state) {
@@ -54,8 +56,14 @@ void Game::move() {
 		enemyManager->move(this);
 		bulletManager->move(this);
 		if (System::FrameCount() % 120 == 0) {
+			Vec2 randomPos;
+			while (true) {
+				randomPos = Vec2(Random(0, stageSize.x), Random(0, stageSize.y));
+				if (!Geometry2D::Intersect(player->getPos().asPoint(), Circle(randomPos, 150.0)))
+					break;
+			}
 			auto e = std::make_shared<Technyan>();
-			e->setPos(Vec2(Random(0, stageSize.x), Random(0, stageSize.y)));
+			e->setPos(randomPos);
 			enemyManager->add(e);
 		}
 		break;
@@ -80,6 +88,7 @@ void Game::gameStart() {
 	SoundAsset(L"bgm").setLoop(true);
 	SoundAsset(L"bgm").play();
 	state = State::PLAY;
+	score = 0;
 }
 
 void Game::gameOver() {
@@ -107,7 +116,7 @@ void Game::draw() {
 		TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
 		enemyManager->draw(this);
 		bulletManager->draw(this);
-		Println(L"Ç∞Å[ÇﬁÇ®Å[ÇŒÅ[");
+		TextureAsset(L"gameOver").drawAt(Window::Center());
 		break;
 	}
 }
@@ -116,6 +125,8 @@ void Game::drawHUD() {
 	TextureAsset(L"marker").scale(1.5).drawAt(Mouse::Pos());
 	drawMinimap();
 	drawHpCircle();
+	FontAsset(L"score").draw(Pad(score, { 6, L'0' }), { 11.5, 11.5 }, Palette::Black);
+	FontAsset(L"score").draw(Pad(score, { 6, L'0' }), { 10.0, 10.0 }, Palette::White);
 }
 
 void Game::drawMinimap() {

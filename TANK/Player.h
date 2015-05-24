@@ -9,7 +9,8 @@ class Animation;
 class Player
 {
 public:
-	static const int HP_MAX = 5;
+	static const int HP_MAX;
+	static const double RADUIS;
 	enum class State {
 		Normal,
 		Damage,

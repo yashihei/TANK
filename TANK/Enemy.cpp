@@ -23,13 +23,13 @@ void Enemy::defaultMove(Game* game) {
 		return;
 	}
 	if (checkShotHit(game)) {
-		hp--;
 		SoundAsset(L"hit").playMulti();
-		if (hp == 0) {
+		if (hp <= 0) {
 			state = State::Burn;
 			explosionAnimation->init(L"explosion", 7, 4);
 			SoundAsset(L"burn").playMulti();
 			cnt = 0;
+			game->addScore(100);
 			return;
 		}
 		cnt = 0;
@@ -43,9 +43,10 @@ void Enemy::defaultMove(Game* game) {
 bool Enemy::checkShotHit(Game* game) {
 	auto& bullets = game->getBulletManager()->getBullets();
 	for (auto& bullet : bullets) {
-		if (bullet->getTarget() == Bullet::Target::PLAYER) continue;
+		if (bullet->getTarget() == Bullet::Target::PLAYER || !bullet->isEnabled()) continue;
 		if (Geometry2D::Intersect(Circle(bullet->getPos(), bullet->getRadius()), Circle(pos, radius))) {
 			bullet->disable();
+			hp -= bullet->getDamage();
 			return true;
 		}
 	}
@@ -94,7 +95,7 @@ void Technyan::move(Game* game) {
 		auto bullet = std::make_shared<NormalBullet>();
 		const double bulletSp = 15.0;
 
-		bullet->init(pos, { Cos(radian) * bulletSp, Sin(radian) * bulletSp }, radian, Bullet::Target::PLAYER);
+		bullet->setParam(pos, { Cos(radian) * bulletSp, Sin(radian) * bulletSp }, radian, Bullet::Target::PLAYER);
 		bulletManager->add(bullet);
 	}
 }
@@ -106,7 +107,7 @@ void Technyan::draw(Game* game) {
 		return;
 	}
 	TextureAsset(L"technyan").scale(0.5).rotate(radian + Pi/2).drawAt(screenPos, color);
-	//Circle(screenPos, radius).draw();
+	//Circle(screenPos, 150).draw();
 }
 
 TankDestroyer::TankDestroyer() {

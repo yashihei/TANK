@@ -2,14 +2,11 @@
 
 #include "Game.h"
 
-void Bullet::init(Vec2 pos, Vec2 vec, double radian, Target target) {
+void Bullet::setParam(Vec2 pos, Vec2 vec, double radian, Target target) {
 	this->pos = pos;
 	this->vec = vec;
 	this->radian = radian;
 	this->target = target;
-	enable = true;
-	radius = 5.0;
-	cnt = 0;
 }
 
 void Bullet::checkOutStage(Game* game) {
@@ -20,7 +17,14 @@ void Bullet::checkOutStage(Game* game) {
 	}
 }
 
+NormalBullet::NormalBullet() {
+	damage = 2;
+	radius = 5.0;
+}
+
 void NormalBullet::move(Game* game) {
+	cnt++;
+	if (cnt > 10) damage = 1;
 	pos += vec;
 	checkOutStage(game);
 }
@@ -28,6 +32,11 @@ void NormalBullet::move(Game* game) {
 void NormalBullet::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	TextureAsset(L"bullet").rotate(radian + Pi/2).drawAt(screenPos);
+}
+
+Missile::Missile() {
+	damage = 10;
+	radius = 10.0;
 }
 
 void Missile::move(Game* game) {

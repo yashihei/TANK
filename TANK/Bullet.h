@@ -12,21 +12,22 @@ public:
 		PLAYER
 	};
 
-	Bullet() {}
-	void init(Vec2 pos, Vec2 vec, double radian, Target target);
+	Bullet() {};
+	void setParam(Vec2 pos, Vec2 vec, double radian, Target target);
 	virtual void move(Game* game) = 0;
 	virtual void draw(Game* game) = 0;
 
 	Vec2 getPos() { return pos; }
 	Target getTarget() { return target; }
 	double getRadius() { return radius; }
+	int getDamage() { return damage; }
 	bool isEnabled() { return enable; }
 	void disable() { enable = false; }
 protected:
 	Vec2 pos, vec;
 	double radian, radius;
-	int cnt;
-	bool enable;
+	int damage, cnt = 0;
+	bool enable = true;
 	Target target;
 
 	void checkOutStage(Game* game);
@@ -34,12 +35,14 @@ protected:
 
 class NormalBullet : public Bullet {
 public:
+	NormalBullet();
 	void move(Game* game) override;
 	void draw(Game* game) override;
 };
 
 class Missile : public Bullet {
 public:
+	Missile();
 	void move(Game* game) override;
 	void draw(Game* game) override;
 };

@@ -28,6 +28,7 @@ public:
 	std::shared_ptr<Camera2D> getCamera2D() { return camera2D; }
 	Rect getStageSize() { return stageSize; }
 	void gameOver();
+	void addScore(int score) { this->score += score; }
 private:
 	std::shared_ptr<Player> player;
 	std::shared_ptr<EnemyManager> enemyManager;
@@ -37,6 +38,7 @@ private:
 	Rect stageSize;
 	State state = State::TITLE;
 	int cnt = 0;
+	int score = 0;
 
 	void gameStart();
 
