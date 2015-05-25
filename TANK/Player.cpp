@@ -4,7 +4,7 @@
 #include "Bullet.h"
 #include "Enemy.h"
 
-const int Player::HP_MAX = 5;
+const int Player::HP_MAX = 7;
 const double Player::RADUIS = 10.0;
 
 void Player::init() {

@@ -54,7 +54,7 @@ bool Enemy::checkShotHit(Game* game) {
 }
 
 Technyan::Technyan() {
-	hp = 20;
+	hp = 10;
 	radius = 35.0;
 }
 

@@ -18,13 +18,12 @@ void Bullet::checkOutStage(Game* game) {
 }
 
 NormalBullet::NormalBullet() {
-	damage = 2;
+	damage = 1;
 	radius = 5.0;
 }
 
 void NormalBullet::move(Game* game) {
 	cnt++;
-	if (cnt > 10) damage = 1;
 	pos += vec;
 	checkOutStage(game);
 }

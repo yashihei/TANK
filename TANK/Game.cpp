@@ -39,8 +39,7 @@ void Game::init() {
 
 void Game::move() {
 	if (Input::KeySpace.pressed) return;
-	ClearPrint();
-	Println(L"FPS:", Profiler::FPS());
+	//Println(L"FPS:", Profiler::FPS());
 	//Profiler::Graphics().print();
 	cnt++;
 
@@ -55,7 +54,7 @@ void Game::move() {
 		player->move(this);
 		enemyManager->move(this);
 		bulletManager->move(this);
-		if (System::FrameCount() % 120 == 0) {
+		if (System::FrameCount() % 60 == 0) {
 			Vec2 randomPos;
 			while (true) {
 				randomPos = Vec2(Random(0, stageSize.x), Random(0, stageSize.y));
@@ -119,6 +118,7 @@ void Game::draw() {
 		TextureAsset(L"gameOver").drawAt(Window::Center());
 		break;
 	}
+	ClearPrint();
 }
 
 void Game::drawHUD() {

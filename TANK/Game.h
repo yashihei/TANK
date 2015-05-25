@@ -19,6 +19,7 @@ public:
 	enum class State {
 		TITLE,
 		PLAY,
+		PAUSE,
 		GAME_OVER,
 	};
 	

@@ -10,6 +10,7 @@ class Enemy
 {
 public:
 	enum class State {
+		Spawn,
 		Normal,
 		Damage,
 		Burn,

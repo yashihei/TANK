@@ -12,7 +12,7 @@ public:
 		PLAYER
 	};
 
-	Bullet() {};
+	Bullet() {}
 	void setParam(Vec2 pos, Vec2 vec, double radian, Target target);
 	virtual void move(Game* game) = 0;
 	virtual void draw(Game* game) = 0;
