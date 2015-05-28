@@ -4,6 +4,7 @@
 #include <memory>
 
 class Game;
+class Animation;
 
 class Bullet {
 public:
@@ -45,6 +46,7 @@ public:
 	Missile();
 	void move(Game* game) override;
 	void draw(Game* game) override;
+	std::shared_ptr<Animation> missileAnimation;
 };
 
 class BulletManager

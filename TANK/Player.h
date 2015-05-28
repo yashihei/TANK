@@ -27,7 +27,7 @@ public:
 private:
 	int hp;
 	Vec2 pos, vec;
-	int cnt;
+	int cnt, missileCnt;
 	State state;
 	double radian, turretRad;
 	Color color;

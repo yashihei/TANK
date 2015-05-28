@@ -10,7 +10,7 @@ const double Player::RADUIS = 10.0;
 void Player::init() {
 	hp = HP_MAX;
 	pos = Vec2(540.0, 540.0);
-	cnt = 0;
+	cnt = missileCnt = 0;
 	state = State::Normal;
 	radian = turretRad = 0.0;
 	color = Palette::White;
@@ -23,7 +23,7 @@ void Player::move(Game* game) {
 	if (state == State::Burn) {
 		game->getCamera2D()->shake(30);
 		explosionAnimation->move();
-		if (cnt == 32) {
+		if (cnt == explosionAnimation->getCycleCnt()) {
 			game->gameOver();
 		}
 		return;
@@ -103,7 +103,8 @@ void Player::fire(Game* game) {
 		SoundAsset(L"shoot").playMulti();
 	}
 
-	if (Input::MouseR.clicked) {
+	missileCnt++;
+	if (Input::MouseR.clicked && missileCnt > 60) {
 		double shotRad = Atan2(mousePos.y - offsetPos.y - pos.y, mousePos.x - offsetPos.x - pos.x);
 		double shotSpeed = -5.0;
 
@@ -111,6 +112,8 @@ void Player::fire(Game* game) {
 		auto bullet = std::make_shared<Missile>();
 		bullet->setParam(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Target::ENEMY);
 		bulletManager->add(bullet);
+		SoundAsset(L"missile_shoot").playMulti();
+		missileCnt = 0;
 	}
 }
 

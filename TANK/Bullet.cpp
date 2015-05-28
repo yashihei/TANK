@@ -36,18 +36,21 @@ void NormalBullet::draw(Game* game) {
 Missile::Missile() {
 	damage = 10;
 	radius = 10.0;
+	missileAnimation = std::make_shared<Animation>();
+	missileAnimation->init(L"missile", 4, 15);
 }
 
 void Missile::move(Game* game) {
-	const double sp = 0.50;
+	const double sp = 1.0;
 	vec += Vec2(Cos(radian) * sp, Sin(radian) * sp);
 	pos += vec;
 	checkOutStage(game);
+	missileAnimation->move();
 }
 
 void Missile::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	TextureAsset(L"missile").scale(2.0).rotate(radian + Pi/2).drawAt(screenPos);
+	missileAnimation->draw(screenPos, radian);
 }
 
 void BulletManager::init() {
@@ -63,7 +66,6 @@ void BulletManager::move(Game* game) {
 		bullet->move(game);
 	}
 	Erase_if(bullets, [](std::shared_ptr<Bullet> bullet) { return !bullet->isEnabled(); });
-	Println(L"BulletNum:", bullets.size());
 }
 
 void BulletManager::draw(Game* game) {

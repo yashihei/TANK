@@ -17,16 +17,16 @@ void Enemy::defaultMove(Game* game) {
 	cnt++;
 
 	if (state == State::Burn) {
-		if (cnt == 32) enable = false;
+		if (cnt == explosionAnimation->getCycleCnt()) enable = false;
 		game->getCamera2D()->shake(15);
 		explosionAnimation->move();
-		return;
+		return;//FIXME:
 	}
 	if (checkShotHit(game)) {
 		SoundAsset(L"hit").playMulti();
 		if (hp <= 0) {
 			state = State::Burn;
-			explosionAnimation->init(L"explosion", 7, 4);
+			explosionAnimation->init(L"explosion", 7, 5);
 			SoundAsset(L"burn").playMulti();
 			cnt = 0;
 			game->addScore(100);
@@ -143,7 +143,6 @@ void EnemyManager::move(Game* game) {
 		enemy->move(game);
 	}
 	Erase_if(enemies, [](std::shared_ptr<Enemy> enemy) { return !enemy->isEnable(); });
-	Println(L"EnemyNum:", enemies.size());
 }
 
 void EnemyManager::draw(Game* game) {

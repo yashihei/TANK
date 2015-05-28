@@ -66,12 +66,15 @@ class Animation
 {
 public:
 	Animation(){};
-	void init(String name, int sepNum, int sepTime);
+	void init(String name, int sepNum, int intervalCnt);
 	void move();
 	void draw(Vec2 pos);
+	void draw(Vec2 pos, double radian);
+	int getCycleCnt() { return sepNum * intervalCnt; }
 private:
 	String assetName;
 	Point trimSize;
-	int sepTime, sepNum;
+	int intervalCnt, sepNum;
 	int cnt = 0;
+	Rect trimRect;
 };

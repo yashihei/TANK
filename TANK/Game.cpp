@@ -17,6 +17,7 @@ void Game::init() {
 	TextureAsset::Register(L"title", L"dat/title.png");
 	TextureAsset::Register(L"gameOver", L"dat/gameover.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
+	SoundAsset::Register(L"missile_shoot", L"dat/missile_shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
 	SoundAsset::Register(L"damage", L"dat/damage.wav");
 	SoundAsset::Register(L"burn", L"dat/burn.wav");
@@ -32,6 +33,8 @@ void Game::init() {
 	enemyManager->init();
 	bulletManager->init();
 
+	SoundAsset(L"bgm").setLoop(true);
+	SoundAsset(L"missile_shoot").setSpeed(1.5);
 	Graphics2D::SetSamplerState(SamplerState::WrapPoint);
 	stageSize.x = TextureAsset(L"backGround").width;
 	stageSize.y = TextureAsset(L"backGround").height;
@@ -39,8 +42,6 @@ void Game::init() {
 
 void Game::move() {
 	if (Input::KeySpace.pressed) return;
-	//Println(L"FPS:", Profiler::FPS());
-	//Profiler::Graphics().print();
 	cnt++;
 
 	switch (state) {
@@ -54,7 +55,7 @@ void Game::move() {
 		player->move(this);
 		enemyManager->move(this);
 		bulletManager->move(this);
-		if (System::FrameCount() % 60 == 0) {
+		if (System::FrameCount() % 600 == 0) {
 			Vec2 randomPos;
 			while (true) {
 				randomPos = Vec2(Random(0, stageSize.x), Random(0, stageSize.y));
@@ -84,7 +85,6 @@ void Game::gameStart() {
 	player->init();
 	enemyManager->init();
 	bulletManager->init();
-	SoundAsset(L"bgm").setLoop(true);
 	SoundAsset(L"bgm").play();
 	state = State::PLAY;
 	score = 0;
@@ -118,11 +118,10 @@ void Game::draw() {
 		TextureAsset(L"gameOver").drawAt(Window::Center());
 		break;
 	}
-	ClearPrint();
 }
 
 void Game::drawHUD() {
-	TextureAsset(L"marker").scale(1.5).drawAt(Mouse::Pos());
+	TextureAsset(L"marker").scale(1.3).drawAt(Mouse::Pos());
 	drawMinimap();
 	drawHpCircle();
 	FontAsset(L"score").draw(Pad(score, { 6, L'0' }), { 11.5, 11.5 }, Palette::Black);
@@ -171,20 +170,24 @@ void Camera2D::posUpdate(Game* game) {
 	offsetPos.y = Clamp(offsetPos.y, static_cast<double>(Window::Height() - stageSize.y), 0.0);
 }
 
-void Animation::init(String name, int sepNum, int sepTime) {
+void Animation::init(String name, int sepNum, int intervalCnt) {
 	this->assetName = name;
 	this->sepNum = sepNum;
-	this->sepTime = sepTime;
+	this->intervalCnt = intervalCnt;
 	trimSize = Point(TextureAsset(assetName).width / sepNum, TextureAsset(assetName).height);
+	trimRect = Rect(0, 0, trimSize);
 }
 
 void Animation::move() {
 	cnt++;
-	if (cnt == sepTime * sepNum) cnt = 0;
+	if (cnt == intervalCnt * sepNum) cnt = 0;
+	trimRect = Rect(trimSize.x * (cnt / intervalCnt), 0, trimSize);
 }
 
 void Animation::draw(Vec2 pos) {
-	int animeNum = cnt / sepTime;
-	Rect trimRect(trimSize.x * animeNum, 0, trimSize);
 	TextureAsset(assetName)(trimRect).drawAt(pos);
+}
+
+void Animation::draw(Vec2 pos, double radian) {
+	TextureAsset(assetName)(trimRect).rotate(radian + Radians(90)).drawAt(pos);
 }
