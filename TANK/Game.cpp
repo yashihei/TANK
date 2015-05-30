@@ -7,12 +7,12 @@
 void Game::init() {
 	TextureAsset::Register(L"playerTank", L"dat/panther.png");
 	TextureAsset::Register(L"turret", L"dat/turret.png");
-	TextureAsset::Register(L"SU-152", L"dat/SU-152.png");
 	TextureAsset::Register(L"bullet", L"dat/bullet.png");
 	TextureAsset::Register(L"backGround", L"dat/background.png");
 	TextureAsset::Register(L"technyan", L"dat/technyan.png");
 	TextureAsset::Register(L"explosion", L"dat/explosion.png");
 	TextureAsset::Register(L"missile", L"dat/missile.png");
+	TextureAsset::Register(L"missile_lancher", L"dat/missile_launcher.png");
 	TextureAsset::Register(L"marker", L"dat/marker.png");
 	TextureAsset::Register(L"title", L"dat/title.png");
 	TextureAsset::Register(L"gameOver", L"dat/gameover.png");
@@ -55,17 +55,6 @@ void Game::move() {
 		player->move(this);
 		enemyManager->move(this);
 		bulletManager->move(this);
-		if (System::FrameCount() % 600 == 0) {
-			Vec2 randomPos;
-			while (true) {
-				randomPos = Vec2(Random(0, stageSize.x), Random(0, stageSize.y));
-				if (!Geometry2D::Intersect(player->getPos().asPoint(), Circle(randomPos, 150.0)))
-					break;
-			}
-			auto e = std::make_shared<Technyan>();
-			e->setPos(randomPos);
-			enemyManager->add(e);
-		}
 		break;
 	case State::GAME_OVER:
 		enemyManager->move(this);
@@ -121,7 +110,11 @@ void Game::draw() {
 }
 
 void Game::drawHUD() {
-	TextureAsset(L"marker").scale(1.3).drawAt(Mouse::Pos());
+	if (Input::MouseL.pressed) {
+		TextureAsset(L"marker")(31, 0, 31, 31).scale(1.3).drawAt(Mouse::Pos());
+	} else {
+		TextureAsset(L"marker")(0, 0, 31, 31).scale(1.3).drawAt(Mouse::Pos());
+	}
 	drawMinimap();
 	drawHpCircle();
 	FontAsset(L"score").draw(Pad(score, { 6, L'0' }), { 11.5, 11.5 }, Palette::Black);
@@ -139,6 +132,7 @@ void Game::drawMinimap() {
 	Circle(playerPos / scale + offset, 2.0).draw(Palette::Yellow);
 	for (auto& enemy : enemies) {
 		if (enemy->getState() == Enemy::State::Burn) continue;
+		if (enemy)
 		Circle(enemy->getPos() / scale + offset, 2.0).draw(Palette::Red);
 		if (enemy->getState() == Enemy::State::Damage)
 			Circle(enemy->getPos() / scale + offset, 2.0).draw(Color(255).setAlpha(200));

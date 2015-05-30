@@ -6,3 +6,4 @@ Siv3D + C++11な感じで製作中(迷走中)…です
 
 ## License
 MIT License
+

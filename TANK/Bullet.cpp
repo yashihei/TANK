@@ -12,6 +12,7 @@ void Bullet::setParam(Vec2 pos, Vec2 vec, double radian, Target target) {
 void Bullet::checkOutStage(Game* game) {
 	Rect stageSize = game->getStageSize();
 
+	int margin = 15;
 	if (pos.x > stageSize.x || pos.x < 0 || pos.y > stageSize.y || pos.y < 0) {
 		enable = false;
 	}
@@ -34,10 +35,10 @@ void NormalBullet::draw(Game* game) {
 }
 
 Missile::Missile() {
-	damage = 10;
+	damage = 30;
 	radius = 10.0;
 	missileAnimation = std::make_shared<Animation>();
-	missileAnimation->init(L"missile", 4, 15);
+	missileAnimation->init(L"missile", 4, 10);
 }
 
 void Missile::move(Game* game) {

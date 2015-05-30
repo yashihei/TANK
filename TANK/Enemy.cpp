@@ -38,6 +38,12 @@ void Enemy::defaultMove(Game* game) {
 	if (cnt == 5) {
 		state = State::Normal;
 	}
+
+	if (state == State::Damage) {
+		color = Palette::Red;
+	} else {
+		color = Palette::White;
+	}
 }
 
 bool Enemy::checkShotHit(Game* game) {
@@ -60,6 +66,7 @@ Technyan::Technyan() {
 
 void Technyan::move(Game* game) {
 	defaultMove(game);
+	if (state == State::Burn) return;
 
 	const Vec2 playerPos = game->getPlayer()->getPos();
 	double sp = 2.0;
@@ -84,12 +91,6 @@ void Technyan::move(Game* game) {
 		pos += vec;
 	}
 
-	if (state == State::Damage) {
-		color = Palette::Red;
-	} else {
-		color = Palette::White;
-	}
-
 	if (System::FrameCount() % 7 == 0) {
 		auto bulletManager = game->getBulletManager();
 		auto bullet = std::make_shared<NormalBullet>();
@@ -110,28 +111,36 @@ void Technyan::draw(Game* game) {
 	//Circle(screenPos, 150).draw();
 }
 
-TankDestroyer::TankDestroyer() {
+MissileLauncher::MissileLauncher() {
 	hp = 30;
-	radius = 20.0;
+	radius = 30.0;
 }
 
-void TankDestroyer::move(Game* game) {
+void MissileLauncher::move(Game* game) {
+	defaultMove(game);
+	if (state == State::Burn) return;
 	const Vec2 playerPos = game->getPlayer()->getPos();
-
 	radian = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
 
-	defaultMove(game);
+	if (System::FrameCount() % 80 == 0) {
+		auto bulletManager = game->getBulletManager();
+		auto bullet = std::make_shared<Missile>();
+		const double bulletSp = -5.0;
+
+		bullet->setParam(pos, { Cos(radian) * bulletSp, Sin(radian) * bulletSp }, radian, Bullet::Target::PLAYER);
+		bulletManager->add(bullet);
+		SoundAsset(L"missile_shoot").playMulti();
+	}
 }
 
-void TankDestroyer::draw(Game* game) {
+void MissileLauncher::draw(Game* game) {
 	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	auto& tex = TextureAsset(L"SU-152").scale(1.0).rotate(radian + Pi/2);
-	if (state == State::Normal) {
-		tex.drawAt(screenPos);
-	} else {
-		tex.drawAt(screenPos, { 255, 0, 0 });//TODO:”’ƒtƒ‰ƒbƒVƒ…
+	if (state == State::Burn) {
+		explosionAnimation->draw(screenPos);
+		return;
 	}
-	//Circle(screenPos, radius).draw(Palette::Yellow);//“–‚½‚è”»’è
+	TextureAsset(L"missile_lancher").scale(2.0).rotate(radian + Pi / 2).drawAt(screenPos, color);
+	//Circle(screenPos, radius).draw(Palette::Yellow);
 }
 
 void EnemyManager::init() {
@@ -143,6 +152,17 @@ void EnemyManager::move(Game* game) {
 		enemy->move(game);
 	}
 	Erase_if(enemies, [](std::shared_ptr<Enemy> enemy) { return !enemy->isEnable(); });
+
+	if (System::FrameCount() % 90 == 0) {
+		auto e = std::make_shared<Technyan>();
+		e->setPos(makeRandomPos(game));
+		add(e);
+	}
+	if (System::FrameCount() % 400 == 0) {
+		auto e = std::make_shared<MissileLauncher>();
+		e->setPos(makeRandomPos(game));
+		add(e);
+	}
 }
 
 void EnemyManager::draw(Game* game) {
@@ -153,4 +173,15 @@ void EnemyManager::draw(Game* game) {
 
 void EnemyManager::add(std::shared_ptr<Enemy> e) {
 	enemies.push_back(e);
+}
+
+Vec2 EnemyManager::makeRandomPos(Game* game) {
+	Vec2 randomPos;
+	while (true) {
+		auto stageSize = game->getStageSize();
+		randomPos = Vec2(Random(0, stageSize.x), Random(0, stageSize.y));
+		if (!Geometry2D::Intersect(game->getPlayer()->getPos().asPoint(), Circle(randomPos, 150.0)))
+			break;
+	}
+	return randomPos;
 }

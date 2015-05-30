@@ -10,7 +10,8 @@ class Bullet {
 public:
 	enum class Target {
 		ENEMY,
-		PLAYER
+		PLAYER,
+		NONE
 	};
 
 	Bullet() {}

@@ -46,10 +46,10 @@ public:
 	void draw(Game* game) override;
 };
 
-class TankDestroyer : public Enemy
+class MissileLauncher : public Enemy
 {
 public:
-	TankDestroyer();
+	MissileLauncher();
 	void move(Game* game) override;
 	void draw(Game* game) override;
 };
@@ -65,4 +65,5 @@ public:
 	const std::vector<std::shared_ptr<Enemy>>& getEnemies() const { return enemies; }
 private:
 	std::vector<std::shared_ptr<Enemy>> enemies;
+	Vec2 makeRandomPos(Game* game);
 };
