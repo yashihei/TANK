@@ -20,10 +20,9 @@ void Enemy::defaultMove(Game* game) {
 		if (cnt == explosionAnimation->getCycleCnt()) enable = false;
 		game->getCamera2D()->shake(15);
 		explosionAnimation->move();
-		return;//FIXME:
+		return;
 	}
 	if (checkShotHit(game)) {
-		SoundAsset(L"hit").playMulti();
 		if (hp <= 0) {
 			state = State::Burn;
 			explosionAnimation->init(L"explosion", 7, 5);
@@ -32,8 +31,6 @@ void Enemy::defaultMove(Game* game) {
 			game->addScore(100);
 			return;
 		}
-		cnt = 0;
-		state = State::Damage;
 	}
 	if (cnt == 5) {
 		state = State::Normal;
@@ -46,13 +43,20 @@ void Enemy::defaultMove(Game* game) {
 	}
 }
 
+void Enemy::addDamage(int damage) {
+	hp -= damage;
+	SoundAsset(L"hit").playMulti();
+	cnt = 0;
+	state = State::Damage;
+}
+
 bool Enemy::checkShotHit(Game* game) {
 	auto& bullets = game->getBulletManager()->getBullets();
 	for (auto& bullet : bullets) {
-		if (bullet->getTarget() == Bullet::Target::PLAYER || !bullet->isEnabled()) continue;
-		if (Geometry2D::Intersect(Circle(bullet->getPos(), bullet->getRadius()), Circle(pos, radius))) {
+		if (bullet->getTarget() == Bullet::Target::PLAYER) continue;
+		if (Circle(pos, radius).intersects(Circle(bullet->getPos(), bullet->getRadius()))) {
 			bullet->disable();
-			hp -= bullet->getDamage();
+			addDamage(bullet->getDamage());
 			return true;
 		}
 	}
@@ -108,7 +112,6 @@ void Technyan::draw(Game* game) {
 		return;
 	}
 	TextureAsset(L"technyan").scale(0.5).rotate(radian + Pi/2).drawAt(screenPos, color);
-	//Circle(screenPos, 150).draw();
 }
 
 MissileLauncher::MissileLauncher() {
@@ -140,7 +143,6 @@ void MissileLauncher::draw(Game* game) {
 		return;
 	}
 	TextureAsset(L"missile_lancher").scale(2.0).rotate(radian + Pi / 2).drawAt(screenPos, color);
-	//Circle(screenPos, radius).draw(Palette::Yellow);
 }
 
 void EnemyManager::init() {
@@ -152,17 +154,6 @@ void EnemyManager::move(Game* game) {
 		enemy->move(game);
 	}
 	Erase_if(enemies, [](std::shared_ptr<Enemy> enemy) { return !enemy->isEnable(); });
-
-	if (System::FrameCount() % 90 == 0) {
-		auto e = std::make_shared<Technyan>();
-		e->setPos(makeRandomPos(game));
-		add(e);
-	}
-	if (System::FrameCount() % 400 == 0) {
-		auto e = std::make_shared<MissileLauncher>();
-		e->setPos(makeRandomPos(game));
-		add(e);
-	}
 }
 
 void EnemyManager::draw(Game* game) {
@@ -173,15 +164,4 @@ void EnemyManager::draw(Game* game) {
 
 void EnemyManager::add(std::shared_ptr<Enemy> e) {
 	enemies.push_back(e);
-}
-
-Vec2 EnemyManager::makeRandomPos(Game* game) {
-	Vec2 randomPos;
-	while (true) {
-		auto stageSize = game->getStageSize();
-		randomPos = Vec2(Random(0, stageSize.x), Random(0, stageSize.y));
-		if (!Geometry2D::Intersect(game->getPlayer()->getPos().asPoint(), Circle(randomPos, 150.0)))
-			break;
-	}
-	return randomPos;
 }

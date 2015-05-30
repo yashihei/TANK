@@ -42,6 +42,8 @@ private:
 	int score = 0;
 
 	void gameStart();
+	Vec2 makeRandomPos();
+	void makeEnemies();
 
 	void drawHUD();
 	void drawMinimap();

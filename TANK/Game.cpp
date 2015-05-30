@@ -55,6 +55,7 @@ void Game::move() {
 		player->move(this);
 		enemyManager->move(this);
 		bulletManager->move(this);
+		makeEnemies();
 		break;
 	case State::GAME_OVER:
 		enemyManager->move(this);
@@ -83,6 +84,29 @@ void Game::gameOver() {
 	state = State::GAME_OVER;
 	camera2D->posUpdate(this);
 	cnt = 0;
+}
+
+Vec2 Game::makeRandomPos() {
+	Vec2 randomPos;
+	while (true) {
+		randomPos = Vec2(Random(0, stageSize.x), Random(0, stageSize.y));
+		if (!Geometry2D::Intersect(player->getPos().asPoint(), Circle(randomPos, 150.0)))
+			break;
+	}
+	return randomPos;
+}
+
+void Game::makeEnemies() {
+	if (System::FrameCount() % 90 == 0) {
+		auto e = std::make_shared<Technyan>();
+		e->setPos(makeRandomPos());
+		enemyManager->add(e);
+	}
+	if (System::FrameCount() % 400 == 0) {
+		auto e = std::make_shared<MissileLauncher>();
+		e->setPos(makeRandomPos());
+		enemyManager->add(e);
+	}
 }
 
 void Game::draw() {
@@ -132,10 +156,15 @@ void Game::drawMinimap() {
 	Circle(playerPos / scale + offset, 2.0).draw(Palette::Yellow);
 	for (auto& enemy : enemies) {
 		if (enemy->getState() == Enemy::State::Burn) continue;
-		if (enemy)
-		Circle(enemy->getPos() / scale + offset, 2.0).draw(Palette::Red);
-		if (enemy->getState() == Enemy::State::Damage)
-			Circle(enemy->getPos() / scale + offset, 2.0).draw(Color(255).setAlpha(200));
+
+		Color color(Palette::Red);
+		if (typeid(*enemy.get()) == typeid(MissileLauncher)) {
+			color = Palette::Greenyellow;
+		}
+		if (enemy->getState() == Enemy::State::Damage) {
+			color = Palette::White;
+		}
+		Circle(enemy->getPos() / scale + offset, 2.0).draw(color);
 	}
 }
 

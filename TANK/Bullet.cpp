@@ -54,6 +54,19 @@ void Missile::draw(Game* game) {
 	missileAnimation->draw(screenPos, radian);
 }
 
+Bomb::Bomb() {
+	damage = 100;
+	radius = 200;
+	explosionAnimation = std::make_shared<Animation>();
+	explosionAnimation->init(L"explosion", 7, 5);
+}
+
+void Bomb::move(Game* game) {
+}
+
+void Bomb::draw(Game* game) {
+}
+
 void BulletManager::init() {
 	bullets.clear();
 }

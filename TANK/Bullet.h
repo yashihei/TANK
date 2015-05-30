@@ -20,6 +20,7 @@ public:
 	virtual void draw(Game* game) = 0;
 
 	Vec2 getPos() { return pos; }
+	Vec2 getVec() { return vec; }
 	Target getTarget() { return target; }
 	double getRadius() { return radius; }
 	int getDamage() { return damage; }
@@ -48,6 +49,14 @@ public:
 	void move(Game* game) override;
 	void draw(Game* game) override;
 	std::shared_ptr<Animation> missileAnimation;
+};
+
+class Bomb : public Bullet {
+public:
+	Bomb();
+	void move(Game* game) override;
+	void draw(Game* game) override;
+	std::shared_ptr<Animation> explosionAnimation;
 };
 
 class BulletManager

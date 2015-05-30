@@ -36,6 +36,7 @@ protected:
 
 	bool checkShotHit(Game* game);
 	void defaultMove(Game* game);
+	void addDamage(int damage);
 };
 
 class Technyan : public Enemy
@@ -65,5 +66,4 @@ public:
 	const std::vector<std::shared_ptr<Enemy>>& getEnemies() const { return enemies; }
 private:
 	std::vector<std::shared_ptr<Enemy>> enemies;
-	Vec2 makeRandomPos(Game* game);
 };
