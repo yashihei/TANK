@@ -10,9 +10,8 @@ void Bullet::setParam(Vec2 pos, Vec2 vec, double radian, Target target) {
 }
 
 void Bullet::checkOutStage(Game* game) {
-	Rect stageSize = game->getStageSize();
-
-	int margin = 15;
+	const Rect stageSize = game->getStageSize();
+	const int margin = 15;
 	if (pos.x > stageSize.x || pos.x < 0 || pos.y > stageSize.y || pos.y < 0) {
 		enable = false;
 	}
@@ -30,7 +29,7 @@ void NormalBullet::move(Game* game) {
 }
 
 void NormalBullet::draw(Game* game) {
-	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	TextureAsset(L"bullet").rotate(radian + Pi/2).drawAt(screenPos);
 }
 
@@ -50,7 +49,7 @@ void Missile::move(Game* game) {
 }
 
 void Missile::draw(Game* game) {
-	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	missileAnimation->draw(screenPos, radian);
 }
 

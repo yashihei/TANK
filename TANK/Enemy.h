@@ -21,16 +21,16 @@ public:
 	virtual void draw(Game* game) = 0;
 
 	void setPos(Vec2 pos) { this->pos = pos; }
-	Vec2 getPos() { return pos; }
-	double getRadius() { return radius; }
-	State getState() { return state; }
-	bool isEnable() { return enable; }
+	Vec2 getPos() const { return pos; }
+	double getRadius() const { return radius; }
+	State getState() const { return state; }
+	bool isEnabled() const { return enabled; }
 protected:
 	State state;
 	Vec2 pos, vec;
 	int hp, cnt;
 	double radian, radius;
-	bool enable;
+	bool enabled;
 	Color color;
 	std::shared_ptr<Animation> explosionAnimation;
 

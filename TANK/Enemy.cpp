@@ -7,7 +7,7 @@
 Enemy::Enemy() {
 	cnt = 0;
 	radian = 0.0;
-	enable = true;
+	enabled = true;
 	state = State::Normal;
 	explosionAnimation = std::make_shared<Animation>();
 }
@@ -17,7 +17,7 @@ void Enemy::defaultMove(Game* game) {
 	cnt++;
 
 	if (state == State::Burn) {
-		if (cnt == explosionAnimation->getCycleCnt()) enable = false;
+		if (cnt == explosionAnimation->getCycleCnt()) enabled = false;
 		game->getCamera2D()->shake(15);
 		explosionAnimation->move();
 		return;
@@ -73,19 +73,7 @@ void Technyan::move(Game* game) {
 	if (state == State::Burn) return;
 
 	const Vec2 playerPos = game->getPlayer()->getPos();
-	double sp = 2.0;
-	
-	//ù‰ñ‚É§ŒÀ FIXME:
-	//double tRad;
-	//double limitRad = Radians(2.0);
-	//tRad = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
-	//double difRad = rad - tRad;
-	//if (Abs(difRad) > limitRad) {
-	//	rad += (difRad > 0) ? -limitRad : limitRad;
-	//} else {
-	//	rad = tRad;
-	//}
-	//Println(L"EnemyRad:", rad);
+	const double sp = 2.0;
 	
 	radian = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
 
@@ -106,7 +94,7 @@ void Technyan::move(Game* game) {
 }
 
 void Technyan::draw(Game* game) {
-	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	if (state == State::Burn) {
 		explosionAnimation->draw(screenPos);
 		return;
@@ -137,7 +125,7 @@ void MissileLauncher::move(Game* game) {
 }
 
 void MissileLauncher::draw(Game* game) {
-	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	if (state == State::Burn) {
 		explosionAnimation->draw(screenPos);
 		return;
@@ -153,7 +141,7 @@ void EnemyManager::move(Game* game) {
 	for (auto& enemy : enemies) {
 		enemy->move(game);
 	}
-	Erase_if(enemies, [](std::shared_ptr<Enemy> enemy) { return !enemy->isEnable(); });
+	Erase_if(enemies, [](std::shared_ptr<Enemy> enemy) { return !enemy->isEnabled(); });
 }
 
 void EnemyManager::draw(Game* game) {

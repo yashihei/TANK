@@ -22,8 +22,8 @@ public:
 	void move(Game* game);
 	void draw(Game* game);
 
-	Vec2 getPos() { return pos; }
-	int getHp() { return hp; }
+	Vec2 getPos() const { return pos; }
+	int getHp() const { return hp; }
 private:
 	int hp;
 	Vec2 pos, vec;

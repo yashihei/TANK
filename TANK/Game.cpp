@@ -169,8 +169,8 @@ void Game::drawMinimap() {
 }
 
 void Game::drawHpCircle() {
-	int playerHp = player->getHp();
-	Vec2 screenPos = camera2D->convertToScreenPos(player->getPos());
+	const int playerHp = player->getHp();
+	const Vec2 screenPos = camera2D->convertToScreenPos(player->getPos());
 	if (playerHp < Player::HP_MAX)
 		Circle(screenPos, (500 / Player::HP_MAX) * playerHp).drawFrame(0.0, 1000.0, Color(255, 30, 30).setAlpha(70));
 }

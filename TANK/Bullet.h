@@ -19,12 +19,12 @@ public:
 	virtual void move(Game* game) = 0;
 	virtual void draw(Game* game) = 0;
 
-	Vec2 getPos() { return pos; }
-	Vec2 getVec() { return vec; }
-	Target getTarget() { return target; }
-	double getRadius() { return radius; }
-	int getDamage() { return damage; }
-	bool isEnabled() { return enable; }
+	Vec2 getPos() const { return pos; }
+	Vec2 getVec() const { return vec; }
+	Target getTarget() const { return target; }
+	double getRadius() const { return radius; }
+	int getDamage() const { return damage; }
+	bool isEnabled() const { return enable; }
 	void disable() { enable = false; }
 protected:
 	Vec2 pos, vec;

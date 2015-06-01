@@ -78,7 +78,7 @@ void Player::move(Game* game) {
 }
 
 void Player::draw(Game* game) {
-	Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	if (state == State::Burn) {
 		explosionAnimation->draw(screenPos);
 		return;

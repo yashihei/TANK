@@ -23,11 +23,11 @@ public:
 		GAME_OVER,
 	};
 	
-	std::shared_ptr<Player> getPlayer() { return player; }
-	std::shared_ptr<EnemyManager> getEnemyManager() { return enemyManager; }
-	std::shared_ptr<BulletManager> getBulletManager() { return bulletManager; }
-	std::shared_ptr<Camera2D> getCamera2D() { return camera2D; }
-	Rect getStageSize() { return stageSize; }
+	std::shared_ptr<Player> getPlayer() const { return player; }
+	std::shared_ptr<EnemyManager> getEnemyManager() const { return enemyManager; }
+	std::shared_ptr<BulletManager> getBulletManager() const { return bulletManager; }
+	std::shared_ptr<Camera2D> getCamera2D() const { return camera2D; }
+	Rect getStageSize() const { return stageSize; }
 	void gameOver();
 	void addScore(int score) { this->score += score; }
 private:
@@ -59,7 +59,7 @@ public:
 	void shake(int num);
 	Vec2 convertToScreenPos(Vec2 pos);
 
-	Vec2 getoffsetPos() { return offsetPos; }
+	Vec2 getoffsetPos() const { return offsetPos; }
 private:
 	Vec2 offsetPos = { 0, 0 };
 };
@@ -72,7 +72,7 @@ public:
 	void move();
 	void draw(Vec2 pos);
 	void draw(Vec2 pos, double radian);
-	int getCycleCnt() { return sepNum * intervalCnt; }
+	int getCycleCnt() const { return sepNum * intervalCnt; }
 private:
 	String assetName;
 	Point trimSize;
