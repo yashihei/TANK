@@ -7,23 +7,27 @@
 const int Player::HP_MAX = 7;
 const double Player::RADUIS = 10.0;
 
-void Player::init() {
-	hp = HP_MAX;
-	pos = Vec2(540.0, 540.0);
-	cnt = missileCnt = 0;
-	state = State::Normal;
-	radian = turretRad = 0.0;
-	color = Palette::White;
+Player::Player() {
 	explosionAnimation = std::make_shared<Animation>();
 }
 
+void Player::init() {
+	hp = HP_MAX;
+	pos = Vec2(540.0, 540.0);
+	vec = Vec2(0.0, 0.0);
+	stateCnt = missileCnt = shotCnt = 0;
+	state = State::Normal;
+	radian = turretRad = 0.0;
+	color = Palette::White;
+}
+
 void Player::move(Game* game) {
-	cnt++;
+	stateCnt++;
 
 	if (state == State::Burn) {
 		game->getCamera2D()->shake(30);
 		explosionAnimation->move();
-		if (cnt == explosionAnimation->getCycleCnt()) {
+		if (stateCnt == explosionAnimation->getCycleCnt()) {
 			game->gameOver();
 		}
 		return;
@@ -32,15 +36,15 @@ void Player::move(Game* game) {
 	if (checkEnemyShotHit(game)) {
 		SoundAsset(L"damage").playMulti();
 		state = State::Damage;
-		cnt = 0;
+		stateCnt = 0;
 		if (hp <= 0) {
 			state = State::Burn;
 			explosionAnimation->init(L"explosion", 7, 4);
 			SoundAsset(L"burn").playMulti();
 		}
-	} else if (cnt == 5) {
+	} else if (stateCnt == 5) {
 		state = State::Normal;
-	} else if (state == State::Normal && cnt % 30 == 0) {
+	} else if (state == State::Normal && stateCnt % 30 == 0) {
 		hp++;
 	}
 	hp = Clamp(hp, 0, HP_MAX);
@@ -92,7 +96,8 @@ void Player::fire(Game* game) {
 	const Vec2 offsetPos = game->getCamera2D()->getoffsetPos();
 	turretRad = Atan2(mousePos.y - pos.y - offsetPos.y, mousePos.x - pos.x - offsetPos.x);
 
-	if (Input::MouseL.pressed && System::FrameCount() % 3 == 0) {
+	shotCnt++;
+	if (Input::MouseL.pressed && shotCnt % 3 == 0) {
 		double shotRad = Atan2(mousePos.y - offsetPos.y - pos.y, mousePos.x - offsetPos.x - pos.x) + Radians(Random(-8.0, 8.0));
 		double shotSpeed = 15.0;
 

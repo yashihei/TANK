@@ -26,12 +26,12 @@ public:
 	State getState() const { return state; }
 	bool isEnabled() const { return enabled; }
 protected:
-	State state;
-	Vec2 pos, vec;
-	int hp, cnt;
-	double radian, radius;
-	bool enabled;
-	Color color;
+	State state = State::Normal;
+	Vec2 pos, vec = { 0.0, 0.0 };
+	int hp, stateCnt = 0, fireCnt = 0;
+	double radian = 0.0, radius;
+	bool enabled = true;
+	Color color = Palette::White;
 	std::shared_ptr<Animation> explosionAnimation;
 
 	bool checkShotHit(Game* game);
@@ -66,4 +66,6 @@ public:
 	const std::vector<std::shared_ptr<Enemy>>& getEnemies() const { return enemies; }
 private:
 	std::vector<std::shared_ptr<Enemy>> enemies;
+	Vec2 makeRandomPos(Game* game);
+	int cnt;
 };

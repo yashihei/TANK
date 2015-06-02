@@ -11,7 +11,7 @@ class Animation;
 class Game
 {
 public:
-	Game(){};
+	Game(){}
 	void init();
 	void move();
 	void draw();
@@ -42,8 +42,6 @@ private:
 	int score = 0;
 
 	void gameStart();
-	Vec2 makeRandomPos();
-	void makeEnemies();
 
 	void drawHUD();
 	void drawMinimap();

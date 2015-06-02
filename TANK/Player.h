@@ -17,7 +17,7 @@ public:
 		Burn,
 	};
 
-	Player(){};
+	Player();
 	void init();
 	void move(Game* game);
 	void draw(Game* game);
@@ -27,7 +27,7 @@ public:
 private:
 	int hp;
 	Vec2 pos, vec;
-	int cnt, missileCnt;
+	int stateCnt, missileCnt, shotCnt;
 	State state;
 	double radian, turretRad;
 	Color color;
