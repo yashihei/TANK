@@ -63,6 +63,7 @@ bool Enemy::checkShotHit(Game* game) {
 Technyan::Technyan() {
 	hp = 10;
 	radius = 35.0;
+	minimapColor = Palette::Red;
 }
 
 void Technyan::move(Game* game) {
@@ -103,6 +104,7 @@ void Technyan::draw(Game* game) {
 MissileLauncher::MissileLauncher() {
 	hp = 30;
 	radius = 30.0;
+	minimapColor = Palette::Greenyellow;
 }
 
 void MissileLauncher::move(Game* game) {

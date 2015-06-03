@@ -133,10 +133,7 @@ void Game::drawMinimap() {
 	for (auto& enemy : enemies) {
 		if (enemy->getState() == Enemy::State::Burn) continue;
 
-		Color color(Palette::Red);
-		if (typeid(*enemy.get()) == typeid(MissileLauncher)) {
-			color = Palette::Greenyellow;
-		}
+		Color color = enemy->getMinimapColor();
 		if (enemy->getState() == Enemy::State::Damage) {
 			color = Palette::White;
 		}

@@ -11,7 +11,7 @@ class Animation;
 class Game
 {
 public:
-	Game(){}
+	Game() = default;
 	void init();
 	void move();
 	void draw();
@@ -51,7 +51,7 @@ private:
 class Camera2D
 {
 public:
-	Camera2D(){};
+	Camera2D() = default;
 	void init();
 	void posUpdate(Game* game);
 	void shake(int num);
@@ -65,7 +65,7 @@ private:
 class Animation
 {
 public:
-	Animation(){};
+	Animation() = default;
 	void init(String name, int sepNum, int intervalCnt);
 	void move();
 	void draw(Vec2 pos);

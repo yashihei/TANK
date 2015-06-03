@@ -126,7 +126,6 @@ bool Player::checkEnemyShotHit(Game* game) {
 	auto& bullets = game->getBulletManager()->getBullets();
 	for (auto& bullet : bullets) {
 		if (bullet->getTarget() == Bullet::Target::ENEMY) continue;
-		auto bulletPos = bullet->getPos();
 		if (Circle(pos, RADUIS).intersects(Circle(bullet->getPos(), bullet->getRadius()))) {
 			bullet->disable();
 			hp -= bullet->getDamage();

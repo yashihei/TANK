@@ -25,13 +25,14 @@ public:
 	double getRadius() const { return radius; }
 	State getState() const { return state; }
 	bool isEnabled() const { return enabled; }
+	Color getMinimapColor() const { return minimapColor; }
 protected:
 	State state = State::Normal;
 	Vec2 pos, vec = { 0.0, 0.0 };
 	int hp, stateCnt = 0, fireCnt = 0;
 	double radian = 0.0, radius;
 	bool enabled = true;
-	Color color = Palette::White;
+	Color color = Palette::White, minimapColor;
 	std::shared_ptr<Animation> explosionAnimation;
 
 	bool checkShotHit(Game* game);
