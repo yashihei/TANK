@@ -35,7 +35,7 @@ void NormalBullet::draw(Game* game) {
 }
 
 Missile::Missile() {
-	damage = 30;
+	damage = 15;
 	radius = 10.0;
 	missileAnimation = std::make_shared<Animation>();
 	missileAnimation->init(L"missile", 4, 10);

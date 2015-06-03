@@ -107,19 +107,6 @@ void Player::fire(Game* game) {
 		bulletManager->add(bullet);
 		SoundAsset(L"shoot").playMulti();
 	}
-
-	missileCnt++;
-	if (Input::MouseR.clicked && missileCnt > 60) {
-		double shotRad = Atan2(mousePos.y - offsetPos.y - pos.y, mousePos.x - offsetPos.x - pos.x);
-		double shotSpeed = -5.0;
-
-		auto bulletManager = game->getBulletManager();
-		auto bullet = std::make_shared<Missile>();
-		bullet->setParam(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Target::ENEMY);
-		bulletManager->add(bullet);
-		SoundAsset(L"missile_shoot").playMulti();
-		missileCnt = 0;
-	}
 }
 
 bool Player::checkEnemyShotHit(Game* game) {

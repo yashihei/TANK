@@ -111,7 +111,7 @@ void Technyan::draw(Game* game) {
 }
 
 MissileLauncher::MissileLauncher() {
-	hp = 30;
+	hp = 15;
 	radius = 30.0;
 	minimapColor = Palette::Greenyellow;
 }
@@ -144,7 +144,7 @@ void MissileLauncher::draw(Game* game) {
 
 void EnemyManager::init() {
 	enemies.clear();
-	cnt = 0;
+	cnt = 1;
 }
 
 Vec2 EnemyManager::makeRandomPos(Game* game) {
@@ -164,12 +164,12 @@ void EnemyManager::move(Game* game) {
 	Erase_if(enemies, [](std::shared_ptr<Enemy> enemy) { return !enemy->isEnabled(); });
 
 	cnt++;
-	if (cnt % 90 == 0) {
+	if (cnt % 180 == 0) {
 		auto e = std::make_shared<Technyan>();
 		e->setPos(makeRandomPos(game));
 		add(e);
 	}
-	if (cnt % 400 == 0) {
+	if (cnt % 800 == 0) {
 		auto e = std::make_shared<MissileLauncher>();
 		e->setPos(makeRandomPos(game));
 		add(e);
