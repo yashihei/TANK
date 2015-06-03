@@ -17,7 +17,7 @@ public:
 	};
 
 	Enemy();
-	virtual void move(Game* game) = 0;
+	virtual void move(Game* game);
 	virtual void draw(Game* game) = 0;
 
 	void setPos(Vec2 pos) { this->pos = pos; }
@@ -36,20 +36,23 @@ protected:
 	std::shared_ptr<Animation> explosionAnimation;
 
 	bool checkShotHit(Game* game);
-	void defaultMove(Game* game);
 	void addDamage(int damage);
 };
 
 class Technyan : public Enemy
 {
+using Super = Enemy;
 public:
 	Technyan();
 	void move(Game* game) override;
 	void draw(Game* game) override;
+private:
+	double turretRad;
 };
 
 class MissileLauncher : public Enemy
 {
+using Super = Enemy;
 public:
 	MissileLauncher();
 	void move(Game* game) override;

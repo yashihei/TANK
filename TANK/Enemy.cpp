@@ -9,7 +9,7 @@ Enemy::Enemy() {
 }
 
 //FIXME:‚à‚¤­‚µ‚¢‚¢‘‚«•û‚ª‚ ‚é‚Í‚¸
-void Enemy::defaultMove(Game* game) {
+void Enemy::move(Game* game) {
 	stateCnt++;
 	fireCnt++;
 
@@ -63,17 +63,21 @@ bool Enemy::checkShotHit(Game* game) {
 Technyan::Technyan() {
 	hp = 10;
 	radius = 35.0;
+	turretRad = 0.0;
 	minimapColor = Palette::Red;
 }
 
 void Technyan::move(Game* game) {
-	defaultMove(game);
+	Super::move(game);
 	if (state == State::Burn) return;
+	if (state == State::Normal) {
+		color = Palette::Yellow;
+	}
 
 	const Vec2 playerPos = game->getPlayer()->getPos();
 	const double sp = 2.0;
 	
-	radian = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
+	radian = turretRad = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
 
 	if (!Geometry2D::Intersect(Circle(playerPos, 100.0), Circle(pos, radius))) {
 		vec.x = Cos(radian) * sp;
@@ -98,7 +102,8 @@ void Technyan::draw(Game* game) {
 		explosionAnimation->draw(screenPos);
 		return;
 	}
-	TextureAsset(L"technyan").scale(0.5).rotate(radian + Pi/2).drawAt(screenPos, color);
+	TextureAsset(L"playerTank").rotate(radian + Pi/2).drawAt(screenPos, color);
+	TextureAsset(L"turret").rotate(turretRad + Pi/2).drawAt(screenPos, color);
 }
 
 MissileLauncher::MissileLauncher() {
@@ -108,7 +113,7 @@ MissileLauncher::MissileLauncher() {
 }
 
 void MissileLauncher::move(Game* game) {
-	defaultMove(game);
+	Super::move(game);
 	if (state == State::Burn) return;
 	const Vec2 playerPos = game->getPlayer()->getPos();
 	radian = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
@@ -130,7 +135,7 @@ void MissileLauncher::draw(Game* game) {
 		explosionAnimation->draw(screenPos);
 		return;
 	}
-	TextureAsset(L"missile_lancher").scale(2.0).rotate(radian + Pi / 2).drawAt(screenPos, color);
+	TextureAsset(L"missile_lancher").scale(1.5).rotate(radian + Pi / 2).drawAt(screenPos, color);
 }
 
 void EnemyManager::init() {
