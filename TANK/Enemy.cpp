@@ -63,8 +63,8 @@ bool Enemy::checkShotHit(Game* game) {
 Technyan::Technyan() {
 	hp = 10;
 	radius = 35.0;
-	turretRad = 0.0;
 	minimapColor = Palette::Red;
+	turnRad = Radians(3.0);
 }
 
 void Technyan::move(Game* game) {
@@ -75,21 +75,24 @@ void Technyan::move(Game* game) {
 	}
 
 	const Vec2 playerPos = game->getPlayer()->getPos();
-	const double sp = 2.0;
+	const double sp = 3.0;
 	
-	radian = turretRad = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
+	turretRad = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
 
-	if (!Geometry2D::Intersect(Circle(playerPos, 100.0), Circle(pos, radius))) {
-		vec.x = Cos(radian) * sp;
-		vec.y = Sin(radian) * sp;
-		pos += vec;
-	}
+	if (Random(0, 60) == 0) turnRad *= -1;
+	radian += turnRad;
 
-	if (fireCnt % 7 == 0) {
+	vec.x = Cos(radian) * sp;
+	vec.y = Sin(radian) * sp;
+	pos += vec;
+	pos.x = Clamp(pos.x, 0.0, static_cast<double>(game->getStageSize().x));
+	pos.y = Clamp(pos.y, 0.0, static_cast<double>(game->getStageSize().y));
+
+	if (fireCnt % 7 == 0 && fireCnt % 120 < 60) {
 		auto bulletManager = game->getBulletManager();
 		auto bullet = std::make_shared<NormalBullet>();
 		const double bulletSp = 15.0;
-		const double shotRad = radian;
+		const double shotRad = turretRad;
 
 		bullet->setParam(pos, { Cos(shotRad) * bulletSp, Sin(shotRad) * bulletSp }, shotRad, Bullet::Target::PLAYER);
 		bulletManager->add(bullet);
@@ -104,6 +107,7 @@ void Technyan::draw(Game* game) {
 	}
 	TextureAsset(L"playerTank").rotate(radian + Pi/2).drawAt(screenPos, color);
 	TextureAsset(L"turret").rotate(turretRad + Pi/2).drawAt(screenPos, color);
+	//Circle(screenPos, radius).draw(Palette::Red);
 }
 
 MissileLauncher::MissileLauncher() {

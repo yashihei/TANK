@@ -47,7 +47,8 @@ public:
 	void move(Game* game) override;
 	void draw(Game* game) override;
 private:
-	double turretRad;
+	double turretRad = 0.0;
+	double turnRad;
 };
 
 class MissileLauncher : public Enemy
