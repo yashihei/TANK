@@ -39,11 +39,11 @@ protected:
 	void addDamage(int damage);
 };
 
-class Technyan : public Enemy
+class T3485 : public Enemy
 {
 using Super = Enemy;
 public:
-	Technyan();
+	T3485();
 	void move(Game* game) override;
 	void draw(Game* game) override;
 private:

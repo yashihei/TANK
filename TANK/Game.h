@@ -52,7 +52,6 @@ class Camera2D
 {
 public:
 	Camera2D() = default;
-	void init();
 	void posUpdate(Game* game);
 	void shake(int num);
 	Vec2 convertToScreenPos(Vec2 pos);
@@ -77,4 +76,11 @@ private:
 	int intervalCnt, sepNum;
 	int cnt = 0;
 	Rect trimRect;
+};
+
+class Item
+{
+public:
+	Item() = default;
+private:
 };

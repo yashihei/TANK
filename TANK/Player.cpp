@@ -107,12 +107,18 @@ void Player::fire(Game* game) {
 		bulletManager->add(bullet);
 		SoundAsset(L"shoot").playMulti();
 	}
+	//if (Input::MouseM.clicked) {
+	//	auto bulletManager = game->getBulletManager();
+	//	auto bullet = std::make_shared<Bomb>();
+	//	bullet->setParam(pos, Vec2::Zero, 0.0, Bullet::Target::NONE);
+	//	bulletManager->add(bullet);
+	//}
 }
 
 bool Player::checkEnemyShotHit(Game* game) {
 	auto& bullets = game->getBulletManager()->getBullets();
 	for (auto& bullet : bullets) {
-		if (bullet->getTarget() == Bullet::Target::ENEMY) continue;
+		if (bullet->getTarget() != Bullet::Target::PLAYER) continue;
 		if (Circle(pos, RADUIS).intersects(Circle(bullet->getPos(), bullet->getRadius()))) {
 			bullet->disable();
 			hp -= bullet->getDamage();

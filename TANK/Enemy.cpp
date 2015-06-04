@@ -50,7 +50,7 @@ void Enemy::addDamage(int damage) {
 bool Enemy::checkShotHit(Game* game) {
 	auto& bullets = game->getBulletManager()->getBullets();
 	for (auto& bullet : bullets) {
-		if (bullet->getTarget() == Bullet::Target::PLAYER) continue;
+		if (bullet->getTarget() != Bullet::Target::ENEMY) continue;
 		if (Circle(pos, radius).intersects(Circle(bullet->getPos(), bullet->getRadius()))) {
 			bullet->disable();
 			addDamage(bullet->getDamage());
@@ -60,14 +60,14 @@ bool Enemy::checkShotHit(Game* game) {
 	return false;
 }
 
-Technyan::Technyan() {
+T3485::T3485() {
 	hp = 10;
 	radius = 35.0;
 	minimapColor = Palette::Red;
 	turnRad = Radians(3.0);
 }
 
-void Technyan::move(Game* game) {
+void T3485::move(Game* game) {
 	Super::move(game);
 	if (state == State::Burn) return;
 	if (state == State::Normal) {
@@ -88,7 +88,7 @@ void Technyan::move(Game* game) {
 	pos.x = Clamp(pos.x, 0.0, static_cast<double>(game->getStageSize().x));
 	pos.y = Clamp(pos.y, 0.0, static_cast<double>(game->getStageSize().y));
 
-	if (fireCnt % 7 == 0 && fireCnt % 120 < 60) {
+	if (fireCnt % 7 == 0 && fireCnt % 100 > 50 && Circle(pos, 500).intersects(playerPos)) {
 		auto bulletManager = game->getBulletManager();
 		auto bullet = std::make_shared<NormalBullet>();
 		const double bulletSp = 15.0;
@@ -99,7 +99,7 @@ void Technyan::move(Game* game) {
 	}
 }
 
-void Technyan::draw(Game* game) {
+void T3485::draw(Game* game) {
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	if (state == State::Burn) {
 		explosionAnimation->draw(screenPos);
@@ -151,7 +151,7 @@ Vec2 EnemyManager::makeRandomPos(Game* game) {
 	Vec2 randomPos;
 	while (true) {
 		randomPos = Vec2(Random(0, game->getStageSize().x), Random(0, game->getStageSize().y));
-		if (!Geometry2D::Intersect(game->getPlayer()->getPos().asPoint(), Circle(randomPos, 150.0)))
+		if (!Geometry2D::Intersect(game->getPlayer()->getPos().asPoint(), Circle(randomPos, 200.0)))
 			break;
 	}
 	return randomPos;
@@ -164,12 +164,12 @@ void EnemyManager::move(Game* game) {
 	Erase_if(enemies, [](std::shared_ptr<Enemy> enemy) { return !enemy->isEnabled(); });
 
 	cnt++;
-	if (cnt % 180 == 0) {
-		auto e = std::make_shared<Technyan>();
+	if (cnt % 90 == 0) {
+		auto e = std::make_shared<T3485>();
 		e->setPos(makeRandomPos(game));
 		add(e);
 	}
-	if (cnt % 800 == 0) {
+	if (cnt % 400 == 0) {
 		auto e = std::make_shared<MissileLauncher>();
 		e->setPos(makeRandomPos(game));
 		add(e);

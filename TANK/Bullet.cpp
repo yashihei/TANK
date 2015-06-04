@@ -24,7 +24,6 @@ NormalBullet::NormalBullet() {
 }
 
 void NormalBullet::move(Game* game) {
-	cnt++;
 	pos += vec;
 	checkOutStage(game);
 }
@@ -62,9 +61,12 @@ Bomb::Bomb() {
 }
 
 void Bomb::move(Game* game) {
+	cnt++;
 }
 
 void Bomb::draw(Game* game) {
+	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	Circle(screenPos, 10.0).draw(Color(255, 255, 0, 122));
 }
 
 void BulletManager::init() {
