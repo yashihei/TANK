@@ -62,7 +62,7 @@ bool Enemy::checkShotHit(Game* game) {
 
 T3485::T3485() {
 	hp = 10;
-	radius = 35.0;
+	radius = 30.0;
 	minimapColor = Palette::Red;
 	turnRad = Radians(3.0);
 }
@@ -70,9 +70,6 @@ T3485::T3485() {
 void T3485::move(Game* game) {
 	Super::move(game);
 	if (state == State::Burn) return;
-	if (state == State::Normal) {
-		color = Palette::Yellow;
-	}
 
 	const Vec2 playerPos = game->getPlayer()->getPos();
 	const double sp = 3.0;
@@ -105,9 +102,8 @@ void T3485::draw(Game* game) {
 		explosionAnimation->draw(screenPos);
 		return;
 	}
-	TextureAsset(L"playerTank").rotate(radian + Pi/2).drawAt(screenPos, color);
-	TextureAsset(L"turret").rotate(turretRad + Pi/2).drawAt(screenPos, color);
-	//Circle(screenPos, radius).draw(Palette::Red);
+	TextureAsset(L"T-34-85").rotate(radian + Pi/2).drawAt(screenPos, color);
+	TextureAsset(L"T-34-85_turret").rotate(turretRad + Pi/2).drawAt(screenPos, color);
 }
 
 MissileLauncher::MissileLauncher() {

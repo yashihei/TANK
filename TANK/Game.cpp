@@ -9,13 +9,14 @@ void Game::init() {
 	TextureAsset::Register(L"turret", L"dat/turret.png");
 	TextureAsset::Register(L"bullet", L"dat/bullet.png");
 	TextureAsset::Register(L"backGround", L"dat/background.png");
-	TextureAsset::Register(L"technyan", L"dat/technyan.png");
 	TextureAsset::Register(L"explosion", L"dat/explosion.png");
 	TextureAsset::Register(L"missile", L"dat/missile.png");
 	TextureAsset::Register(L"missile_lancher", L"dat/missile_launcher.png");
 	TextureAsset::Register(L"marker", L"dat/marker.png");
 	TextureAsset::Register(L"title", L"dat/title.png");
 	TextureAsset::Register(L"gameOver", L"dat/gameover.png");
+	TextureAsset::Register(L"T-34-85", L"dat/T-34-85.png");
+	TextureAsset::Register(L"T-34-85_turret", L"dat/T-34-85_turret.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
 	SoundAsset::Register(L"missile_shoot", L"dat/missile_shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
