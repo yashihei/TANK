@@ -17,6 +17,7 @@ void Game::init() {
 	TextureAsset::Register(L"gameOver", L"dat/gameover.png");
 	TextureAsset::Register(L"T-34-85", L"dat/T-34-85.png");
 	TextureAsset::Register(L"T-34-85_turret", L"dat/T-34-85_turret.png");
+	TextureAsset::Register(L"rut", L"dat/rut.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
 	SoundAsset::Register(L"missile_shoot", L"dat/missile_shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");

@@ -19,6 +19,7 @@ void Player::init() {
 	state = State::Normal;
 	radian = turretRad = 0.0;
 	color = Palette::White;
+	ruts.clear();
 }
 
 void Player::move(Game* game) {
@@ -78,10 +79,23 @@ void Player::move(Game* game) {
 		radian -= Radians(turnSpeed);
 	}
 
+	auto rut = std::make_shared<Rut>();
+	rut->pos = pos;
+	rut->radian = radian;
+	ruts.push_back(rut);
+
+	for (auto& rut : ruts) {
+		rut->cnt++;
+	}
+	Erase_if(ruts, [](std::shared_ptr<Rut> rut) { return rut->cnt > 60; });
+
 	fire(game);
 }
 
 void Player::draw(Game* game) {
+	for (auto& rut : ruts) {
+		TextureAsset(L"rut").rotate(rut->radian + Pi / 2).drawAt(game->getCamera2D()->convertToScreenPos(rut->pos), Alpha(255 - 255 / 60 * rut->cnt));
+	}
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	if (state == State::Burn) {
 		explosionAnimation->draw(screenPos);

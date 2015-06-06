@@ -33,6 +33,14 @@ private:
 	Color color;
 	std::shared_ptr<Animation> explosionAnimation;
 
+	struct Rut
+	{
+		Vec2 pos;
+		double radian;
+		int cnt = 0;
+	};
+	std::vector<std::shared_ptr<Rut>> ruts;
+
 	void fire(Game* game);
 	bool checkEnemyShotHit(Game* game);
 };
