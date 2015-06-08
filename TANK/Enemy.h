@@ -10,10 +10,9 @@ class Enemy
 {
 public:
 	enum class State {
-		Spawn,
-		Normal,
-		Damage,
-		Burn,
+		NORMAL,
+		DAMAGE,
+		BURN,
 	};
 
 	Enemy();
@@ -27,7 +26,7 @@ public:
 	bool isEnabled() const { return enabled; }
 	Color getMinimapColor() const { return minimapColor; }
 protected:
-	State state = State::Normal;
+	State state = State::NORMAL;
 	Vec2 pos, vec = { 0.0, 0.0 };
 	int hp, stateCnt = 0, fireCnt = 0;
 	double radian = 0.0, radius;

@@ -13,7 +13,7 @@ void Enemy::move(Game* game) {
 	stateCnt++;
 	fireCnt++;
 
-	if (state == State::Burn) {
+	if (state == State::BURN) {
 		if (stateCnt == explosionAnimation->getCycleCnt()) enabled = false;
 		game->getCamera2D()->shake(15);
 		explosionAnimation->move();
@@ -21,7 +21,7 @@ void Enemy::move(Game* game) {
 	}
 	if (checkShotHit(game)) {
 		if (hp <= 0) {
-			state = State::Burn;
+			state = State::BURN;
 			explosionAnimation->init(L"explosion", 7, 5);
 			SoundAsset(L"burn").playMulti();
 			stateCnt = 0;
@@ -30,10 +30,10 @@ void Enemy::move(Game* game) {
 		}
 	}
 	if (stateCnt == 5) {
-		state = State::Normal;
+		state = State::NORMAL;
 	}
 
-	if (state == State::Damage) {
+	if (state == State::DAMAGE) {
 		color = Palette::Red;
 	} else {
 		color = Palette::White;
@@ -44,7 +44,7 @@ void Enemy::addDamage(int damage) {
 	hp -= damage;
 	SoundAsset(L"hit").playMulti();
 	stateCnt = 0;
-	state = State::Damage;
+	state = State::DAMAGE;
 }
 
 bool Enemy::checkShotHit(Game* game) {
@@ -69,7 +69,7 @@ T3485::T3485() {
 
 void T3485::move(Game* game) {
 	Super::move(game);
-	if (state == State::Burn) return;
+	if (state == State::BURN) return;
 
 	const Vec2 playerPos = game->getPlayer()->getPos();
 	const double sp = 3.0;
@@ -98,7 +98,7 @@ void T3485::move(Game* game) {
 
 void T3485::draw(Game* game) {
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	if (state == State::Burn) {
+	if (state == State::BURN) {
 		explosionAnimation->draw(screenPos);
 		return;
 	}
@@ -114,7 +114,7 @@ MissileLauncher::MissileLauncher() {
 
 void MissileLauncher::move(Game* game) {
 	Super::move(game);
-	if (state == State::Burn) return;
+	if (state == State::BURN) return;
 	const Vec2 playerPos = game->getPlayer()->getPos();
 	radian = Atan2(playerPos.y - pos.y, playerPos.x - pos.x);
 
@@ -131,7 +131,7 @@ void MissileLauncher::move(Game* game) {
 
 void MissileLauncher::draw(Game* game) {
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	if (state == State::Burn) {
+	if (state == State::BURN) {
 		explosionAnimation->draw(screenPos);
 		return;
 	}

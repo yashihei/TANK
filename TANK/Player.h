@@ -12,9 +12,9 @@ public:
 	static const int HP_MAX;
 	static const double RADUIS;
 	enum class State {
-		Normal,
-		Damage,
-		Burn,
+		NORMAL,
+		DAMAGE,
+		BURN,
 	};
 
 	Player();

@@ -46,7 +46,7 @@ void Game::init() {
 
 void Game::move() {
 	if (Input::KeySpace.pressed) return;
-	cnt++;
+	stateCnt++;
 
 	switch (state) {
 	case State::TITLE:
@@ -63,7 +63,7 @@ void Game::move() {
 	case State::GAME_OVER:
 		enemyManager->move(this);
 		bulletManager->move(this);
-		if (Input::MouseL.clicked || cnt > 300) {
+		if (Input::MouseL.clicked || stateCnt > 300) {
 			SoundAsset(L"bgm").stop();
 			state = State::TITLE;
 		}
@@ -86,7 +86,7 @@ void Game::gameStart() {
 void Game::gameOver() {
 	state = State::GAME_OVER;
 	camera2D->posUpdate(this);
-	cnt = 0;
+	stateCnt = 0;
 }
 
 void Game::draw() {
@@ -135,10 +135,10 @@ void Game::drawMinimap() {
 	mapRect.draw({ 0, 122, 255, 122 });
 	Circle(playerPos / scale + offset, 2.0).draw(Palette::Yellow);
 	for (auto& enemy : enemies) {
-		if (enemy->getState() == Enemy::State::Burn) continue;
+		if (enemy->getState() == Enemy::State::BURN) continue;
 
 		Color color = enemy->getMinimapColor();
-		if (enemy->getState() == Enemy::State::Damage) {
+		if (enemy->getState() == Enemy::State::DAMAGE) {
 			color = Palette::White;
 		}
 		Circle(enemy->getPos() / scale + offset, 2.0).draw(color);

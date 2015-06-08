@@ -38,8 +38,9 @@ private:
 
 	Rect stageSize;
 	State state = State::TITLE;
-	int cnt = 0;
+	int stateCnt = 0, levelCnt = 0;
 	int score = 0;
+	int level = 1;
 
 	void gameStart();
 
@@ -78,9 +79,21 @@ private:
 	Rect trimRect;
 };
 
-class Item
-{
+class Item {
 public:
+	enum class Type {
+		NONE,
+		INCREASE_SHOT,
+		SEPARATE_SHOT,
+		SPEED_UP,
+	};
 	Item() = default;
+	void move();
+	void draw();
+
+	void setPos(Vec2 pos) { this->pos = pos; }
+	Vec2 getPos() const { return pos; }
 private:
+	Vec2 pos;
+	bool enable = true;
 };

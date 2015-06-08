@@ -16,7 +16,7 @@ void Player::init() {
 	pos = Vec2(540.0, 540.0);
 	vec = Vec2(0.0, 0.0);
 	stateCnt = missileCnt = shotCnt = 0;
-	state = State::Normal;
+	state = State::NORMAL;
 	radian = turretRad = 0.0;
 	color = Palette::White;
 	ruts.clear();
@@ -25,7 +25,7 @@ void Player::init() {
 void Player::move(Game* game) {
 	stateCnt++;
 
-	if (state == State::Burn) {
+	if (state == State::BURN) {
 		game->getCamera2D()->shake(30);
 		explosionAnimation->move();
 		if (stateCnt == explosionAnimation->getCycleCnt()) {
@@ -36,21 +36,21 @@ void Player::move(Game* game) {
 
 	if (checkEnemyShotHit(game)) {
 		SoundAsset(L"damage").playMulti();
-		state = State::Damage;
+		state = State::DAMAGE;
 		stateCnt = 0;
 		if (hp <= 0) {
-			state = State::Burn;
+			state = State::BURN;
 			explosionAnimation->init(L"explosion", 7, 4);
 			SoundAsset(L"burn").playMulti();
 		}
 	} else if (stateCnt == 5) {
-		state = State::Normal;
-	} else if (state == State::Normal && stateCnt % 30 == 0) {
+		state = State::NORMAL;
+	} else if (state == State::NORMAL && stateCnt % 30 == 0) {
 		hp++;
 	}
 	hp = Clamp(hp, 0, HP_MAX);
 
-	if (state == State::Damage) {
+	if (state == State::DAMAGE) {
 		color = Palette::Red;
 	} else {
 		color = Palette::White;
@@ -97,7 +97,7 @@ void Player::draw(Game* game) {
 		TextureAsset(L"rut").rotate(rut->radian + Pi / 2).drawAt(game->getCamera2D()->convertToScreenPos(rut->pos), Alpha(255 - 255 / 60 * rut->cnt));
 	}
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	if (state == State::Burn) {
+	if (state == State::BURN) {
 		explosionAnimation->draw(screenPos);
 		return;
 	}
