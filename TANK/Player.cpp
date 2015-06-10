@@ -112,29 +112,22 @@ void Player::fire(Game* game) {
 
 	shotCnt++;
 	if (Input::MouseL.pressed && shotCnt % 3 == 0) {
+		auto bulletManager = game->getBulletManager();
 		double shotRad = Atan2(mousePos.y - offsetPos.y - pos.y, mousePos.x - offsetPos.x - pos.x) + Radians(Random(-8.0, 8.0));
 		double shotSpeed = 15.0;
-
-		auto bulletManager = game->getBulletManager();
 		auto bullet = std::make_shared<NormalBullet>();
 		bullet->setParam(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Target::ENEMY);
 		bulletManager->add(bullet);
 		SoundAsset(L"shoot").playMulti();
 	}
-	//if (Input::MouseM.clicked) {
-	//	auto bulletManager = game->getBulletManager();
-	//	auto bullet = std::make_shared<Bomb>();
-	//	bullet->setParam(pos, Vec2::Zero, 0.0, Bullet::Target::NONE);
-	//	bulletManager->add(bullet);
-	//}
 }
 
 bool Player::checkEnemyShotHit(Game* game) {
-	auto& bullets = game->getBulletManager()->getBullets();
-	for (auto& bullet : bullets) {
+	auto bulletManager = game->getBulletManager();
+	for (auto& bullet : *bulletManager) {
 		if (bullet->getTarget() != Bullet::Target::PLAYER) continue;
 		if (Circle(pos, RADUIS).intersects(Circle(bullet->getPos(), bullet->getRadius()))) {
-			bullet->disable();
+			bullet->kill();
 			hp -= bullet->getDamage();
 			return true;
 		}

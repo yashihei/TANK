@@ -69,23 +69,10 @@ void Bomb::draw(Game* game) {
 	Circle(screenPos, 10.0).draw(Color(255, 255, 0, 122));
 }
 
-void BulletManager::init() {
-	bullets.clear();
-}
-
-void BulletManager::add(std::shared_ptr<Bullet> bullet) {
-	bullets.push_back(bullet);
-}
-
 void BulletManager::move(Game* game) {
-	for (auto& bullet : bullets) {
-		bullet->move(game);
-	}
-	Erase_if(bullets, [](std::shared_ptr<Bullet> bullet) { return !bullet->isEnabled(); });
+	Super::move(game);
 }
 
 void BulletManager::draw(Game* game) {
-	for (auto& bullet : bullets) {
-		bullet->draw(game);
-	}
+	Super::draw(game);
 }

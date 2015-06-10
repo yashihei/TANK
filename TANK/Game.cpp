@@ -33,8 +33,8 @@ void Game::init() {
 	camera2D = std::make_shared<Camera2D>();
 
 	player->init();
-	enemyManager->init();
-	bulletManager->init();
+	enemyManager->clear();
+	bulletManager->clear();
 
 	SoundAsset(L"bgm").setLoop(true);
 	SoundAsset(L"missile_shoot").setSpeed(1.5);
@@ -70,14 +70,14 @@ void Game::move() {
 		break;
 	}
 
-	if (Input::KeyR.clicked) enemyManager->init();
+	if (Input::KeyR.clicked) enemyManager->clear();
 	if (Input::KeyP.pressed) camera2D->shake(30);
 }
 
 void Game::gameStart() {
 	player->init();
-	enemyManager->init();
-	bulletManager->init();
+	enemyManager->clear();
+	bulletManager->clear();
 	SoundAsset(L"bgm").play();
 	state = State::PLAY;
 	score = 0;
@@ -126,7 +126,6 @@ void Game::drawHUD() {
 }
 
 void Game::drawMinimap() {
-	auto& enemies = enemyManager->getEnemies();
 	const Vec2 offset(Window::Width() - 150, 30);
 	const Rect mapRect(offset.asPoint(), {120, 120});
 	const double scale = static_cast<double>(stageSize.x) / mapRect.w;
@@ -134,7 +133,7 @@ void Game::drawMinimap() {
 
 	mapRect.draw({ 0, 122, 255, 122 });
 	Circle(playerPos / scale + offset, 2.0).draw(Palette::Yellow);
-	for (auto& enemy : enemies) {
+	for (auto& enemy : *enemyManager) {
 		if (enemy->getState() == Enemy::State::BURN) continue;
 
 		Color color = enemy->getMinimapColor();

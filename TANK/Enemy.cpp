@@ -14,7 +14,7 @@ void Enemy::move(Game* game) {
 	fireCnt++;
 
 	if (state == State::BURN) {
-		if (stateCnt == explosionAnimation->getCycleCnt()) enabled = false;
+		if (stateCnt == explosionAnimation->getCycleCnt()) kill();
 		game->getCamera2D()->shake(15);
 		explosionAnimation->move();
 		return;
@@ -48,11 +48,11 @@ void Enemy::addDamage(int damage) {
 }
 
 bool Enemy::checkShotHit(Game* game) {
-	auto& bullets = game->getBulletManager()->getBullets();
-	for (auto& bullet : bullets) {
+	auto bulletManager = game->getBulletManager();
+	for (auto bullet : *bulletManager) {
 		if (bullet->getTarget() != Bullet::Target::ENEMY) continue;
 		if (Circle(pos, radius).intersects(Circle(bullet->getPos(), bullet->getRadius()))) {
-			bullet->disable();
+			bullet->kill();
 			addDamage(bullet->getDamage());
 			return true;
 		}
@@ -138,11 +138,6 @@ void MissileLauncher::draw(Game* game) {
 	TextureAsset(L"missile_lancher").scale(1.5).rotate(radian + Pi / 2).drawAt(screenPos, color);
 }
 
-void EnemyManager::init() {
-	enemies.clear();
-	cnt = 1;
-}
-
 Vec2 EnemyManager::makeRandomPos(Game* game) {
 	Vec2 randomPos;
 	while (true) {
@@ -154,11 +149,7 @@ Vec2 EnemyManager::makeRandomPos(Game* game) {
 }
 
 void EnemyManager::move(Game* game) {
-	for (auto& enemy : enemies) {
-		enemy->move(game);
-	}
-	Erase_if(enemies, [](std::shared_ptr<Enemy> enemy) { return !enemy->isEnabled(); });
-
+	Super::move(game);
 	cnt++;
 	if (cnt % 90 == 0) {
 		auto e = std::make_shared<T3485>();
@@ -173,11 +164,5 @@ void EnemyManager::move(Game* game) {
 }
 
 void EnemyManager::draw(Game* game) {
-	for (auto& enemy : enemies) {
-		enemy->draw(game);
-	}
-}
-
-void EnemyManager::add(std::shared_ptr<Enemy> e) {
-	enemies.push_back(e);
+	Super::draw(game);
 }

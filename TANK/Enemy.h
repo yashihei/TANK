@@ -2,11 +2,12 @@
 #include <Siv3D.hpp>
 #include <vector>
 #include <memory>
+#include "Actor.h"
 
 class Game;
 class Animation;
 
-class Enemy
+class Enemy : public Actor
 {
 public:
 	enum class State {
@@ -23,14 +24,12 @@ public:
 	Vec2 getPos() const { return pos; }
 	double getRadius() const { return radius; }
 	State getState() const { return state; }
-	bool isEnabled() const { return enabled; }
 	Color getMinimapColor() const { return minimapColor; }
 protected:
 	State state = State::NORMAL;
 	Vec2 pos, vec = { 0.0, 0.0 };
 	int hp, stateCnt = 0, fireCnt = 0;
 	double radian = 0.0, radius;
-	bool enabled = true;
 	Color color = Palette::White, minimapColor;
 	std::shared_ptr<Animation> explosionAnimation;
 
@@ -59,17 +58,13 @@ public:
 	void draw(Game* game) override;
 };
 
-class EnemyManager
+class EnemyManager : public ActorManager<Enemy>
 {
 public:
-	void init();
-	void move(Game* game);
-	void draw(Game* game);
-	void add(std::shared_ptr<Enemy>);
-
-	const std::vector<std::shared_ptr<Enemy>>& getEnemies() const { return enemies; }
+	using Super = ActorManager<Enemy>;
+	void move(Game* game) override;
+	void draw(Game* game) override;
 private:
-	std::vector<std::shared_ptr<Enemy>> enemies;
 	Vec2 makeRandomPos(Game* game);
-	int cnt;
+	int cnt = 0;
 };
