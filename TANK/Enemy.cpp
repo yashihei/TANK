@@ -138,29 +138,8 @@ void MissileLauncher::draw(Game* game) {
 	TextureAsset(L"missile_lancher").scale(1.5).rotate(radian + Pi / 2).drawAt(screenPos, color);
 }
 
-Vec2 EnemyManager::makeRandomPos(Game* game) {
-	Vec2 randomPos;
-	while (true) {
-		randomPos = Vec2(Random(0, game->getStageSize().x), Random(0, game->getStageSize().y));
-		if (!Geometry2D::Intersect(game->getPlayer()->getPos().asPoint(), Circle(randomPos, 200.0)))
-			break;
-	}
-	return randomPos;
-}
-
 void EnemyManager::move(Game* game) {
 	Super::move(game);
-	cnt++;
-	if (cnt % 90 == 0) {
-		auto e = std::make_shared<T3485>();
-		e->setPos(makeRandomPos(game));
-		add(e);
-	}
-	if (cnt % 400 == 0) {
-		auto e = std::make_shared<MissileLauncher>();
-		e->setPos(makeRandomPos(game));
-		add(e);
-	}
 }
 
 void EnemyManager::draw(Game* game) {

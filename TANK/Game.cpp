@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Item.h"
 
 void Game::init() {
 	TextureAsset::Register(L"playerTank", L"dat/panther.png");
@@ -30,6 +31,7 @@ void Game::init() {
 	player = std::make_shared<Player>();
 	enemyManager = std::make_shared<EnemyManager>();
 	bulletManager = std::make_shared<BulletManager>();
+	itemManager = std::make_shared<ItemManager>();
 	camera2D = std::make_shared<Camera2D>();
 
 	player->init();
@@ -59,6 +61,8 @@ void Game::move() {
 		player->move(this);
 		enemyManager->move(this);
 		bulletManager->move(this);
+		itemManager->move(this);
+		createActors();
 		break;
 	case State::GAME_OVER:
 		enemyManager->move(this);
@@ -74,13 +78,44 @@ void Game::move() {
 	if (Input::KeyP.pressed) camera2D->shake(30);
 }
 
+Vec2 Game::makeRandomPos() {
+	Vec2 randomPos;
+	while (true) {
+		randomPos = Vec2(Random(0, getStageSize().x), Random(0, getStageSize().y));
+		if (!Geometry2D::Intersect(getPlayer()->getPos().asPoint(), Circle(randomPos, 200.0)))
+			break;
+	}
+	return randomPos;
+}
+
+void Game::createActors() {
+	inGameCnt++;
+	if (inGameCnt % 90 == 0) {
+		auto e = std::make_shared<T3485>();
+		e->setPos(makeRandomPos());
+		enemyManager->add(e);
+	}
+	if (inGameCnt % 400 == 0) {
+		auto e = std::make_shared<MissileLauncher>();
+		e->setPos(makeRandomPos());
+		enemyManager->add(e);
+	}
+	if (inGameCnt % 300 == 0) {
+		Item::Type t = RandomBool(0.5) ? Item::Type::INCREASE_SHOT : Item::Type::SEPARATE_SHOT;
+		auto i = std::make_shared<Item>(makeRandomPos(), t);
+		itemManager->add(i);
+	}
+}
+
 void Game::gameStart() {
 	player->init();
 	enemyManager->clear();
 	bulletManager->clear();
+	itemManager->clear();
 	SoundAsset(L"bgm").play();
 	state = State::PLAY;
 	score = 0;
+	inGameCnt = 0;
 }
 
 void Game::gameOver() {
@@ -99,6 +134,7 @@ void Game::draw() {
 		break;
 	case State::PLAY:
 		TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
+		itemManager->draw(this);
 		player->draw(this);
 		enemyManager->draw(this);
 		bulletManager->draw(this);

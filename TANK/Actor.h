@@ -30,7 +30,7 @@ public:
 	void clear() {
 		actors.clear();
 	}
-	virtual void move(Game* game){
+	virtual void move(Game* game) {
 		for (auto& actor : actors) {
 			actor->move(game);
 		}

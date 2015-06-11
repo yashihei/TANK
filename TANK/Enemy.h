@@ -39,8 +39,8 @@ protected:
 
 class T3485 : public Enemy
 {
-using Super = Enemy;
 public:
+	using Super = Enemy;
 	T3485();
 	void move(Game* game) override;
 	void draw(Game* game) override;
@@ -51,8 +51,8 @@ private:
 
 class MissileLauncher : public Enemy
 {
-using Super = Enemy;
 public:
+	using Super = Enemy;
 	MissileLauncher();
 	void move(Game* game) override;
 	void draw(Game* game) override;
@@ -64,7 +64,4 @@ public:
 	using Super = ActorManager<Enemy>;
 	void move(Game* game) override;
 	void draw(Game* game) override;
-private:
-	Vec2 makeRandomPos(Game* game);
-	int cnt = 0;
 };
