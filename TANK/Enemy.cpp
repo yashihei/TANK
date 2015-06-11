@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Util.h"
 
 Enemy::Enemy() {
 	explosionAnimation = std::make_shared<Animation>();

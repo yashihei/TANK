@@ -1,6 +1,7 @@
 #include "Bullet.h"
 
 #include "Game.h"
+#include "Util.h"
 
 void Bullet::setParam(Vec2 pos, Vec2 vec, double radian, Target target) {
 	this->pos = pos;

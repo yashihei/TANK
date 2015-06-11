@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Bullet.h"
 #include "Enemy.h"
+#include "Util.h"
 
 const int Player::HP_MAX = 7;
 const double Player::RADUIS = 10.0;
