@@ -101,7 +101,7 @@ void Game::createActors() {
 		e->setPos(makeRandomPos());
 		enemyManager->add(e);
 	}
-	if (inGameCnt % 300 == 0) {
+	if (inGameCnt % 400 == 0) {
 		ItemType t = RandomSelect({ ItemType::INCREASE_SHOT, ItemType::SEPARATE_SHOT });
 		auto i = std::make_shared<Item>(makeRandomPos(), t);
 		itemManager->add(i);

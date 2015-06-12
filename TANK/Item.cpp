@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Util.h"
 
-const double Item::RADIUS = 10.0;
+const double Item::RADIUS = 15.0;
 
 Item::Item(Vec2 pos, ItemType type) {
 	this->pos = pos;

@@ -40,7 +40,7 @@ void Player::move(Game* game) {
 	itemCnt++;
 	auto itemManager = game->getItemManager();
 	for (auto& item : *itemManager) {
-		if (Circle(pos, RADUIS).intersects(Circle(item->getPos(), item->RADIUS * 2))) {
+		if (Circle(pos, RADUIS * 2).intersects(Circle(item->getPos(), item->RADIUS * 2))) {
 			item->kill();
 			itemType = item->getItemType();
 			itemCnt = 0;
@@ -128,10 +128,19 @@ void Player::fire(Game* game) {
 	if (Input::MouseL.pressed && shotCnt % 3 == 0) {
 		auto bulletManager = game->getBulletManager();
 		const double shotSpeed = 15.0;
+
 		int num = 1;
-		if (itemType == ItemType::INCREASE_SHOT) num = 5;
+		if (itemType == ItemType::INCREASE_SHOT) {
+			num = 3;
+		} else if (itemType == ItemType::SEPARATE_SHOT) {
+			num = 3;
+		}
+
 		for (int i = 0; i < num; i++) {
 			double shotRad = Atan2(mousePos.y - offsetPos.y - pos.y, mousePos.x - offsetPos.x - pos.x) + Radians(Random(-8.0, 8.0));
+			if (itemType == ItemType::SEPARATE_SHOT) {
+				shotRad += Radians(-30.0 + 30.0 * i);
+			}
 			auto bullet = std::make_shared<NormalBullet>();
 			bullet->setParam(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Target::ENEMY);
 			bulletManager->add(bullet);
