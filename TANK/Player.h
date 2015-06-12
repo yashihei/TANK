@@ -5,6 +5,7 @@
 
 class Game;
 class Animation;
+enum class ItemType;
 
 class Player
 {
@@ -27,11 +28,12 @@ public:
 private:
 	int hp;
 	Vec2 pos, vec;
-	int stateCnt, missileCnt, shotCnt;
+	int stateCnt, missileCnt, shotCnt, itemCnt;
 	State state;
 	double radian, turretRad;
 	Color color;
 	std::shared_ptr<Animation> explosionAnimation;
+	ItemType itemType;
 
 	struct Rut
 	{
@@ -42,5 +44,5 @@ private:
 	std::vector<std::shared_ptr<Rut>> ruts;
 
 	void fire(Game* game);
-	bool checkEnemyShotHit(Game* game);
+	bool checkHitEnemyShot(Game* game);
 };

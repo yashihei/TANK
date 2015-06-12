@@ -6,26 +6,31 @@
 
 class Game;
 
+enum class ItemType {
+	INCREASE_SHOT,
+	SEPARATE_SHOT,
+	NONE,
+};
+
 class Item : public Actor {
 public:
 	static const double RADIUS;
-	enum class Type {
-		INCREASE_SHOT,
-		SEPARATE_SHOT,
-	};
-
-	Item(Vec2, Type);
+	Item(Vec2, ItemType);
 	void move(Game* game) override;
 	void draw(Game* game) override;
+
+	Vec2 getPos() const { return pos; }
+	ItemType getItemType() const { return type; }
 protected:
 	Vec2 pos;
-	Type type;
+	ItemType type;
 	int cnt = 0;
 };
 
 class ItemManager : public ActorManager<Item> {
 public:
 	using Super = ActorManager<Item>;
+	ItemManager() = default;
 	void move(Game* game) override;
 	void draw(Game* game) override;
 };

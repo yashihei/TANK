@@ -5,7 +5,7 @@
 
 const double Item::RADIUS = 10.0;
 
-Item::Item(Vec2 pos, Type type) {
+Item::Item(Vec2 pos, ItemType type) {
 	this->pos = pos;
 	this->type = type;
 }
@@ -18,12 +18,12 @@ void Item::move(Game* game) {
 void Item::draw(Game* game) {
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	Color color;
-	if (type == Type::INCREASE_SHOT) {
+	if (type == ItemType::INCREASE_SHOT) {
 		color = Palette::Red;
-	} else if (type == Type::SEPARATE_SHOT) {
+	} else if (type == ItemType::SEPARATE_SHOT) {
 		color = Palette::Green;
 	}
-	Circle(screenPos, RADIUS).draw(color);
+	Circle(screenPos, RADIUS).draw(color).drawFrame(0.0, 2.0);
 }
 
 void ItemManager::move(Game* game) {

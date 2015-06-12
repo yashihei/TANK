@@ -110,7 +110,7 @@ void T3485::draw(Game* game) {
 MissileLauncher::MissileLauncher() {
 	hp = 15;
 	radius = 30.0;
-	minimapColor = Palette::Greenyellow;
+	minimapColor = Palette::Orange;
 }
 
 void MissileLauncher::move(Game* game) {
@@ -136,7 +136,7 @@ void MissileLauncher::draw(Game* game) {
 		explosionAnimation->draw(screenPos);
 		return;
 	}
-	TextureAsset(L"missile_lancher").scale(1.5).rotate(radian + Pi / 2).drawAt(screenPos, color);
+	TextureAsset(L"missile_lancher").scale(1.4).rotate(radian + Pi / 2).drawAt(screenPos, color);
 }
 
 void EnemyManager::move(Game* game) {

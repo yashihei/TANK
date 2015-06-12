@@ -82,7 +82,7 @@ void Game::move() {
 Vec2 Game::makeRandomPos() {
 	Vec2 randomPos;
 	while (true) {
-		randomPos = Vec2(Random(0, getStageSize().x), Random(0, getStageSize().y));
+		randomPos = RandomVec2(getStageSize().x, getStageSize().y);
 		if (!Geometry2D::Intersect(getPlayer()->getPos().asPoint(), Circle(randomPos, 200.0)))
 			break;
 	}
@@ -102,7 +102,7 @@ void Game::createActors() {
 		enemyManager->add(e);
 	}
 	if (inGameCnt % 300 == 0) {
-		Item::Type t = RandomBool(0.5) ? Item::Type::INCREASE_SHOT : Item::Type::SEPARATE_SHOT;
+		ItemType t = RandomSelect({ ItemType::INCREASE_SHOT, ItemType::SEPARATE_SHOT });
 		auto i = std::make_shared<Item>(makeRandomPos(), t);
 		itemManager->add(i);
 	}
@@ -178,6 +178,10 @@ void Game::drawMinimap() {
 			color = Palette::White;
 		}
 		Circle(enemy->getPos() / scale + offset, 2.0).draw(color);
+	}
+
+	for (auto& item : *itemManager) {
+		Circle(item->getPos() / scale + offset, 2.0).draw(Palette::Greenyellow);
 	}
 }
 
