@@ -24,7 +24,7 @@ public:
 protected:
 	Vec2 pos;
 	ItemType type;
-	int cnt = 0;
+	int cnt;
 };
 
 class ItemManager : public ActorManager<Item> {

@@ -3,6 +3,9 @@
 #include "Game.h"
 #include "Util.h"
 
+Bullet::Bullet() : pos(0.0, 0.0), vec(Vec2::Zero), radian(0.0), radius(0.0), damage(0), cnt(0), target(Target::NONE) {
+}
+
 void Bullet::setParam(Vec2 pos, Vec2 vec, double radian, Target target) {
 	this->pos = pos;
 	this->vec = vec;

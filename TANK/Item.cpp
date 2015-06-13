@@ -5,7 +5,7 @@
 
 const double Item::RADIUS = 20.0;
 
-Item::Item(Vec2 pos, ItemType type) {
+Item::Item(Vec2 pos, ItemType type) : cnt(0) {
 	this->pos = pos;
 	this->type = type;
 }

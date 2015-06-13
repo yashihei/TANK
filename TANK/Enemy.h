@@ -26,11 +26,11 @@ public:
 	State getState() const { return state; }
 	Color getMinimapColor() const { return minimapColor; }
 protected:
-	State state = State::NORMAL;
-	Vec2 pos, vec = { 0.0, 0.0 };
-	int hp, stateCnt = 0, fireCnt = 0;
-	double radian = 0.0, radius;
-	Color color = Palette::White, minimapColor;
+	State state;
+	Vec2 pos, vec;
+	int hp, stateCnt, fireCnt;
+	double radian, radius;
+	Color color, minimapColor;
 	std::shared_ptr<Animation> explosionAnimation;
 
 	bool checkShotHit(Game* game);
@@ -45,7 +45,7 @@ public:
 	void move(Game* game) override;
 	void draw(Game* game) override;
 private:
-	double turretRad = 0.0;
+	double turretRad;
 	double turnRad;
 };
 

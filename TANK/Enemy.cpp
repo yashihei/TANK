@@ -5,7 +5,7 @@
 #include "Bullet.h"
 #include "Util.h"
 
-Enemy::Enemy() {
+Enemy::Enemy() : state(State::NORMAL), pos(0.0, 0.0), vec(Vec2::Zero), hp(0), stateCnt(0), fireCnt(0), radian(0.0), radius(0.0), color(Palette::White), minimapColor(Palette::White) {
 	explosionAnimation = std::make_shared<Animation>();
 }
 
@@ -61,7 +61,7 @@ bool Enemy::checkShotHit(Game* game) {
 	return false;
 }
 
-T3485::T3485() {
+T3485::T3485() : turretRad(0.0) {
 	hp = 10;
 	radius = 30.0;
 	minimapColor = Palette::Red;

@@ -6,7 +6,7 @@
 #include "Item.h"
 #include "Util.h"
 
-void Game::init() {
+Game::Game() {
 	TextureAsset::Register(L"playerTank", L"dat/panther.png");
 	TextureAsset::Register(L"turret", L"dat/turret.png");
 	TextureAsset::Register(L"bullet", L"dat/bullet.png");

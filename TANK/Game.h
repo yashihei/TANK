@@ -12,8 +12,7 @@ class ItemManager;
 class Game
 {
 public:
-	Game() = default;
-	void init();
+	Game();
 	void move();
 	void draw();
 

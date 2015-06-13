@@ -13,7 +13,6 @@ void Main()
 	}
 
 	std::unique_ptr<Game> game = std::make_unique<Game>();
-	game->init();
 	while (System::Update())
 	{
 		game->move();

@@ -15,7 +15,7 @@ public:
 		NONE
 	};
 
-	Bullet() = default;
+	Bullet();
 	void setParam(Vec2 pos, Vec2 vec, double radian, Target target);
 
 	Vec2 getPos() const { return pos; }
@@ -26,7 +26,7 @@ public:
 protected:
 	Vec2 pos, vec;
 	double radian, radius;
-	int damage, cnt = 0;
+	int damage, cnt;
 	Target target;
 
 	void checkOutStage(Game* game);
