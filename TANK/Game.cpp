@@ -6,7 +6,11 @@
 #include "Item.h"
 #include "Util.h"
 
-Game::Game() {
+Game::Game() :
+state(State::TITLE),
+stateCnt(0), inGameCnt(0),
+score(0)
+{
 	TextureAsset::Register(L"playerTank", L"dat/panther.png");
 	TextureAsset::Register(L"turret", L"dat/turret.png");
 	TextureAsset::Register(L"bullet", L"dat/bullet.png");
@@ -35,10 +39,6 @@ Game::Game() {
 	bulletManager = std::make_shared<BulletManager>();
 	itemManager = std::make_shared<ItemManager>();
 	camera2D = std::make_shared<Camera2D>();
-
-	player->init();
-	enemyManager->clear();
-	bulletManager->clear();
 
 	SoundAsset(L"bgm").setLoop(true);
 	SoundAsset(L"missile_shoot").setSpeed(1.5);
@@ -111,7 +111,7 @@ void Game::createActors() {
 }
 
 void Game::gameStart() {
-	player->init();
+	player->start();
 	enemyManager->clear();
 	bulletManager->clear();
 	itemManager->clear();

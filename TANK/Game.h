@@ -40,10 +40,9 @@ private:
 	std::shared_ptr<Camera2D> camera2D;
 
 	Rect stageSize;
-	State state = State::TITLE;
-	int stateCnt = 0, inGameCnt = 0;
-	int score = 0;
-	int level = 1;
+	State state;
+	int stateCnt, inGameCnt;
+	int score;
 
 	void gameStart();
 	void createActors();

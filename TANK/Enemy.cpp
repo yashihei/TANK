@@ -5,7 +5,13 @@
 #include "Bullet.h"
 #include "Util.h"
 
-Enemy::Enemy() : state(State::NORMAL), pos(0.0, 0.0), vec(Vec2::Zero), hp(0), stateCnt(0), fireCnt(0), radian(0.0), radius(0.0), color(Palette::White), minimapColor(Palette::White) {
+Enemy::Enemy() :
+state(State::NORMAL),
+pos(0.0, 0.0), vec(Vec2::Zero),
+hp(0), stateCnt(0), fireCnt(0),
+radian(0.0), radius(0.0),
+color(Palette::White), minimapColor(Palette::White)
+{
 	explosionAnimation = std::make_shared<Animation>();
 }
 

@@ -13,7 +13,7 @@ Player::Player() {
 	explosionAnimation = std::make_shared<Animation>();
 }
 
-void Player::init() {
+void Player::start() {
 	hp = HP_MAX;
 	pos = Vec2(540.0, 540.0);
 	vec = Vec2(0.0, 0.0);

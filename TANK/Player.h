@@ -19,7 +19,7 @@ public:
 	};
 
 	Player();
-	void init();
+	void start();
 	void move(Game* game);
 	void draw(Game* game);
 
