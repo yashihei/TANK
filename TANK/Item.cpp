@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Util.h"
 
-const double Item::RADIUS = 15.0;
+const double Item::RADIUS = 20.0;
 
 Item::Item(Vec2 pos, ItemType type) {
 	this->pos = pos;
@@ -23,6 +23,7 @@ void Item::draw(Game* game) {
 	} else if (type == ItemType::SEPARATE_SHOT) {
 		color = Palette::Green;
 	}
+	if (cnt > 250 && cnt % 10 < 5) color = Palette::White;
 	Circle(screenPos, RADIUS).draw(color).drawFrame(0.0, 2.0);
 }
 

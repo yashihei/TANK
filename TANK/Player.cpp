@@ -40,10 +40,11 @@ void Player::move(Game* game) {
 	itemCnt++;
 	auto itemManager = game->getItemManager();
 	for (auto& item : *itemManager) {
-		if (Circle(pos, RADUIS * 2).intersects(Circle(item->getPos(), item->RADIUS * 2))) {
+		if (Circle(pos, RADUIS * 3).intersects(Circle(item->getPos(), item->RADIUS))) {
 			item->kill();
 			itemType = item->getItemType();
 			itemCnt = 0;
+			SoundAsset(L"power_up").playMulti();
 		}
 	}
 	if (itemCnt > 300) itemType = ItemType::NONE;
@@ -144,8 +145,12 @@ void Player::fire(Game* game) {
 			auto bullet = std::make_shared<NormalBullet>();
 			bullet->setParam(pos, { Cos(shotRad) * shotSpeed, Sin(shotRad) * shotSpeed }, shotRad, Bullet::Target::ENEMY);
 			bulletManager->add(bullet);
-			SoundAsset(L"shoot").playMulti();
 		}
+		double volume = 0.5;
+		if (itemType != ItemType::NONE) {
+			volume = 1.0;
+		}
+		SoundAsset(L"shoot").playMulti(volume);
 	}
 }
 

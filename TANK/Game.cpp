@@ -25,6 +25,7 @@ void Game::init() {
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
 	SoundAsset::Register(L"damage", L"dat/damage.wav");
 	SoundAsset::Register(L"burn", L"dat/burn.wav");
+	SoundAsset::Register(L"power_up", L"dat/power_up.wav");
 	SoundAsset::Register(L"bgm", L"dat/bgm.mp3");
 	FontAsset::Register(L"score", 20, Typeface::Black);
 	FontAsset::Register(L"ratio", 40, Typeface::Black);
@@ -42,6 +43,7 @@ void Game::init() {
 	SoundAsset(L"bgm").setLoop(true);
 	SoundAsset(L"missile_shoot").setSpeed(1.5);
 	SoundAsset(L"burn").setVolume(0.5);
+	MasterVoice::SetVolume(0.5);
 	Graphics2D::SetSamplerState(SamplerState::WrapPoint);
 	stageSize.x = TextureAsset(L"backGround").width;
 	stageSize.y = TextureAsset(L"backGround").height;
