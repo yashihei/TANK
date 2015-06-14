@@ -102,14 +102,14 @@ void Player::move(Game* game) {
 	for (auto& rut : ruts) {
 		rut->cnt++;
 	}
-	Erase_if(ruts, [](std::shared_ptr<Rut> rut) { return rut->cnt > 60; });
+	Erase_if(ruts, [](std::shared_ptr<Rut> rut) { return rut->cnt > 30; });
 
 	fire(game);
 }
 
 void Player::draw(Game* game) {
 	for (auto& rut : ruts) {
-		TextureAsset(L"rut").rotate(rut->radian + Pi / 2).drawAt(game->getCamera2D()->convertToScreenPos(rut->pos), Alpha(255 - 255 / 60 * rut->cnt));
+		TextureAsset(L"rut").rotate(rut->radian + Pi / 2).drawAt(game->getCamera2D()->convertToScreenPos(rut->pos), Alpha(255 - 255 / 30 * rut->cnt));
 	}
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
 	if (state == State::BURN) {
