@@ -23,6 +23,7 @@ public:
 	void move();
 	void draw(Vec2 pos);
 	void draw(Vec2 pos, double radian);
+	void draw(Vec2 pos, double radian, int alpha);
 	int getCycleCnt() const { return sepNum * intervalCnt; }
 private:
 	String assetName;

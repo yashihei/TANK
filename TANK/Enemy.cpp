@@ -131,9 +131,8 @@ void MissileLauncher::move(Game* game) {
 
 	if (fireCnt % 80 == 0) {
 		auto bulletManager = game->getBulletManager();
-		auto bullet = std::make_shared<Missile>();
 		const double bulletSp = -5.0;
-
+		auto bullet = std::make_shared<Missile>();
 		bullet->setParam(pos, { Cos(radian) * bulletSp, Sin(radian) * bulletSp }, radian, Bullet::Target::PLAYER);
 		bulletManager->add(bullet);
 		SoundAsset(L"missile_shoot").playMulti();

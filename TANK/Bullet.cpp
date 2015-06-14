@@ -20,7 +20,7 @@ void Bullet::setParam(Vec2 pos, Vec2 vec, double radian, Target target) {
 
 void Bullet::checkOutStage(Game* game) {
 	Rect stageSize = game->getStageSize();
-	const int margin = 15;
+	const int margin = 50;
 
 	if (pos.x > stageSize.x + margin || pos.x < 0 - margin || pos.y > stageSize.y + margin || pos.y < 0 - margin) {
 		enable = false;
@@ -46,7 +46,7 @@ Missile::Missile() {
 	damage = 15;
 	radius = 10.0;
 	missileAnimation = std::make_shared<Animation>();
-	missileAnimation->init(L"missile", 4, 10);
+	missileAnimation->init(L"missile", 5, 8);
 }
 
 void Missile::move(Game* game) {
@@ -59,6 +59,9 @@ void Missile::move(Game* game) {
 
 void Missile::draw(Game* game) {
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	for (int i = 20; i > 0; i--) {
+		missileAnimation->draw(screenPos - (vec / 3 * i), radian, 100 - 100 / 20 * i);
+	}
 	missileAnimation->draw(screenPos, radian);
 }
 

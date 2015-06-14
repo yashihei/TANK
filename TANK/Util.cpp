@@ -42,3 +42,7 @@ void Animation::draw(Vec2 pos) {
 void Animation::draw(Vec2 pos, double radian) {
 	TextureAsset(assetName)(trimRect).rotate(radian + Radians(90)).drawAt(pos);
 }
+
+void Animation::draw(Vec2 pos, double radian, int alpha) {
+	TextureAsset(assetName)(trimRect).rotate(radian + Radians(90)).drawAt(pos, Alpha(alpha));
+}
