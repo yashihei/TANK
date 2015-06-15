@@ -9,7 +9,15 @@
 const int Player::HP_MAX = 7;
 const double Player::RADUIS = 10.0;
 
-Player::Player() {
+Player::Player() :
+hp(0),
+pos(0.0, 0.0), vec(Vec2::Zero),
+stateCnt(0), missileCnt(0), shotCnt(0), itemCnt(0),
+state(State::NORMAL),
+radian(0.0), turretRad(0.0),
+color(Palette::White),
+itemType(ItemType::NONE)
+{
 	explosionAnimation = std::make_shared<Animation>();
 }
 
@@ -47,7 +55,9 @@ void Player::move(Game* game) {
 			SoundAsset(L"power_up").playMulti();
 		}
 	}
-	if (itemCnt > 300) itemType = ItemType::NONE;
+	if (itemCnt > 300) {
+		itemType = ItemType::NONE;
+	}
 
 	if (checkHitEnemyShot(game)) {
 		SoundAsset(L"damage").playMulti();

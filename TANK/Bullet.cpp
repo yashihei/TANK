@@ -59,10 +59,10 @@ void Missile::move(Game* game) {
 
 void Missile::draw(Game* game) {
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	for (int i = 20; i > 0; i--) {
-		missileAnimation->draw(screenPos - (vec / 3 * i), radian, 100 - 100 / 20 * i);
-	}
 	missileAnimation->draw(screenPos, radian);
+	for (int i = 0; i < 10; i++) {
+		TextureAsset(L"ring").rotate(radian + Radians(90)).drawAt(screenPos - vec * i, Alpha(255 - 255 / 10 * i));
+	}
 }
 
 Bomb::Bomb() {

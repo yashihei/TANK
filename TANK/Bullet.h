@@ -44,6 +44,7 @@ public:
 	Missile();
 	void move(Game* game) override;
 	void draw(Game* game) override;
+private:
 	std::shared_ptr<Animation> missileAnimation;
 };
 
@@ -52,6 +53,7 @@ public:
 	Bomb();
 	void move(Game* game) override;
 	void draw(Game* game) override;
+private:
 	std::shared_ptr<Animation> explosionAnimation;
 };
 

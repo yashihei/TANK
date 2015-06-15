@@ -18,6 +18,7 @@ score(0)
 	TextureAsset::Register(L"explosion", L"dat/explosion.png");
 	TextureAsset::Register(L"missile", L"dat/missile.png");
 	TextureAsset::Register(L"missile_lancher", L"dat/missile_launcher.png");
+	TextureAsset::Register(L"ring", L"dat/ring.png");
 	TextureAsset::Register(L"marker", L"dat/marker.png");
 	TextureAsset::Register(L"title", L"dat/title.png");
 	TextureAsset::Register(L"gameOver", L"dat/gameover.png");
