@@ -17,14 +17,16 @@ void Item::move(Game* game) {
 
 void Item::draw(Game* game) {
 	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
-	Color color;
+	String assetName;
+	Color color(Palette::White);
+
 	if (type == ItemType::INCREASE_SHOT) {
-		color = Palette::Red;
-	} else if (type == ItemType::SEPARATE_SHOT) {
-		color = Palette::Green;
+		assetName = L"item1";
 	}
-	if (cnt > 250 && cnt % 10 < 5) color = Palette::White;
-	Circle(screenPos, RADIUS).draw(color).drawFrame(0.0, 2.0);
+	if (cnt > 250 && cnt % 10 < 5) {
+		color = Palette::Red;
+	}
+	TextureAsset(assetName).scale(0.5).drawAt(screenPos, color);
 }
 
 void ItemManager::move(Game* game) {

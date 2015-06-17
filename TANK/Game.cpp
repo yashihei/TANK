@@ -27,6 +27,7 @@ score(0)
 	TextureAsset::Register(L"T-34-85_r", L"dat/T-34-85_r.png");
 	TextureAsset::Register(L"T-34-85_turret_r", L"dat/T-34-85_turret_r.png");
 	TextureAsset::Register(L"rut", L"dat/rut.png");
+	TextureAsset::Register(L"item1", L"dat/item1.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
 	SoundAsset::Register(L"missile_shoot", L"dat/missile_shoot.wav");
 	SoundAsset::Register(L"hit", L"dat/hit.wav");
@@ -54,6 +55,7 @@ score(0)
 
 void Game::move() {
 	if (Input::KeySpace.pressed) return;
+	ClearPrint();
 	stateCnt++;
 
 	switch (state) {
@@ -96,7 +98,8 @@ Vec2 Game::makeRandomPos() {
 
 void Game::createActors() {
 	inGameCnt++;
-	if (inGameCnt % 90 == 0) {
+	//if (inGameCnt % (200 - Min(inGameCnt / 30, 150)) == 0) {
+	if (inGameCnt % 60 == 0) {
 		auto e = std::make_shared<T3485>();
 		e->setPos(makeRandomPos());
 		enemyManager->add(e);
@@ -106,8 +109,8 @@ void Game::createActors() {
 		e->setPos(makeRandomPos());
 		enemyManager->add(e);
 	}
-	if (inGameCnt % 400 == 0) {
-		ItemType t = RandomSelect({ ItemType::INCREASE_SHOT, ItemType::SEPARATE_SHOT });
+	if (inGameCnt % 500 == 0) {
+		ItemType t = RandomSelect({ ItemType::INCREASE_SHOT });
 		auto i = std::make_shared<Item>(makeRandomPos(), t);
 		itemManager->add(i);
 	}
