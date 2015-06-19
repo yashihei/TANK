@@ -104,7 +104,7 @@ void T3485::move(Game* game) {
 }
 
 void T3485::draw(Game* game) {
-	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->toScreenPos(pos);
 	if (state == State::BURN) {
 		explosionAnimation->draw(screenPos);
 		return;
@@ -140,7 +140,7 @@ void MissileLauncher::move(Game* game) {
 }
 
 void MissileLauncher::draw(Game* game) {
-	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->toScreenPos(pos);
 	if (state == State::BURN) {
 		explosionAnimation->draw(screenPos);
 		return;

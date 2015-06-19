@@ -16,7 +16,7 @@ void Item::move(Game* game) {
 }
 
 void Item::draw(Game* game) {
-	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->toScreenPos(pos);
 	String assetName;
 	Color color(Palette::White);
 

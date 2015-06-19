@@ -5,14 +5,14 @@ class Game;
 class Camera2D
 {
 public:
-	Camera2D() = default;
+	Camera2D();
 	void posUpdate(Game* game);
 	void shake(int num);
-	Vec2 convertToScreenPos(Vec2 pos);
+	Vec2 toScreenPos(Vec2 pos);
 
 	Vec2 getoffsetPos() const { return offsetPos; }
 private:
-	Vec2 offsetPos = { 0, 0 };
+	Vec2 offsetPos;
 };
 
 class Animation
@@ -23,7 +23,6 @@ public:
 	void move();
 	void draw(Vec2 pos);
 	void draw(Vec2 pos, double radian);
-	void draw(Vec2 pos, double radian, int alpha);
 	int getCycleCnt() const { return sepNum * intervalCnt; }
 private:
 	String assetName;

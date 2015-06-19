@@ -3,12 +3,14 @@
 #include "Game.h"
 #include "Player.h"
 
+Camera2D::Camera2D() : offsetPos(0.0, 0.0) {}
+
 void Camera2D::shake(int num) {
 	offsetPos.x += Random(-num, num);
 	offsetPos.y += Random(-num, num);
 }
 
-Vec2 Camera2D::convertToScreenPos(Vec2 pos) {
+Vec2 Camera2D::toScreenPos(Vec2 pos) {
 	return pos + offsetPos;
 }
 
@@ -41,8 +43,4 @@ void Animation::draw(Vec2 pos) {
 
 void Animation::draw(Vec2 pos, double radian) {
 	TextureAsset(assetName)(trimRect).rotate(radian + Radians(90)).drawAt(pos);
-}
-
-void Animation::draw(Vec2 pos, double radian, int alpha) {
-	TextureAsset(assetName)(trimRect).rotate(radian + Radians(90)).drawAt(pos, Alpha(alpha));
 }

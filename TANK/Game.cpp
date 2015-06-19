@@ -98,7 +98,12 @@ Vec2 Game::makeRandomPos() {
 
 void Game::createActors() {
 	inGameCnt++;
-	//if (inGameCnt % (200 - Min(inGameCnt / 30, 150)) == 0) {
+	if (inGameCnt % (200 - Min(inGameCnt / 30, 150)) == 0) {
+	}
+	if (inGameCnt % (600 - Min(inGameCnt / 15, 300)) == 0) {
+	}
+	if (inGameCnt % (1000 - Min(inGameCnt / 10, 600)) == 0) {
+	}
 	if (inGameCnt % 60 == 0) {
 		auto e = std::make_shared<T3485>();
 		e->setPos(makeRandomPos());
@@ -136,13 +141,13 @@ void Game::gameOver() {
 void Game::draw() {
 	switch (state) {
 	case State::TITLE:
-		TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
+		TextureAsset(L"backGround").draw(camera2D->toScreenPos({ 0, 0 }));
 		enemyManager->draw(this);
 		bulletManager->draw(this);
 		TextureAsset(L"title").drawAt(Window::Center());
 		break;
 	case State::PLAY:
-		TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
+		TextureAsset(L"backGround").draw(camera2D->toScreenPos({ 0, 0 }));
 		itemManager->draw(this);
 		player->draw(this);
 		enemyManager->draw(this);
@@ -150,7 +155,7 @@ void Game::draw() {
 		drawHUD();
 		break;
 	case State::GAME_OVER:
-		TextureAsset(L"backGround").draw(camera2D->convertToScreenPos({ 0, 0 }));
+		TextureAsset(L"backGround").draw(camera2D->toScreenPos({ 0, 0 }));
 		enemyManager->draw(this);
 		bulletManager->draw(this);
 		TextureAsset(L"gameOver").drawAt(Window::Center());
@@ -195,7 +200,7 @@ void Game::drawMinimap() {
 
 void Game::drawHpCircle() {
 	const int playerHp = player->getHp();
-	const Vec2 screenPos = camera2D->convertToScreenPos(player->getPos());
+	const Vec2 screenPos = camera2D->toScreenPos(player->getPos());
 	if (playerHp < Player::HP_MAX)
 		Circle(screenPos, (500 / Player::HP_MAX) * playerHp).drawFrame(0.0, 1000.0, Color(255, 30, 30).setAlpha(70));
 }

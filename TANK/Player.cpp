@@ -119,9 +119,9 @@ void Player::move(Game* game) {
 
 void Player::draw(Game* game) {
 	for (auto& rut : ruts) {
-		TextureAsset(L"rut").rotate(rut->radian + Pi / 2).drawAt(game->getCamera2D()->convertToScreenPos(rut->pos), Alpha(255 - 255 / 30 * rut->cnt));
+		TextureAsset(L"rut").rotate(rut->radian + Pi / 2).drawAt(game->getCamera2D()->toScreenPos(rut->pos), Alpha(255 - 255 / 30 * rut->cnt));
 	}
-	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->toScreenPos(pos);
 	if (state == State::BURN) {
 		explosionAnimation->draw(screenPos);
 		return;

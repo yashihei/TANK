@@ -38,7 +38,7 @@ void NormalBullet::move(Game* game) {
 }
 
 void NormalBullet::draw(Game* game) {
-	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->toScreenPos(pos);
 	TextureAsset(L"bullet").rotate(radian + Pi/2).drawAt(screenPos);
 }
 
@@ -58,7 +58,7 @@ void Missile::move(Game* game) {
 }
 
 void Missile::draw(Game* game) {
-	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->toScreenPos(pos);
 	missileAnimation->draw(screenPos, radian);
 	for (int i = 0; i < 10; i++) {
 		TextureAsset(L"ring").rotate(radian + Radians(90)).drawAt(screenPos - vec * i, Alpha(255 - 255 / 10 * i));
@@ -77,7 +77,7 @@ void Bomb::move(Game* game) {
 }
 
 void Bomb::draw(Game* game) {
-	const Vec2 screenPos = game->getCamera2D()->convertToScreenPos(pos);
+	const Vec2 screenPos = game->getCamera2D()->toScreenPos(pos);
 	Circle(screenPos, 10.0).draw(Color(255, 255, 0, 122));
 }
 
