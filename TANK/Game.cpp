@@ -21,7 +21,6 @@ score(0), hiScore(0)
 	TextureAsset::Register(L"ring", L"dat/ring.png");
 	TextureAsset::Register(L"marker", L"dat/marker.png");
 	TextureAsset::Register(L"title", L"dat/title.png");
-	TextureAsset::Register(L"gameOver", L"dat/gameover.png");
 	TextureAsset::Register(L"T-34-85", L"dat/T-34-85.png");
 	TextureAsset::Register(L"T-34-85_turret", L"dat/T-34-85_turret.png");
 	TextureAsset::Register(L"T-34-85_r", L"dat/T-34-85_r.png");
@@ -139,6 +138,7 @@ void Game::gameOver() {
 	state = State::GAME_OVER;
 	camera2D->posUpdate(this);
 	stateCnt = 0;
+	bulletManager->clear();
 	hiScore = Max(score, hiScore);
 }
 

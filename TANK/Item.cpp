@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Util.h"
 
-const double Item::RADIUS = 20.0;
+const double Item::RADIUS = 30.0;
 
 Item::Item(Vec2 pos, ItemType type) : cnt(0) {
 	this->pos = pos;
@@ -26,7 +26,7 @@ void Item::draw(Game* game) {
 	if (cnt > 250 && cnt % 10 < 5) {
 		color = Palette::Red;
 	}
-	TextureAsset(assetName).scale(0.5).drawAt(screenPos, color);
+	TextureAsset(assetName).scale(0.5 + Sin(Radians(System::FrameCount()) * 5) / 10).drawAt(screenPos, color);
 }
 
 void ItemManager::move(Game* game) {
