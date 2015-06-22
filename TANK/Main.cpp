@@ -11,6 +11,7 @@ void Main()
 	} else if (command == MessageBoxCommand::No) {
 		Window::Resize(800, 600);
 	}
+	Window::SetTitle(L"たんくうぉー！");
 
 	std::unique_ptr<Game> game = std::make_unique<Game>();
 	while (System::Update())

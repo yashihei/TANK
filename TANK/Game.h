@@ -42,13 +42,15 @@ private:
 	Rect stageSize;
 	State state;
 	int stateCnt, inGameCnt;
-	int score;
+	int score, hiScore;
 
 	void gameStart();
 	void createActors();
 	Vec2 makeRandomPos();
 
 	void drawHUD();
+	void drawMarker();
 	void drawMinimap();
 	void drawHpCircle();
+	void drawCenterAddShadowFont(String assetName, String drawStr, Vec2 pos);
 };

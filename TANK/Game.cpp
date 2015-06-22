@@ -9,7 +9,7 @@
 Game::Game() :
 state(State::TITLE),
 stateCnt(0), inGameCnt(0),
-score(0)
+score(0), hiScore(0)
 {
 	TextureAsset::Register(L"playerTank", L"dat/panther.png");
 	TextureAsset::Register(L"turret", L"dat/turret.png");
@@ -36,7 +36,7 @@ score(0)
 	SoundAsset::Register(L"power_up", L"dat/power_up.wav");
 	SoundAsset::Register(L"bgm", L"dat/bgm.mp3");
 	FontAsset::Register(L"score", 20, Typeface::Black);
-	FontAsset::Register(L"ratio", 40, Typeface::Black);
+	FontAsset::Register(L"gameover", 40, Typeface::Black);
 
 	player = std::make_shared<Player>();
 	enemyManager = std::make_shared<EnemyManager>();
@@ -97,13 +97,16 @@ Vec2 Game::makeRandomPos() {
 }
 
 void Game::createActors() {
+	//Println(200 - Min(inGameCnt / 30, 150));
+	//Println(600 - Min(inGameCnt / 15, 300));
+	//Println(1000 - Min(inGameCnt / 10, 600));
+	//if (inGameCnt % (200 - Min(inGameCnt / 30, 150)) == 0) {
+	//}
+	//if (inGameCnt % (600 - Min(inGameCnt / 15, 300)) == 0) {
+	//}
+	//if (inGameCnt % (1000 - Min(inGameCnt / 10, 600)) == 0) {
+	//}
 	inGameCnt++;
-	if (inGameCnt % (200 - Min(inGameCnt / 30, 150)) == 0) {
-	}
-	if (inGameCnt % (600 - Min(inGameCnt / 15, 300)) == 0) {
-	}
-	if (inGameCnt % (1000 - Min(inGameCnt / 10, 600)) == 0) {
-	}
 	if (inGameCnt % 60 == 0) {
 		auto e = std::make_shared<T3485>();
 		e->setPos(makeRandomPos());
@@ -136,6 +139,7 @@ void Game::gameOver() {
 	state = State::GAME_OVER;
 	camera2D->posUpdate(this);
 	stateCnt = 0;
+	hiScore = Max(score, hiScore);
 }
 
 void Game::draw() {
@@ -144,7 +148,8 @@ void Game::draw() {
 		TextureAsset(L"backGround").draw(camera2D->toScreenPos({ 0, 0 }));
 		enemyManager->draw(this);
 		bulletManager->draw(this);
-		TextureAsset(L"title").drawAt(Window::Center());
+		drawMarker();
+		TextureAsset(L"title").rotate(Radians(Random(-1.0, 1.0))).drawAt(Window::Center());
 		break;
 	case State::PLAY:
 		TextureAsset(L"backGround").draw(camera2D->toScreenPos({ 0, 0 }));
@@ -158,21 +163,28 @@ void Game::draw() {
 		TextureAsset(L"backGround").draw(camera2D->toScreenPos({ 0, 0 }));
 		enemyManager->draw(this);
 		bulletManager->draw(this);
-		TextureAsset(L"gameOver").drawAt(Window::Center());
+		drawHUD();
+		drawCenterAddShadowFont(L"gameover", L"げーむおーばー", Window::Center());
+		drawCenterAddShadowFont(L"score", Format(L"すこあ：", score), Window::Center() + Vec2(0.0, 150.0));
+		drawCenterAddShadowFont(L"score", Format(L"はいすこあ：", hiScore), Window::Center() + Vec2(0.0, 180.0));
 		break;
 	}
 }
 
 void Game::drawHUD() {
+	drawMarker();
+	drawMinimap();
+	drawHpCircle();
+	FontAsset(L"score").draw(Pad(score, { 6, L'0' }), { 12.0, 12.0 }, Palette::Black);
+	FontAsset(L"score").draw(Pad(score, { 6, L'0' }), { 10.0, 10.0 }, Palette::White);
+}
+
+void Game::drawMarker() {
 	if (Input::MouseL.pressed) {
 		TextureAsset(L"marker")(31, 0, 31, 31).scale(1.3).drawAt(Mouse::Pos());
 	} else {
 		TextureAsset(L"marker")(0, 0, 31, 31).scale(1.3).drawAt(Mouse::Pos());
 	}
-	drawMinimap();
-	drawHpCircle();
-	FontAsset(L"score").draw(Pad(score, { 6, L'0' }), { 11.5, 11.5 }, Palette::Black);
-	FontAsset(L"score").draw(Pad(score, { 6, L'0' }), { 10.0, 10.0 }, Palette::White);
 }
 
 void Game::drawMinimap() {
@@ -203,4 +215,9 @@ void Game::drawHpCircle() {
 	const Vec2 screenPos = camera2D->toScreenPos(player->getPos());
 	if (playerHp < Player::HP_MAX)
 		Circle(screenPos, (500 / Player::HP_MAX) * playerHp).drawFrame(0.0, 1000.0, Color(255, 30, 30).setAlpha(70));
+}
+
+void Game::drawCenterAddShadowFont(String assetName, String drawStr, Vec2 pos) {
+	FontAsset(assetName).drawCenter(drawStr, pos + Vec2(2.0, 2.0), Palette::Black);
+	FontAsset(assetName).drawCenter(drawStr, pos, Palette::White);
 }
