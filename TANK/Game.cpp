@@ -7,6 +7,7 @@
 #include "Util.h"
 
 Game::Game() :
+stageRect(0.0, 0.0),
 state(State::TITLE),
 stateCnt(0), inGameCnt(0),
 score(0), hiScore(0)
@@ -46,8 +47,8 @@ score(0), hiScore(0)
 	SoundAsset(L"burn").setVolume(0.5);
 	MasterVoice::SetVolume(0.5);
 	Graphics2D::SetSamplerState(SamplerState::WrapPoint);
-	stageSize.x = TextureAsset(L"backGround").width;
-	stageSize.y = TextureAsset(L"backGround").height;
+	stageRect.x = TextureAsset(L"backGround").width;
+	stageRect.y = TextureAsset(L"backGround").height;
 }
 
 void Game::move() {
@@ -86,7 +87,7 @@ void Game::move() {
 Vec2 Game::makeRandomPos() {
 	Vec2 randomPos;
 	while (true) {
-		randomPos = RandomVec2(getStageSize().x, getStageSize().y);
+		randomPos = RandomVec2(getStageRect().x, getStageRect().y);
 		if (!Geometry2D::Intersect(getPlayer()->getPos().asPoint(), Circle(randomPos, 200.0)))
 			break;
 	}
@@ -188,7 +189,7 @@ void Game::drawMarker() {
 void Game::drawMinimap() {
 	const Vec2 offset(Window::Width() - 150, 30);
 	const Rect mapRect(offset.asPoint(), {120, 120});
-	const double scale = static_cast<double>(stageSize.x) / mapRect.w;
+	const double scale = static_cast<double>(stageRect.x) / mapRect.w;
 	const Vec2 playerPos = player->getPos();
 
 	mapRect.draw({ 0, 122, 255, 122 });

@@ -89,8 +89,8 @@ void T3485::move(Game* game) {
 	vec.x = Cos(radian) * sp;
 	vec.y = Sin(radian) * sp;
 	pos += vec;
-	pos.x = Clamp(pos.x, 0.0, static_cast<double>(game->getStageSize().x));
-	pos.y = Clamp(pos.y, 0.0, static_cast<double>(game->getStageSize().y));
+	pos.x = Clamp(pos.x, 0.0, game->getStageRect().x);
+	pos.y = Clamp(pos.y, 0.0, game->getStageRect().y);
 
 	if (fireCnt % 7 == 0 && fireCnt % 100 > 50 && Circle(pos, 500).intersects(playerPos)) {
 		auto bulletManager = game->getBulletManager();

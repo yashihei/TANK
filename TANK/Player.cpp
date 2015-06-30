@@ -90,8 +90,8 @@ void Player::move(Game* game) {
 		pos -= vec;
 	}
 
-	pos.x = Clamp(pos.x, 0.0, static_cast<double>(game->getStageSize().x));
-	pos.y = Clamp(pos.y, 0.0, static_cast<double>(game->getStageSize().y));
+	pos.x = Clamp(pos.x, 0.0, game->getStageRect().x);
+	pos.y = Clamp(pos.y, 0.0, game->getStageRect().y);
 
 	//‰ñ“]
 	double turnSpeed = 4.0;

@@ -16,11 +16,11 @@ Vec2 Camera2D::toScreenPos(Vec2 pos) {
 
 void Camera2D::posUpdate(Game* game) {
 	auto player = game->getPlayer();
-	const Rect stageSize = game->getStageSize();
+	const auto stageRect = game->getStageRect();
 
 	offsetPos.set(Window::Width() / 2 - player->getPos().x, Window::Height() / 2 - player->getPos().y);
-	offsetPos.x = Clamp(offsetPos.x, static_cast<double>(Window::Width() - stageSize.x), 0.0);
-	offsetPos.y = Clamp(offsetPos.y, static_cast<double>(Window::Height() - stageSize.y), 0.0);
+	offsetPos.x = Clamp(offsetPos.x, static_cast<double>(Window::Width() - stageRect.x), 0.0);
+	offsetPos.y = Clamp(offsetPos.y, static_cast<double>(Window::Height() - stageRect.y), 0.0);
 }
 
 void Animation::init(String name, int sepNum, int intervalCnt) {

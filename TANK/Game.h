@@ -28,7 +28,7 @@ public:
 	std::shared_ptr<BulletManager> getBulletManager() const { return bulletManager; }
 	std::shared_ptr<ItemManager> getItemManager() const { return itemManager; }
 	std::shared_ptr<Camera2D> getCamera2D() const { return camera2D; }
-	Rect getStageSize() const { return stageSize; }
+	RectF getStageRect() const { return stageRect; }
 
 	void gameOver();
 	void addScore(int score) { this->score += score; }
@@ -39,7 +39,7 @@ private:
 	std::shared_ptr<ItemManager> itemManager;
 	std::shared_ptr<Camera2D> camera2D;
 
-	Rect stageSize;
+	RectF stageRect;
 	State state;
 	int stateCnt, inGameCnt;
 	int score, hiScore;

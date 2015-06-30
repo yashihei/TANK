@@ -19,10 +19,10 @@ void Bullet::setParam(Vec2 pos, Vec2 vec, double radian, Target target) {
 }
 
 void Bullet::checkOutStage(Game* game) {
-	Rect stageSize = game->getStageSize();
+	Rect stageRect = game->getStageRect();
 	const int margin = 50;
 
-	if (pos.x > stageSize.x + margin || pos.x < 0 - margin || pos.y > stageSize.y + margin || pos.y < 0 - margin) {
+	if (pos.x > stageRect.x + margin || pos.x < 0 - margin || pos.y > stageRect.y + margin || pos.y < 0 - margin) {
 		enable = false;
 	}
 }
