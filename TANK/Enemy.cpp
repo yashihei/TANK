@@ -109,11 +109,11 @@ void T3485::draw(Game* game) {
 		explosionAnimation->draw(screenPos);
 		return;
 	}
-	TextureAsset(L"T-34-85").rotate(radian + Pi/2).drawAt(screenPos);
-	TextureAsset(L"T-34-85_turret").rotate(turretRad + Pi/2).drawAt(screenPos);
+	TextureAsset(L"T-34-85")(0, 0, 40, 80).rotate(radian + Pi/2).drawAt(screenPos);
+	TextureAsset(L"T-34-85_turret")(0, 0, 40, 100).rotate(turretRad + Pi/2).drawAt(screenPos);
 	if (state == State::DAMAGE) {
-		TextureAsset(L"T-34-85_r").rotate(radian + Pi/2).drawAt(screenPos);
-		TextureAsset(L"T-34-85_turret_r").rotate(turretRad + Pi/2).drawAt(screenPos);
+		TextureAsset(L"T-34-85")(40, 0, 40, 80).rotate(radian + Pi/2).drawAt(screenPos);
+		TextureAsset(L"T-34-85_turret")(40, 0, 40, 100).rotate(turretRad + Pi/2).drawAt(screenPos);
 	}
 }
 

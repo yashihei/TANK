@@ -23,8 +23,6 @@ score(0), hiScore(0)
 	TextureAsset::Register(L"title", L"dat/title.png");
 	TextureAsset::Register(L"T-34-85", L"dat/T-34-85.png");
 	TextureAsset::Register(L"T-34-85_turret", L"dat/T-34-85_turret.png");
-	TextureAsset::Register(L"T-34-85_r", L"dat/T-34-85_r.png");
-	TextureAsset::Register(L"T-34-85_turret_r", L"dat/T-34-85_turret_r.png");
 	TextureAsset::Register(L"rut", L"dat/rut.png");
 	TextureAsset::Register(L"item1", L"dat/item1.png");
 	SoundAsset::Register(L"shoot", L"dat/shoot.wav");
